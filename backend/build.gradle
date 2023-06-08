@@ -1,0 +1,58 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.joetsumap'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '19'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+ext {
+  jwtVersion = '0.11.5'
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// implementation 'org.flywaydb:flyway-core'
+	// implementation 'org.flywaydb:flyway-mysql'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.32' // バージョンを指定したら動いた
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	// providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	// JWT認証
+	implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
+	implementation "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+	implementation "io.jsonwebtoken:jjwt-jackson:${jwtVersion}"
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+jar {
+	// plainは不要
+  enabled = false
+}
