@@ -34,4 +34,9 @@ public class TestController {
   public String adminAccess() {
     return "Admin Board.";
   }
+
+  @GetMapping(API_TEST_CONNECTION)
+  public String connection() {
+    return "Connection Test.";
+  }
 }

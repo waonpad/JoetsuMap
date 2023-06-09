@@ -38,7 +38,7 @@ public class UserDetailsImpl implements UserDetails {
 
   //   return new UserDetailsImpl(
   //       user.getId(), 
-  //       user.getUsername(), 
+  //       user.getUsername(),
   //       user.getEmail(),
   //       user.getPassword(), 
   //       authorities);
@@ -46,9 +46,14 @@ public class UserDetailsImpl implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() { // --- ユーザに与えられている権限リストを返却するメソッド
-    // return AuthorityUtils.createAuthorityList("ROLE_" + this.user.getRoleName());
     return this.authorities;
   }
+
+
+  // Rolesのまま返すよりこうして文字配列にした方がいいか？う～ん
+  // List<String> strRoles = userDetails.getAuthorities().stream()
+  //     .map(item -> item.getAuthority())
+  //     .collect(Collectors.toList());
 
   @Override
   public String getPassword() { // --- 登録されているパスワードを返却するメソッド

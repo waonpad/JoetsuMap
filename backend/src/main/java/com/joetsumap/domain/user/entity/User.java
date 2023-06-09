@@ -1,7 +1,7 @@
 package com.joetsumap.domain.user.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.joetsumap.common.entity.BaseEntity;
 import com.joetsumap.domain.role.entity.Role;
@@ -11,13 +11,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
 @Data
 @Table(name = "users", 
     uniqueConstraints = { 
@@ -50,7 +48,6 @@ public class User extends BaseEntity {
   @JoinTable(  name = "user_roles", 
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id"))
-  @Builder.Default
-  private Set<Role> roles = new HashSet<>();
+  private List<Role> roles = new ArrayList<>();
 
 }

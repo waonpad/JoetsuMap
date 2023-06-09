@@ -41,9 +41,7 @@ export const TestScreen = () => {
       role: ['USER'],
     };
 
-    const registerResult = await register(registerParams);
-
-    console.log('registerResult', registerResult);
+    await register(registerParams);
   };
 
   const onPressLogout = () => {
@@ -56,9 +54,7 @@ export const TestScreen = () => {
       password: 'testpassword',
     };
 
-    const loginResult = await login(loginParams);
-
-    console.log('loginResult', loginResult);
+    await login(loginParams);
   };
 
   useEffect(() => {

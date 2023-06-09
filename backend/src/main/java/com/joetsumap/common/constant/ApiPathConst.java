@@ -10,6 +10,7 @@ public final class ApiPathConst {
   public static final String API_TEST_USER = "/user";
   public static final String API_TEST_MOD = "/mod";
   public static final String API_TEST_ADMIN = "/admin";
+  public static final String API_TEST_CONNECTION = "/connection";
   
   // Auth
   public static final String API_AUTH_PREFIX = API_PATH + "/auth";

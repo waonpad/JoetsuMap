@@ -8,5 +8,10 @@ export type AuthUser = {
 } & BaseEntity;
 
 export type UserResponse = {
-  accessToken: string;
-} & AuthUser;
+  user: AuthUser;
+};
+
+export type JwtResponse = {
+  token: string;
+  user: AuthUser;
+};

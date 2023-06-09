@@ -2,13 +2,11 @@ package com.joetsumap.domain.role.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
 @Table(name = "roles")
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class Role {
   

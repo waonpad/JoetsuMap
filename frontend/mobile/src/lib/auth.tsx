@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
-import { useNavigation } from '@react-navigation/native';
+// ログアウト時にホーム画面に遷移したいが、navigationはAuthProviderより下位のコンポーネントなため使えない
+// どうしよう？
+
+// import { useNavigation } from '@react-navigation/native';
 import { View, ActivityIndicator } from 'react-native';
 
 import type { LoginCredentialsDTO, RegisterCredentialsDTO, AuthUser } from '@/features/auth';
 import { loginWithEmailAndPassword, getUser, registerWithEmailAndPassword } from '@/features/auth';
-import type { RootStackParamList } from '@/navigation';
-import { omitToken } from '@/utils/format';
+// import type { RootStackParamList } from '@/navigation';
+import { omitToken } from '@/utils/compute';
 import storage from '@/utils/storage';
 
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+// import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 function createCtx<ContextType>() {
   const ctx = React.createContext<ContextType | undefined>(undefined);
@@ -25,6 +28,7 @@ const [createdUseAuth, SetAuthProvider] = createCtx<ReturnType<typeof useAuthCtx
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const auth = useAuthCtx();
+
   if (auth.load) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -43,27 +47,27 @@ const useAuthCtx = () => {
 
   const [load, setLoad] = useState(true);
 
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
+  // const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
 
   const register = async (data: RegisterCredentialsDTO) => {
     const response = await registerWithEmailAndPassword(data);
 
     setUser(omitToken(response));
-    storage.setToken(response.accessToken);
+    storage.setToken(response.token);
   };
 
   const login = async (data: LoginCredentialsDTO) => {
     const response = await loginWithEmailAndPassword(data);
 
     setUser(omitToken(response));
-    storage.setToken(response.accessToken);
+    storage.setToken(response.token);
   };
 
   const logout = () => {
     setUser(null);
     storage.clearToken();
 
-    navigation.navigate('Home');
+    // navigation.navigate('Home');
   };
 
   const loadUser = async () => {
@@ -72,7 +76,7 @@ const useAuthCtx = () => {
     if (token) {
       const data = await getUser();
 
-      setUser(data);
+      setUser(data.user);
       setLoad(false);
       return data;
     }
