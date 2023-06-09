@@ -1,4 +1,4 @@
-package com.joetsumap.user.payload.request;
+package com.joetsumap.domain.user.payload.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

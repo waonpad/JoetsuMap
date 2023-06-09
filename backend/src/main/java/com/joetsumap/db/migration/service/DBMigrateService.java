@@ -8,9 +8,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.joetsumap.role.entity.ERole;
-import com.joetsumap.role.entity.Role;
-import com.joetsumap.role.repository.RoleRepository;
+import com.joetsumap.domain.role.entity.ERole;
+import com.joetsumap.domain.role.entity.Role;
+import com.joetsumap.domain.role.repository.RoleRepository;
 
 import jakarta.transaction.Transactional;
 

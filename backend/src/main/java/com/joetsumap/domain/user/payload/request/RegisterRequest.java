@@ -1,4 +1,4 @@
-package com.joetsumap.user.payload.request;
+package com.joetsumap.domain.user.payload.request;
 
 import java.util.Set;
 

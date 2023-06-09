@@ -1,4 +1,4 @@
-package com.joetsumap.user.payload.response;
+package com.joetsumap.domain.user.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

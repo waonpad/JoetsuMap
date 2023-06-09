@@ -1,4 +1,4 @@
-package com.joetsumap.user.controller;
+package com.joetsumap.domain.user.controller;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,21 +22,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.common.payload.response.MessageResponse;
-import com.joetsumap.role.entity.ERole;
-import com.joetsumap.role.entity.Role;
-import com.joetsumap.role.repository.RoleRepository;
+import com.joetsumap.domain.role.entity.ERole;
+import com.joetsumap.domain.role.entity.Role;
+import com.joetsumap.domain.role.repository.RoleRepository;
+import com.joetsumap.domain.user.entity.User;
+import com.joetsumap.domain.user.payload.request.LoginRequest;
+import com.joetsumap.domain.user.payload.request.RegisterRequest;
+import com.joetsumap.domain.user.payload.response.JwtResponse;
+import com.joetsumap.domain.user.payload.response.UserResponse;
+import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.security.jwt.JwtUtils;
 import com.joetsumap.security.services.UserDetailsImpl;
-import com.joetsumap.user.entity.User;
-import com.joetsumap.user.payload.request.LoginRequest;
-import com.joetsumap.user.payload.request.RegisterRequest;
-import com.joetsumap.user.payload.response.JwtResponse;
-import com.joetsumap.user.payload.response.UserResponse;
-import com.joetsumap.user.repository.UserRepository;
+
+import static com.joetsumap.common.constant.ApiPathConst.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(API_AUTH_PREFIX)
 public class AuthController {
   @Autowired
   AuthenticationManager authenticationManager;
@@ -53,7 +55,7 @@ public class AuthController {
   @Autowired
   JwtUtils jwtUtils;
 
-  @PostMapping("/login")
+  @PostMapping(API_AUTH_LOGIN)
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager.authenticate(
@@ -78,7 +80,7 @@ public class AuthController {
     return ResponseEntity.ok(jwtResponse);
   }
 
-  @PostMapping("/register")
+  @PostMapping(API_AUTH_REGISTER)
   public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
       return ResponseEntity
@@ -156,7 +158,7 @@ public class AuthController {
     return ResponseEntity.ok(jwtResponse);
   }
 
-  @GetMapping("/me")
+  @GetMapping(API_AUTH_ME)
   public ResponseEntity<?> getMe(Authentication authentication) {
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();    
     List<String> roles = userDetails.getAuthorities().stream()

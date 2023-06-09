@@ -1,10 +1,10 @@
-package com.joetsumap.user.entity;
+package com.joetsumap.domain.user.entity;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.joetsumap.common.entity.BaseEntity;
-import com.joetsumap.role.entity.Role;
+import com.joetsumap.domain.role.entity.Role;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

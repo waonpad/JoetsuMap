@@ -1,4 +1,4 @@
-package com.joetsumap.role.entity;
+package com.joetsumap.domain.role.entity;
 
 public enum ERole {
   ROLE_USER,

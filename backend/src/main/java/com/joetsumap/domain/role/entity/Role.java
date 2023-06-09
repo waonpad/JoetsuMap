@@ -1,4 +1,4 @@
-package com.joetsumap.role.entity;
+package com.joetsumap.domain.role.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
