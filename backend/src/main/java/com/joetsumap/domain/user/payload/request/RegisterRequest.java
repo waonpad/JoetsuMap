@@ -1,6 +1,6 @@
 package com.joetsumap.domain.user.payload.request;
 
-import java.util.Set;
+import java.util.List;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -17,7 +17,7 @@ public class RegisterRequest {
   @Email
   private String email;
 
-  private Set<String> role;
+  private List<String> role;
 
   @NotBlank
   @Size(min = 6, max = 40)

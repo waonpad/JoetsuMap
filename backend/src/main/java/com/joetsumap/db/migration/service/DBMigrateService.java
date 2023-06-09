@@ -27,7 +27,8 @@ public class DBMigrateService {
     Arrays.asList(ERole.values()).forEach(name -> {
       Optional<Role> targetRole = roleRepository.findByName(name);
       if (!targetRole.isPresent()) {
-          Role role = new Role(null, name);
+          Role role = new Role();
+          role.setName(name);
           roles.add(role);
       }
     });

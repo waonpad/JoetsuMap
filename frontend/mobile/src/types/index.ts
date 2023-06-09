@@ -9,4 +9,7 @@ export type LatLng = {
   lng: number;
 };
 
-export type ROLES = 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MODERATOR';
+export type ROLES = {
+  id: number;
+  name: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MODERATOR';
+};

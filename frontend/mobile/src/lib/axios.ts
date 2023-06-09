@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
-import { API_URL } from '@/constants';
 import { useNotificationStore } from '@/stores/notifications';
+import { API_URL } from '@/utils/compute';
 import storage from '@/utils/storage';
 
 import type { InternalAxiosRequestConfig } from 'axios';
@@ -21,8 +21,16 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use(authRequestInterceptor);
+// 全てのリクエストをログに出力する
+// axios.interceptors.request.use((config) => {
+//   console.log('Request:', config);
+//   return config;
+// });
+
 axios.interceptors.response.use(
   (response) => {
+    // 全てのレスポンスをログに出力する
+    // console.log('Response:', response);
     return response.data;
   },
   (error) => {
