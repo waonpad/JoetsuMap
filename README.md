@@ -100,7 +100,7 @@ QR コードを読み込むとアプリが開く
   
 ※ AndroidStudio から localhost に接続する場合、10.0.2.2 という IP アドレスに接続するため、iOS シミュレータのアドレスと共存できない  
 ※ 参照：https://learn.microsoft.com/ja-jp/xamarin/cross-platform/deploy-test/connect-to-local-web-services  
-※ frontend/mobile/.envではAndroidStudioで開く場合を想定した設定がしてあります
+※ frontend/mobile/.envではAndroidStudioで開く場合を想定した設定がしてあります  
 ※ スマホから localhost に繋ぐ方法は未検証  
 ※ 共存するための設定等はおいおい出来ればするつもりです  
   
