@@ -4,7 +4,7 @@
   
 ## VSCode に以下の拡張機能をインストール  
 ESLint  
-Prettier - COde formatter  
+Prettier - Code formatter  
 Extension Pack for Java  
 Spring Boot Extension Pack  
   
