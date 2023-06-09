@@ -1,6 +1,6 @@
 # 環境準備
 
-#### Java JDK, node, git の環境は無ければ各自行ってください  
+### Java JDK, node, git の環境は無ければ各自行ってください  
   
 ## VSCode に以下の拡張機能をインストール  
 ESLint  
@@ -28,8 +28,10 @@ https://akira-watson.com/android/adt-windows.html
 
 ### 環境変数の設定
 特にインストール時のパスを弄ってなければこれでいいはず  
+  
 ANDROID_HOME として新しく設定  
 C:\Users\ユーザー名\AppData\Local\Android\Sdk  
+  
 Path に以下 3 つを追加  
 C:\Users\ユーザー名\AppData\Local\Android\Sdk\tools  
 C:\Users\ユーザー名\AppData\Local\Android\Sdk\tools\bin  
@@ -39,8 +41,10 @@ C:\Users\ユーザー名\AppData\Local\Android\Sdk\platform-tools
 https://developer.android.com/studio/run/managing-avds?hl=ja  
   
 ## expo にログイン(アカウントが無ければ作成する)
+```
 expo login  
-  
+```
+
 ## リポジトリを clone する
 ```
 git clone https://github.com/waonpad/JoetsuMap.git
@@ -69,7 +73,7 @@ npm install
 localhost:3306 で立てた mysql に joetsumap データベースを作成  
 ユーザー: root  
 パスワード: 空白  
-
+  
 # 動作確認
 
 ## バックエンド
