@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
 
 import { useAuth } from '@/lib/auth';
+import { ROLES } from '@/lib/authorization';
 import { secureStore } from '@/lib/expo-secure-store';
 import storage from '@/utils/storage';
 
@@ -38,7 +39,7 @@ export const TestScreen = () => {
       username: 'test',
       password: 'testpassword',
       email: 'test@example.com',
-      role: ['USER'],
+      role: [ROLES.ROLE_USER],
     };
 
     await register(registerParams);
