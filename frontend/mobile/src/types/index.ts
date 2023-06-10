@@ -1,3 +1,5 @@
+import type { ROLES as RoleTypes } from '@/lib/authorization';
+
 export type BaseEntity = {
   id: string;
   createdAt: Date;
@@ -11,5 +13,5 @@ export type LatLng = {
 
 export type ROLES = {
   id: number;
-  name: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MODERATOR';
+  name: keyof typeof RoleTypes;
 };

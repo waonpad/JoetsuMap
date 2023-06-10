@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import { Button } from 'react-native-elements';
 
 import { useTestConnection } from '@/features/test';
 
@@ -20,7 +21,13 @@ export const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Text>HomeScreen</Text>
-      <Button title="About画面に遷移する" onPress={onPress} />
+      <Button
+        title="About画面に遷移する"
+        onPress={onPress}
+        icon={{
+          name: 'android',
+        }}
+      />
       <Text>{testConnectionQuery.data}</Text>
     </View>
   );

@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.joetsumap.common.constant.ApiConst.*;
 import static com.joetsumap.common.constant.ApiPathConst.*;
+import static com.joetsumap.common.constant.AuthorizeConst.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = CROSS_ORIGIN, maxAge = MAX_AGE)
 @RestController
 @RequestMapping(API_TEST_PREFIX)
 public class TestController {
@@ -18,19 +20,19 @@ public class TestController {
   }
 
   @GetMapping(API_TEST_USER)
-  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  @PreAuthorize(AUTHORIZED_USER)
   public String userAccess() {
     return "User Content.";
   }
 
   @GetMapping(API_TEST_MOD)
-  @PreAuthorize("hasRole('MODERATOR')")
+  @PreAuthorize(AUTHORIZED_MODERATOR)
   public String moderatorAccess() {
     return "Moderator Board.";
   }
 
   @GetMapping(API_TEST_ADMIN)
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize(AUTHORIZED_ADMIN)
   public String adminAccess() {
     return "Admin Board.";
   }
