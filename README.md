@@ -77,12 +77,6 @@ git clone https://github.com/waonpad/JoetsuMap.git
 cd JoetsuMap
 ```
 
-# フロントエンドのセットアップ
-
-```
-cd frontend/mobile
-```
-
 ## OS を指定する
 
 ```
@@ -97,6 +91,12 @@ cp .env.example .env
 [bakcendディレクトリ内で] chmod +x gradlew
 [bakcendディレクトリ内で]  chmod +x run-terminal.sh
 [frontend/mobileディレクトリ内で] chmod +x run-terminal.sh
+```
+
+# フロントエンドのセットアップ
+
+```
+cd frontend/mobile
 ```
 
 ## パッケージインストール
