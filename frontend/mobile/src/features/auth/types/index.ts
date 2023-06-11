@@ -9,7 +9,7 @@ export type AuthUser = {
 
 export type UserResponse = {
   user: AuthUser;
-};
+} | null;
 
 export type JwtResponse = {
   token: string;

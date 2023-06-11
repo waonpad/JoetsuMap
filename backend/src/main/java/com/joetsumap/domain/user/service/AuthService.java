@@ -33,7 +33,11 @@ public class AuthService {
   }
 
   public UserResponse getMe(UserDetailsImpl userDetails) {
-
+    
+    if (userDetails == null) {
+      return null;
+    }
+    
     UserResponse userResponse = new UserResponse(userDetails.getUser());
 
     return userResponse;

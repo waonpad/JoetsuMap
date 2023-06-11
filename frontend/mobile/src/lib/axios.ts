@@ -22,15 +22,15 @@ export const axios = Axios.create({
 
 axios.interceptors.request.use(authRequestInterceptor);
 // 全てのリクエストをログに出力する
-// axios.interceptors.request.use((config) => {
-//   console.log('Request:', config);
-//   return config;
-// });
+axios.interceptors.request.use((config) => {
+  console.log('Request:', config);
+  return config;
+});
 
 axios.interceptors.response.use(
   (response) => {
     // 全てのレスポンスをログに出力する
-    // console.log('Response:', response);
+    console.log('Response:', response);
     return response.data;
   },
   (error) => {

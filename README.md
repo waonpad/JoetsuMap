@@ -2,12 +2,14 @@
 
 ### Java JDK, node, git の環境は無ければ各自行ってください
 
-## VSCode に以下の拡張機能をインストール
+## VSCode の拡張機能をインストール
 
-ESLint  
-Prettier - Code formatter  
-Extension Pack for Java  
-Spring Boot Extension Pack
+以下の拡張機能をインストール
+
+- ESLint
+- Prettier - Code formatter
+- Extension Pack for Java
+- Spring Boot Extension Pack
 
 ## VSCode の設定を変更(コードの自動整形を有効化)
 
@@ -109,6 +111,25 @@ mac の場合、i で IOS シミュレータが起動
 
 #### スマホから開く場合
 
+トネリング用パッケージをインストール
+
+```
+npm install -g localtunnel
+```
+
+トネリング時のサブドメインを設定する
+frontend/mobile/.env の LOCAL_TUNNEL_SUBDOMAIN を世界中で重複の無いサブドメイン名に書き換え
+
+バックエンドをウェブに公開
+
+```
+lt --port 8080 --subdomain <上述で設定したサブドメイン>
+```
+
+※一週間に一度、localtunnel の認証をする※
+your url is: の後に表示されている URL にアクセス、
+手順通りに https://ipv4.icanhazip.com にアクセスして ip アドレスを登録
+
 Expo Go をストアから事前にインストールしておき、
 
 ```
@@ -116,5 +137,3 @@ npx expo start --tunnel
 ```
 
 QR コードを読み込むとアプリが開く
-
-※ スマホから localhost に繋ぐ方法は未検証
