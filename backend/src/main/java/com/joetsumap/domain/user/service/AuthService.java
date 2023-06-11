@@ -20,6 +20,7 @@ public class AuthService {
   AuthLogic authLogic;
   
   public JwtResponse login(LoginRequest loginRequest) {
+
     return authLogic.login(loginRequest.getUsername(), loginRequest.getPassword());
   }
 

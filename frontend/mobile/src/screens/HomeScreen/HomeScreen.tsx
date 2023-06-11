@@ -13,15 +13,14 @@ export const HomeScreen = () => {
   const testConnectionQuery = useTestConnection();
 
   const onPress = () => {
-    rootNavigation.navigate('About');
+    rootNavigation.navigate('Test');
   };
 
   return (
-    <>
-      <View style={styles.container}>
-        <Text>HomeScreen</Text>
-        {/* @renui/themed */}
-        {/* <Button
+    <View style={styles.container}>
+      <Text>HomeScreen</Text>
+      {/* @renui/themed */}
+      {/* <Button
           title="About画面に遷移する"
           onPress={onPress}
           icon={{
@@ -29,11 +28,10 @@ export const HomeScreen = () => {
             color: 'white',
           }}
         /> */}
-        {/* native-base */}
-        <Button onPress={onPress}>About画面に遷移する</Button>
-        <Text>{testConnectionQuery.data}</Text>
-      </View>
-    </>
+      {/* native-base */}
+      <Button onPress={onPress}>Test画面に遷移する</Button>
+      <Text>{testConnectionQuery.data}</Text>
+    </View>
   );
 };
 
