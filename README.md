@@ -28,13 +28,6 @@ https://developer.apple.com/download/all/?q=command%20line%20tools
 default formatter: prettier  
 format on save: true
 
-## expo の開発に必要なパッケージをグローバルにインストール
-
-```
-npm install -g expo-cli
-npm install -g eas-cli
-```
-
 ## AndroidStudio の導入
 
 https://developer.android.com/studio/install?hl=ja
@@ -64,17 +57,24 @@ https://developer.android.com/studio/run/managing-avds?hl=ja
 
 https://expfrom.me/launch-react-native-with-ios-simulator/
 
-## expo にログイン(アカウントが無ければ作成する)
-
-```
-expo login
-```
-
 ## リポジトリを clone する
 
 ```
 git clone https://github.com/waonpad/JoetsuMap.git
 cd JoetsuMap
+```
+
+## expo の開発に必要なパッケージをグローバルにインストール
+
+```
+npm install -g expo-cli
+npm install -g eas-cli
+```
+
+## expo にログイン(アカウントが無ければ作成する)
+
+```
+expo login
 ```
 
 ## OS を指定する
@@ -85,12 +85,16 @@ cp .env.example .env
 
 .env ファイルの OS を win か mac、自分のものに設定する
 
+## 簡略化されたセットアップ手順と起動手順を見る
+
+win.mkとmac.mkにそれぞれ記載
+
 ## (Mac) シェルスクリプトの権限を付与する
 
 ```
-[bakcendディレクトリ内で] chmod +x gradlew
-[bakcendディレクトリ内で]  chmod +x run-terminal.sh
-[frontend/mobileディレクトリ内で] chmod +x run-terminal.sh
+[bakcendディレクトリで] chmod +x gradlew
+[bakcendディレクトリで]  chmod +x run-terminal.sh
+[frontend/mobileディレクトリで] chmod +x run-terminal.sh
 ```
 
 # フロントエンドのセットアップ
@@ -115,27 +119,23 @@ localhost:3306 で立てた mysql に joetsumap データベースを作成
 ユーザー: root  
 パスワード: 空白
 
-## Mac の場合、 gradlew の顕現付与
-
-```
-cd backend
-chmod +x gradlew
-```
-
 # 動作確認
 
 ## バックエンド
 
 拡張機能の Spring Boot Dashboard を開く(六角形のアイコン)  
 joetsumap を RUN  
-エラーになると... xx common frames omitted と出た後強制終了する
+  
+もしくは
+
+```
+[backendディレクトリで] ./gradlew bootRun
+```
 
 ## フロントエンド
 
-frontend/mobile ディレクトリで
-
 ```
-npx expo start
+[frontend/mobile ディレクトリで] npx expo start
 ```
 
 a を入力すると AndroidStudio でアプリが開く  
