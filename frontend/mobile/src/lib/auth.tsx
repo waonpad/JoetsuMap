@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-// ログアウト時にホーム画面に遷移したいが、navigationはAuthProviderより下位のコンポーネントなため使えない
-// どうしよう？
-
-// import { useNavigation } from '@react-navigation/native';
 import { View, ActivityIndicator } from 'react-native';
 
 import type { LoginCredentialsDTO, RegisterCredentialsDTO, AuthUser } from '@/features/auth';
 import { loginWithEmailAndPassword, getUser, registerWithEmailAndPassword } from '@/features/auth';
-// import type { RootStackParamList } from '@/navigation';
+import { useRootNavigation } from '@/navigation/RootNavigator/useRootNavigation';
 import { omitToken } from '@/utils/compute';
 import storage from '@/utils/storage';
-
-// import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 function createCtx<ContextType>() {
   const ctx = React.createContext<ContextType | undefined>(undefined);
@@ -47,7 +41,7 @@ const useAuthCtx = () => {
 
   const [load, setLoad] = useState(true);
 
-  // const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
+  const navigation = useRootNavigation();
 
   const register = async (data: RegisterCredentialsDTO) => {
     const response = await registerWithEmailAndPassword(data);
@@ -67,7 +61,7 @@ const useAuthCtx = () => {
     setUser(null);
     storage.clearToken();
 
-    // navigation.navigate('Home');
+    navigation.navigate('Home');
   };
 
   const loadUser = async () => {
@@ -75,6 +69,13 @@ const useAuthCtx = () => {
 
     if (token) {
       const data = await getUser();
+
+      if (!data) {
+        storage.clearToken();
+
+        setLoad(false);
+        return null;
+      }
 
       setUser(data.user);
       setLoad(false);

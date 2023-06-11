@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
 
 import { useAuth } from '@/lib/auth';
 import { ROLES } from '@/lib/authorization';
 import { secureStore } from '@/lib/expo-secure-store';
+import { useRootNavigation } from '@/navigation/RootNavigator/useRootNavigation';
 import storage from '@/utils/storage';
 
-import type { RootStackParamList } from '../../navigation';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
 export const TestScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'About'>>();
+  const rootNavigation = useRootNavigation();
 
   const [testValue, setTestValue] = useState('');
 
@@ -21,7 +18,7 @@ export const TestScreen = () => {
   const { register, user, logout, login } = useAuth();
 
   const onPress = () => {
-    navigation.navigate('About');
+    rootNavigation.navigate('About');
   };
 
   const getTestValue = async () => {
