@@ -4,4 +4,6 @@ declare module '@env' {
   export const RN_API_URL_PROD: string;
   export const RN_API_URL_DEV_IOS: string;
   export const RN_API_URL_DEV_ANDROID: string;
+  export const RN_IS_TUNNEL: 'true' | 'false';
+  export const RN_API_URL_DEV_TUNNEL: string;
 }

@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.domain.role.entity.ERole;
@@ -35,8 +36,13 @@ public class AuthLogic {
   @Autowired
   JwtUtils jwtUtils;
 
+  @Autowired
+  PasswordEncoder encoder;
+
   public void createUser(RegisterRequest registerRequest) {
-    User user = new User(null, registerRequest.getUsername(), registerRequest.getEmail(), registerRequest.getPassword(), null);
+
+    User user = new User(null, registerRequest.getUsername(), registerRequest.getEmail(),
+      encoder.encode(registerRequest.getPassword()), null);
 
     List<String> strRoles = registerRequest.getRole();
 
@@ -44,6 +50,7 @@ public class AuthLogic {
   }
 
   public void addRole(User user, List<String> strRoles) {
+
     List<Role> roles = new ArrayList<>();
 
     String exceptionMessage = "Error: Role is not found.";
@@ -68,6 +75,7 @@ public class AuthLogic {
   }
 
   public JwtResponse login(String username, String password) {
+
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(username, password));
 
@@ -80,6 +88,7 @@ public class AuthLogic {
   }
 
   public void existsUserCheck(String username, String email) {
+
     if (userRepository.existsByUsername(username)) {
       throw new RuntimeException("Error: Username is already taken!");
     }

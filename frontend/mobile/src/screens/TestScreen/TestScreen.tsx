@@ -18,7 +18,7 @@ export const TestScreen = () => {
   const { register, user, logout, login } = useAuth();
 
   const onPress = () => {
-    rootNavigation.navigate('About');
+    rootNavigation.navigate('Home');
   };
 
   const getTestValue = async () => {
@@ -62,7 +62,7 @@ export const TestScreen = () => {
   return (
     <View style={styles.container}>
       <Text>TestScreen</Text>
-      <Button title="About画面に遷移する" onPress={onPress} />
+      <Button title="Home画面に遷移する" onPress={onPress} />
       <TextInput
         onChangeText={(text) => {
           secureStore.save('test', text);
@@ -75,6 +75,7 @@ export const TestScreen = () => {
       <Button title="login" onPress={onPressLogin} />
       <Button title="logout" onPress={onPressLogout} />
       <Text>user: {user?.id ?? 'null'}</Text>
+      <Text>スクリーンの再読み込み毎にtokenは再描画</Text>
       <Text>token: {token}</Text>
     </View>
   );

@@ -2,6 +2,18 @@
 
 ### Java JDK, node, git の環境は無ければ各自行ってください
 
+## makefile のインストール
+
+#### windows
+
+これを参考に  
+https://zenn.dev/genki86web/articles/6e61c167fbe926
+
+#### mac
+
+Command Line Tools for Xcode を入れると自動で入る  
+https://developer.apple.com/download/all/?q=command%20line%20tools
+
 ## VSCode の拡張機能をインストール
 
 以下の拡張機能をインストール
@@ -30,9 +42,9 @@ https://developer.android.com/studio/install?hl=ja
 公式サイトや適当な記事を見たりして上手くやってください  
 https://akira-watson.com/android/adt-windows.html
 
-#### mac への AndroidStudio と iOS シミュレータの導入は所持者各自行ってください
+#### mac への AndroidStudio 導入で躓いてます・・・
 
-### 環境変数の設定
+###　（windows） 環境変数の設定
 
 特にインストール時のパスを弄ってなければこれでいいはず
 
@@ -47,6 +59,10 @@ C:\Users\ユーザー名\AppData\Local\Android\Sdk\platform-tools
 ## エミュレータの作成
 
 https://developer.android.com/studio/run/managing-avds?hl=ja
+
+## （Mac）　 iOS Simulator の導入
+
+https://expfrom.me/launch-react-native-with-ios-simulator/
 
 ## expo にログイン(アカウントが無ければ作成する)
 
@@ -67,10 +83,20 @@ cd JoetsuMap
 cd frontend/mobile
 ```
 
-## 環境変数ファイルを作成
+## OS を指定する
 
 ```
 cp .env.example .env
+```
+
+.env ファイルの OS を win か mac、自分のものに設定する
+
+## (Mac) シェルスクリプトの権限を付与する
+
+```
+[bakcendディレクトリ内で] chmod +x gradlew
+[bakcendディレクトリ内で]  chmod +x run-terminal.sh
+[frontend/mobileディレクトリ内で] chmod +x run-terminal.sh
 ```
 
 ## パッケージインストール
@@ -88,6 +114,13 @@ npm install
 localhost:3306 で立てた mysql に joetsumap データベースを作成  
 ユーザー: root  
 パスワード: 空白
+
+## Mac の場合、 gradlew の顕現付与
+
+```
+cd backend
+chmod +x gradlew
+```
 
 # 動作確認
 
@@ -117,8 +150,11 @@ mac の場合、i で IOS シミュレータが起動
 npm install -g localtunnel
 ```
 
-トネリング時のサブドメインを設定する
-frontend/mobile/.env の LOCAL_TUNNEL_SUBDOMAIN を世界中で重複の無いサブドメイン名に書き換え
+##### トネリング時のサブドメインを設定する
+
+frontend/mobile/.env を開く  
+LOCAL_TUNNEL_SUBDOMAIN を世界中で重複の無いサブドメイン名に書き換え  
+IS_TUNNEL を true に書き換え 1(localhost を使う場合 false に戻す)
 
 バックエンドをウェブに公開
 

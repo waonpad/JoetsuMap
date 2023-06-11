@@ -4,6 +4,8 @@ import {
   RN_API_URL_PROD,
   RN_API_URL_DEV_IOS,
   RN_API_URL_DEV_ANDROID,
+  RN_IS_TUNNEL,
+  RN_API_URL_DEV_TUNNEL,
 } from '@env';
 
 export const APP_NAME = RN_APP_NAME;
@@ -11,3 +13,5 @@ export const APP_ENV = RN_APP_ENV;
 export const API_URL_PROD = RN_API_URL_PROD;
 export const API_URL_DEV_IOS = RN_API_URL_DEV_IOS;
 export const API_URL_DEV_ANDROID = RN_API_URL_DEV_ANDROID;
+export const IS_TUNNEL = RN_IS_TUNNEL;
+export const API_URL_DEV_TUNNEL = RN_API_URL_DEV_TUNNEL;
