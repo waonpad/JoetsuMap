@@ -99,13 +99,10 @@ cp .env.example .env
 
 # フロントエンドのセットアップ
 
-```
-cd frontend/mobile
-```
-
 ## パッケージインストール
 
 ```
+cd frontend/mobile
 npm install
 ```
 
