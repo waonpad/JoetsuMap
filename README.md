@@ -64,6 +64,10 @@ git clone https://github.com/waonpad/JoetsuMap.git
 cd JoetsuMap
 ```
 
+## 簡略化されたセットアップ手順と起動手順を見る
+
+win.mkとmac.mkにそれぞれ記載
+
 ## expo の開発に必要なパッケージをグローバルにインストール
 
 ```
@@ -84,10 +88,6 @@ cp .env.example .env
 ```
 
 .env ファイルの OS を win か mac、自分のものに設定する
-
-## 簡略化されたセットアップ手順と起動手順を見る
-
-win.mkとmac.mkにそれぞれ記載
 
 ## (Mac) シェルスクリプトの権限を付与する
 
