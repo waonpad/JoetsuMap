@@ -154,7 +154,7 @@ npm install -g localtunnel
 
 frontend/mobile/.env を開く  
 LOCAL_TUNNEL_SUBDOMAIN を世界中で重複の無いサブドメイン名に書き換え  
-IS_TUNNEL を true に書き換え 1(localhost を使う場合 false に戻す)
+IS_TUNNEL を true に書き換え (localhost を使う場合 false に戻す)
 
 バックエンドをウェブに公開
 
