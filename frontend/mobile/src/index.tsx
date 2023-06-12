@@ -4,6 +4,7 @@ import { View, SafeAreaView } from 'react-native';
 
 import { RootNavigator } from './navigation/RootNavigator';
 import { AppProvider } from './providers/app';
+export { initMocks } from './test/server';
 
 export const App = () => {
   return (

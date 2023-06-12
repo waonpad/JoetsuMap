@@ -31,4 +31,5 @@ start-tunnel:
 # mysql start
 	${IN_BACKEND_DIR} start gradlew bootRun
 	${IN_MOBILE_DIR} start npx expo start --tunnel
-	start /min /b lt --port 8080 --subdomain ${LOCAL_TUNNEL_SUBDOMAIN}
+# 直接実行すると動かないのでコマンドを挟む
+	break && start lt --port 8080 --subdomain ${LOCAL_TUNNEL_SUBDOMAIN}
