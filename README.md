@@ -39,7 +39,7 @@ https://akira-watson.com/android/adt-windows.html
 
 https://zenn.dev/yuyaamano23/articles/dad35355a30036
 
-###　（windows） 環境変数の設定
+### （windows） 環境変数の設定
 
 特にインストール時のパスを弄ってなければこれでいいはず
 
