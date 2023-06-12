@@ -1,17 +1,15 @@
-import { APP_NAME } from '@/constants';
+import { AUTH_TOKEN_KEY } from '@/constants';
 import { secureStore } from '@/lib/expo-secure-store';
-
-const storagePrefix = `${APP_NAME}_`;
 
 const storage = {
   getToken: () => {
-    return secureStore.get(`${storagePrefix}token`);
+    return secureStore.get(AUTH_TOKEN_KEY);
   },
   setToken: (token: string) => {
-    secureStore.save(`${storagePrefix}token`, token);
+    return secureStore.save(AUTH_TOKEN_KEY, token);
   },
   clearToken: () => {
-    secureStore.delete(`${storagePrefix}token`);
+    return secureStore.delete(AUTH_TOKEN_KEY);
   },
 };
 
