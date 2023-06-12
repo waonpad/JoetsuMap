@@ -35,7 +35,9 @@ https://developer.android.com/studio/install?hl=ja
 公式サイトや適当な記事を見たりして上手くやってください  
 https://akira-watson.com/android/adt-windows.html
 
-#### mac への AndroidStudio 導入で躓いてます・・・
+#### ( mac) 導入
+
+https://zenn.dev/yuyaamano23/articles/dad35355a30036
 
 ###　（windows） 環境変数の設定
 
