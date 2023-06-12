@@ -172,3 +172,4 @@ npx expo start --tunnel
 ```
 
 QR コードを読み込むとアプリが開く
+
