@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import { Button } from '@rneui/themed';
 import { Button } from 'native-base';
 import { StyleSheet, View, Text } from 'react-native';
 
@@ -12,24 +11,19 @@ export const HomeScreen = () => {
 
   const testConnectionQuery = useTestConnection();
 
-  const onPress = () => {
-    rootNavigation.navigate('Test');
+  const onPressNavigateToAuthTest = () => {
+    rootNavigation.navigate('AuthTest');
+  };
+
+  const onPressNavigateToSecureStoreTest = () => {
+    rootNavigation.navigate('SecureStoreTest');
   };
 
   return (
     <View style={styles.container}>
       <Text>HomeScreen</Text>
-      {/* @renui/themed */}
-      {/* <Button
-          title="About画面に遷移する"
-          onPress={onPress}
-          icon={{
-            name: 'android',
-            color: 'white',
-          }}
-        /> */}
-      {/* native-base */}
-      <Button onPress={onPress}>Test画面に遷移する</Button>
+      <Button onPress={onPressNavigateToAuthTest}>AuthTest画面に遷移する</Button>
+      <Button onPress={onPressNavigateToSecureStoreTest}>SecureStoreTest画面に遷移する</Button>
       <Text>{testConnectionQuery.data}</Text>
     </View>
   );
