@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-import { useNotificationStore } from '@/stores/notifications';
+// import { useNotificationStore } from '@/stores/notifications';
 import { API_URL } from '@/utils/compute';
 import storage from '@/utils/storage';
 
@@ -34,12 +34,21 @@ axios.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    const message = error.response?.data?.message || error.message;
-    useNotificationStore.getState().addNotification({
-      type: 'error',
-      title: 'Error',
-      message,
-    });
+    // const message = error.response?.data?.message || error.message;
+    // useNotificationStore.getState().addNotification({
+    //   type: 'error',
+    //   title: 'Error',
+    //   message,
+    // });
+
+    // 膨大な量のレスポンスがログに出力される
+    // console.log('Error:', JSON.stringify(error, null, 2));
+    // console.log('Error:', JSON.stringify(error.response, null, 2));
+
+    console.log(
+      'Error:',
+      error.response.data.message || error.message || 'Not Exist Error Message',
+    );
 
     return Promise.reject(error);
   },

@@ -24,11 +24,13 @@ setup:
 # work commands
 start:
 # mysql start
+	${IN_BACKEND_DIR} start gradlew -t classes
 	${IN_BACKEND_DIR} start gradlew bootRun
 	${IN_MOBILE_DIR} start npx expo start
 
 start-tunnel:
 # mysql start
+	${IN_BACKEND_DIR} start gradlew -t classes
 	${IN_BACKEND_DIR} start gradlew bootRun
 	${IN_MOBILE_DIR} start npx expo start --tunnel
 # 直接実行すると動かないのでコマンドを挟む
