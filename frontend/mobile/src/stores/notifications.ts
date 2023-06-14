@@ -1,4 +1,4 @@
-// React Native で動かない(ctypes がない)
+// React Native で動かない(crypto がない)
 
 // import { nanoid } from 'nanoid';
 // import { create } from 'zustand';
