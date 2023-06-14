@@ -28,11 +28,13 @@ setup:
 # work commands
 start:
 # mysql start
+	${IN_BACKEND_DIR} ${RUN_TERMINAL} ./gradlew -t classes
 	${IN_BACKEND_DIR} ${RUN_TERMINAL} ./gradlew bootRun
 	${IN_MOBILE_DIR} ${RUN_TERMINAL} npx expo start
 
 start-tunnel:
 # mysql start
+	${IN_BACKEND_DIR} ${RUN_TERMINAL} ./gradlew -t classes
 	${IN_BACKEND_DIR} ${RUN_TERMINAL} ./gradlew bootRun
 	${IN_MOBILE_DIR} ${RUN_TERMINAL} npx expo start --tunnel
 	${RUN_TERMINAL} lt --port 8080 --subdomain ${LOCAL_TUNNEL_SUBDOMAIN}
