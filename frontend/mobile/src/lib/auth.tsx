@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 
 import type { LoginCredentialsDTO, RegisterCredentialsDTO, AuthUser } from '@/features/auth';
-import { loginWithEmailAndPassword, getUser, registerWithEmailAndPassword } from '@/features/auth';
+import {
+  loginWithEmailAndPassword,
+  getAuthUser,
+  registerWithEmailAndPassword,
+} from '@/features/auth';
 import { useRootNavigation } from '@/navigation/RootNavigator/useRootNavigation';
 import { omitToken } from '@/utils/compute';
 import storage from '@/utils/storage';
@@ -68,7 +72,7 @@ const useAuthCtx = () => {
     const token = await storage.getToken();
 
     if (token) {
-      const data = await getUser();
+      const data = await getAuthUser();
 
       if (!data) {
         storage.clearToken();

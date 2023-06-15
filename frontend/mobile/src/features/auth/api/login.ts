@@ -1,5 +1,7 @@
 import { axios } from '@/lib/axios';
 
+import { API_ENDPOINT, LOGIN } from '../constants';
+
 import type { JwtResponse } from '../types';
 
 export type LoginCredentialsDTO = {
@@ -8,5 +10,5 @@ export type LoginCredentialsDTO = {
 };
 
 export const loginWithEmailAndPassword = (data: LoginCredentialsDTO): Promise<JwtResponse> => {
-  return axios.post('/auth/login', data);
+  return axios.post(`${API_ENDPOINT}/${LOGIN}`, data);
 };
