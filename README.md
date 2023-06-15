@@ -105,6 +105,7 @@ cp .env.example .env
 
 ```
 cd frontend/mobile
+cp .env.example .env
 npm install
 ```
 
@@ -129,6 +130,7 @@ joetsumap を RUN
 
 ```
 [backendディレクトリで] ./gradlew bootRun
+[別ターミナルを開き、backendディレクトリで] ./gradlew -t classes
 ```
 
 ## フロントエンド
