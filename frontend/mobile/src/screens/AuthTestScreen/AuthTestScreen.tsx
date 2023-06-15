@@ -19,6 +19,7 @@ export const AuthTestScreen = () => {
     const registerParams = {
       username: 'test',
       password: 'testpassword',
+      confirmPassword: 'testpassword',
       email: 'test@example.com',
       role: [ROLES.ROLE_USER],
     };

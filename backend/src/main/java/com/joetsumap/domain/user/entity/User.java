@@ -3,8 +3,15 @@ package com.joetsumap.domain.user.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.joetsumap.common.entity.BaseEntity;
+import com.joetsumap.domain.modelcourse.entity.ModelCourse;
+import com.joetsumap.domain.notification.entity.Notification;
 import com.joetsumap.domain.role.entity.Role;
+import com.joetsumap.domain.trackedlocation.entity.TrackedLocation;
+import com.joetsumap.domain.travelspot.entity.TravelSpot;
+import com.joetsumap.domain.travelbooklet.entity.TravelBooklet;
+import com.joetsumap.domain.passing.entity.Passing;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -42,6 +49,7 @@ public class User extends BaseEntity {
 
   @NotBlank
   @Size(max = 120)
+  @JsonIgnore
   private String password;
 
   @ManyToMany(fetch = FetchType.LAZY)
@@ -50,4 +58,24 @@ public class User extends BaseEntity {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
   private List<Role> roles = new ArrayList<>();
 
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<TravelSpot> travelSpots = new ArrayList<>();
+
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<ModelCourse> modelCourses = new ArrayList<>();
+
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<TravelBooklet> travelBooklets = new ArrayList<>();
+
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<TrackedLocation> trackedLocations = new ArrayList<>();
+
+  @OneToMany(mappedBy = "recipient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Notification> notifications = new ArrayList<>();
+
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(  name = "passing_users", 
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "passing_id"))
+  private List<Passing> passings = new ArrayList<>();
 }

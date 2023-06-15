@@ -41,8 +41,11 @@ public class AuthLogic {
 
   public void createUser(RegisterRequest registerRequest) {
 
-    User user = new User(null, registerRequest.getUsername(), registerRequest.getEmail(),
-      encoder.encode(registerRequest.getPassword()), null);
+    User user = new User();
+
+    user.setUsername(registerRequest.getUsername());
+    user.setEmail(registerRequest.getEmail());
+    user.setPassword(encoder.encode(registerRequest.getPassword()));
 
     List<String> strRoles = registerRequest.getRole();
 

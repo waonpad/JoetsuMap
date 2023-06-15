@@ -23,4 +23,16 @@ public class RegisterRequest {
   @Size(min = 6, max = 40)
   private String password;
 
+  @NotBlank
+  @Size(min = 6, max = 40)
+  private String confirmPassword;
+
+	@AssertTrue
+	public boolean isPasswordValid() {
+		if(password == null || confirmPassword == null) {
+			return false;
+		}
+		return password.equals(confirmPassword);
+	}
+
 }

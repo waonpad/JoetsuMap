@@ -1,15 +1,8 @@
-import type { ROLES, BaseEntity } from '@/types';
+import type { User, UserResponse } from '@/features/user';
 
-export type AuthUser = {
-  id: string;
-  email: string;
-  username: string;
-  roles: ROLES[];
-} & BaseEntity;
+export type AuthUser = User;
 
-export type UserResponse = {
-  user: AuthUser;
-} | null;
+export type AuthUserResponse = UserResponse;
 
 export type JwtResponse = {
   token: string;

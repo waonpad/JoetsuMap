@@ -18,4 +18,28 @@ public final class ApiPathConst {
   public static final String API_AUTH_REGISTER = "/register";
   public static final String API_AUTH_ME = "/me";
 
+  // Role
+  // Not used
+
+  // User
+  public static final String API_USER_PREFIX = API_PATH + "/user";
+
+  // ModelCourse
+  public static final String API_MODEL_COURSE_PREFIX = API_PATH + "/model_course";
+
+  // Notificatioon
+  public static final String API_NOTIFICATION_PREFIX = API_PATH + "/notification";
+
+  // Passing
+  public static final String API_PASSING_PREFIX = API_PATH + "/passing";
+
+  // TrackedLocation
+  public static final String API_TRACKED_LOCATION_PREFIX = API_PATH + "/tracked_location";
+
+  // TravelBooklet
+  public static final String API_TRAVEL_BOOKLET_PREFIX = API_PATH + "/travel_booklet";
+
+  // TravelSpot
+  public static final String API_TRAVEL_SPOT_PREFIX = API_PATH + "/travel_spot";
+
 }

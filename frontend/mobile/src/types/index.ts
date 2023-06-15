@@ -15,3 +15,5 @@ export type ROLES = {
   id: number;
   name: keyof typeof RoleTypes;
 };
+
+export type Photo = string;
