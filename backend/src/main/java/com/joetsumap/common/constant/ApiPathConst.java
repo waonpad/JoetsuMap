@@ -22,24 +22,24 @@ public final class ApiPathConst {
   // Not used
 
   // User
-  public static final String API_USER_PREFIX = API_PATH + "/user";
+  public static final String API_USER_PREFIX = API_PATH + "/users";
 
   // ModelCourse
-  public static final String API_MODEL_COURSE_PREFIX = API_PATH + "/model_course";
+  public static final String API_MODEL_COURSE_PREFIX = API_PATH + "/model_courses";
 
   // Notificatioon
-  public static final String API_NOTIFICATION_PREFIX = API_PATH + "/notification";
+  public static final String API_NOTIFICATION_PREFIX = API_PATH + "/notifications";
 
   // Passing
-  public static final String API_PASSING_PREFIX = API_PATH + "/passing";
+  public static final String API_PASSING_PREFIX = API_PATH + "/passings";
 
   // TrackedLocation
-  public static final String API_TRACKED_LOCATION_PREFIX = API_PATH + "/tracked_location";
+  public static final String API_TRACKED_LOCATION_PREFIX = API_PATH + "/tracked_locations";
 
   // TravelBooklet
-  public static final String API_TRAVEL_BOOKLET_PREFIX = API_PATH + "/travel_booklet";
+  public static final String API_TRAVEL_BOOKLET_PREFIX = API_PATH + "/travel_booklets";
 
   // TravelSpot
-  public static final String API_TRAVEL_SPOT_PREFIX = API_PATH + "/travel_spot";
+  public static final String API_TRAVEL_SPOT_PREFIX = API_PATH + "/travel_spots";
 
 }
