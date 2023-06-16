@@ -5,9 +5,9 @@ import { styles } from './styles';
 import { useLogics } from './useLogics';
 import { useUtils } from './useUtils';
 
-import type { ReadAllNotficationButtonProps } from './types';
+import type { ReadAllNotificationButtonProps } from './types';
 
-export const ReadAllNotficationButton = ({}: ReadAllNotficationButtonProps) => {
+export const ReadAllNotificationButton = ({}: ReadAllNotificationButtonProps) => {
   const {} = useLogics();
 
   const {} = useUtils();

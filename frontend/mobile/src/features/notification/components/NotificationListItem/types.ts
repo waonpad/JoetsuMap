@@ -1,5 +1,5 @@
 import type { Notification } from '../../types';
 
-export type NotficationListItemProps = {
+export type NotificationListItemProps = {
   notification: Notification;
 };

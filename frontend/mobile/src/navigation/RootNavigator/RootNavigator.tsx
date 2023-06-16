@@ -7,14 +7,14 @@ import { AuthTestScreen } from '@/screens/AuthTestScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { PermissionDeniedScreen } from '@/screens/PermissionDeniedScreen';
 import { SecureStoreTestScreen } from '@/screens/SecureStoreTestScreen';
+import type { BaseNavigationParamList } from '@/types';
 
 export type RootStackParamList = {
   Home: undefined; // 受け取るパラメータの型を指定できる 例: { id: number }
   AuthTest: undefined;
   SecureStoreTest: undefined;
   Dummy: undefined; // PermissionDeniedTest
-  PermissionDenied: undefined;
-};
+} & BaseNavigationParamList;
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 

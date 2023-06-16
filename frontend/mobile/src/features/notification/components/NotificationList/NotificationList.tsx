@@ -5,9 +5,9 @@ import { styles } from './styles';
 import { useLogics } from './useLogics';
 import { useUtils } from './useUtils';
 
-import type { NotficationListProps } from './types';
+import type { NotificationListProps } from './types';
 
-export const NotficationList = ({}: NotficationListProps) => {
+export const NotificationList = ({}: NotificationListProps) => {
   const {} = useLogics();
 
   const {} = useUtils();

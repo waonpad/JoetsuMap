@@ -1,3 +1,3 @@
-export type NotficationListProps = {
+export type NotificationListProps = {
   //
 };

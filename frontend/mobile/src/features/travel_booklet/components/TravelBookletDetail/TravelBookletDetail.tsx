@@ -6,7 +6,7 @@ import { useUtils } from './useUtils';
 
 import type { TravelBookletDetailProps } from './types';
 
-export const TravelBookletDetail = ({ TravelBooklet }: TravelBookletDetailProps) => {
+export const TravelBookletDetail = ({ TravelBookletId }: TravelBookletDetailProps) => {
   const {} = useUtils();
 
   return <View style={styles.container}></View>;
