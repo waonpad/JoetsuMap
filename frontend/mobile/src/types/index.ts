@@ -1,5 +1,7 @@
 import type { ROLES as RoleTypes } from '@/lib/authorization';
 
+import type { FieldValues, Path, RegisterOptions } from 'react-hook-form';
+
 export type BaseEntity = {
   id: string;
   createdAt: Date;
@@ -17,3 +19,8 @@ export type ROLES = {
 };
 
 export type Photo = string;
+
+export type ReactHookFormValidationRules<T extends FieldValues> = Record<
+  keyof T,
+  Omit<RegisterOptions<T, Path<T>>, 'value'> | undefined
+>;
