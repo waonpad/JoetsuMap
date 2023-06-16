@@ -33,7 +33,7 @@ public class ModelCourseController {
   @Autowired
   ModelCourseService modelcourseService;
 
-  @GetMapping("/")
+  @GetMapping("")
   public ModelCourseListResponse findAll() {
 
     return modelcourseService.findAll();

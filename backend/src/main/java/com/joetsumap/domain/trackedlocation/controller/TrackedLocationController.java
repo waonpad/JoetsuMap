@@ -34,7 +34,7 @@ public class TrackedLocationController {
     return trackedlocationService.findMy(userDetails);
   }
 
-  @PostMapping("/")
+  @PostMapping("")
   public ResponseEntity<Void> create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateTrackedLocationRequest createRequest) {
 
     trackedlocationService.create(userDetails, createRequest);

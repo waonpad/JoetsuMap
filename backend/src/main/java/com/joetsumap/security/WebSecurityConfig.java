@@ -91,6 +91,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
               .requestMatchers("/api/test/**").permitAll()
               .requestMatchers("/error").permitAll() // 追加
               .anyRequest().authenticated()
+              // auth.anyRequest().permitAll() // 全許可 テスト用
         );
     
     http.authenticationProvider(authenticationProvider());

@@ -30,7 +30,7 @@ public class UserController {
   UserService userService;
 
   // おそらく不要、テスト用
-  @GetMapping("/")
+  @GetMapping("")
   public UserListResponse findAll() {
 
     return userService.findAll();

@@ -32,7 +32,7 @@ public class TravelBookletController {
   @Autowired
   TravelBookletService travelbookletService;
 
-  @GetMapping("/")
+  @GetMapping("")
   public TravelBookletListResponse findAll() {
 
     return travelbookletService.findAll();
@@ -44,7 +44,7 @@ public class TravelBookletController {
     return travelbookletService.findById(id);
   }
 
-  @PostMapping("/")
+  @PostMapping("")
   public TravelBookletResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateTravelBookletRequest createRequest) {
 
     return travelbookletService.create(userDetails, createRequest);

@@ -35,7 +35,7 @@ public class TravelSpotController {
   @Autowired
   TravelSpotService travelspotService;
 
-  @GetMapping("/")
+  @GetMapping("")
   public TravelSpotListResponse findAll() {
 
     return travelspotService.findAll();
@@ -47,7 +47,7 @@ public class TravelSpotController {
     return travelspotService.findById(id);
   }
 
-  @PostMapping("/")
+  @PostMapping("")
   @PreAuthorize(AUTHORIZED_ADMIN_OR_MODERATOR)
   public TravelSpotResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateTravelSpotRequest createRequest) {
 

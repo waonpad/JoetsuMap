@@ -23,6 +23,7 @@ public class TrackedLocation extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   @NotBlank
   private double latitude;
 
