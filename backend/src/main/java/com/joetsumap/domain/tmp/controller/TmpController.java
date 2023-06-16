@@ -33,7 +33,7 @@ public class TmpController {
   @Autowired
   TmpService tmpService;
 
-  @GetMapping("/")
+  @GetMapping("")
   public TmpListResponse findAll() {
 
     return tmpService.findAll();
