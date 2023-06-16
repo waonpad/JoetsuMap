@@ -15,6 +15,12 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(exclude= {"modelCourse", "travelSpot"})
 public class ModelCourseTravelSpot {
 
+  public ModelCourseTravelSpot(ModelCourse modelCourse, TravelSpot travelSpot, int i) {
+    this.modelCourse = modelCourse;
+    this.travelSpot = travelSpot;
+    this.spotOrder = i;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -32,5 +38,5 @@ public class ModelCourseTravelSpot {
   @Column(nullable = false)
   @NotNull
   @Min(1)
-  private Number spot_order;
+  private Integer spotOrder;
 }
