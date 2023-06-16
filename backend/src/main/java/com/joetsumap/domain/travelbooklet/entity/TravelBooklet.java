@@ -25,12 +25,15 @@ public class TravelBooklet extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   @NotBlank
   private String title;
 
+  @Column(nullable = false)
   @NotBlank
   private String text;
 
+  @Column(nullable = false)
   @NotBlank
   private List<String> photos = new ArrayList<>();
 

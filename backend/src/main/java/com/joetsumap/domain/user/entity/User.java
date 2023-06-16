@@ -38,24 +38,24 @@ public class User extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   @NotBlank
   @Size(max = 20)
   private String username;
 
+  @Column(nullable = false)
   @NotBlank
   @Size(max = 50)
   @Email
   private String email;
 
+  @Column(nullable = false)
   @NotBlank
   @Size(max = 120)
   @JsonIgnore
   private String password;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "user_roles", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
+  @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
   private List<Role> roles = new ArrayList<>();
 
   @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -73,9 +73,6 @@ public class User extends BaseEntity {
   @OneToMany(mappedBy = "recipient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<Notification> notifications = new ArrayList<>();
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "passing_users", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "passing_id"))
+  @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
   private List<Passing> passings = new ArrayList<>();
 }
