@@ -1,7 +1,9 @@
 package com.joetsumap.domain.modelcourse.entity;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.joetsumap.common.entity.BaseEntity;
 import com.joetsumap.db.customizedjointable.ModelCourseTravelSpot;
@@ -13,6 +15,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import com.joetsumap.domain.travelspot.entity.TravelSpot;
 import com.joetsumap.domain.user.entity.User;
 
 @Entity
@@ -37,4 +40,21 @@ public class ModelCourse extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id")
   private User author;
+
+  // NOTICE: 未検証
+  public void setTravelSpots(List<TravelSpot> travelSpots) {
+    modelCourseTravelSpots.clear();
+
+    for (int i = 0; i < travelSpots.size(); i++) {
+      modelCourseTravelSpots.add(new ModelCourseTravelSpot(this, travelSpots.get(i), i + 1));
+    }
+  }
+
+  // NOTICE: 未検証
+  public List<TravelSpot> getTravelSpots() {
+    return modelCourseTravelSpots.stream()
+        .sorted(Comparator.comparingInt(ModelCourseTravelSpot::getSpotOrder))
+        .map(ModelCourseTravelSpot::getTravelSpot)
+        .collect(Collectors.toList());
+  }
 }
