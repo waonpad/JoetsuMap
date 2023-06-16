@@ -26,12 +26,12 @@ public class ModelCourseTravelSpot {
   private Long id;
 
   @NotNull
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "model_course_id")
   private ModelCourse modelCourse;
 
   @NotNull
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "travel_spot_id")
   private TravelSpot travelSpot;
 

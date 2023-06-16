@@ -25,6 +25,7 @@ public class PassingController {
   @GetMapping("/my")
   public PassingListResponse findMy(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
+    // TODO: すれ違ったお互いの情報ではなく、相手の情報だけにして返したい
     return passingService.findMy(userDetails);
   }
 }

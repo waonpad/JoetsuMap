@@ -2,7 +2,7 @@ import type { User } from '@/features/user';
 import type { BaseEntity } from '@/types';
 
 export type Passing = {
-  users: User[];
+  passedUser: User;
 } & BaseEntity;
 
 export type PassingResponse = {

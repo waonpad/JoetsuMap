@@ -73,6 +73,9 @@ public class User extends BaseEntity {
   @OneToMany(mappedBy = "recipient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<Notification> notifications = new ArrayList<>();
 
-  @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-  private List<Passing> passings = new ArrayList<>();
+  @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Passing> passings1 = new ArrayList<>();
+
+  @OneToMany(mappedBy = "user2", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Passing> passings2 = new ArrayList<>();
 }

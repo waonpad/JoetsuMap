@@ -4,9 +4,9 @@ import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useUtils } from './useUtils';
 
-import type { NotficationHomeScreenProps } from './types';
+import type { NotificationHomeScreenProps } from './types';
 
-export const NotficationHomeScreen = ({}: NotficationHomeScreenProps) => {
+export const NotificationHomeScreen = ({}: NotificationHomeScreenProps) => {
   const {} = useUtils();
 
   return <View style={styles.container}></View>;

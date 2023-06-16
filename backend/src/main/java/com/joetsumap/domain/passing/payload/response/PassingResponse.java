@@ -1,7 +1,5 @@
 package com.joetsumap.domain.passing.payload.response;
 
-import com.joetsumap.domain.passing.entity.Passing;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,5 +9,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class PassingResponse {
   
-  private Passing passing;
+  private PassingDTO passing;
 }

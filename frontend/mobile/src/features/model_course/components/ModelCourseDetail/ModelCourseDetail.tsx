@@ -6,7 +6,7 @@ import { useUtils } from './useUtils';
 
 import type { ModelCourseDetailProps } from './types';
 
-export const ModelCourseDetail = ({ ModelCourse }: ModelCourseDetailProps) => {
+export const ModelCourseDetail = ({ modelCourseId }: ModelCourseDetailProps) => {
   const {} = useUtils();
 
   return <View style={styles.container}></View>;

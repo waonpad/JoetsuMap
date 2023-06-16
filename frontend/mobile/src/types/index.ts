@@ -24,3 +24,7 @@ export type ReactHookFormValidationRules<T extends FieldValues> = Record<
   keyof T,
   Omit<RegisterOptions<T, Path<T>>, 'value'> | undefined
 >;
+
+export type BaseNavigationParamList = {
+  PermissionDenied: undefined;
+};

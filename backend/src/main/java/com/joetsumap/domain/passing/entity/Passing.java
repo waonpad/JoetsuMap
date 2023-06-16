@@ -5,6 +5,7 @@ import java.util.List;
 import com.joetsumap.common.entity.BaseEntity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,11 +25,13 @@ public class Passing extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-    name = "passing_users",
-    joinColumns = @JoinColumn(name = "passing_id"),
-    inverseJoinColumns = @JoinColumn(name = "user_id")
-  )
-  private List<User> users;
+  @NotNull
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "user1_id")
+  private User user1;
+
+  @NotNull
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "user2_id")
+  private User user2;
 }

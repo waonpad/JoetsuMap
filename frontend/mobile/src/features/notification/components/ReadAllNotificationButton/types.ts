@@ -1,3 +1,3 @@
-export type ReadAllNotficationButtonProps = {
+export type ReadAllNotificationButtonProps = {
   //
 };
