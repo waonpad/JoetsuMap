@@ -8,4 +8,8 @@ export type User = {
 
 export type UserResponse = {
   user: User;
-} | null;
+};
+
+export type UserListResponse = {
+  users: User[];
+};
