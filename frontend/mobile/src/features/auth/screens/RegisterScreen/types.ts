@@ -1,3 +1,3 @@
-export type RegisterScreenProps = {
+export type RegisterScreenParams = {
   //
 };

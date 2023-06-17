@@ -1,3 +1,3 @@
-export type CreateModelCourseScreenProps = {
+export type CreateModelCourseScreenParams = {
   //
 };

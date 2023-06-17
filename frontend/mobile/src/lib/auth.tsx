@@ -65,7 +65,7 @@ const useAuthCtx = () => {
     setUser(null);
     storage.clearToken();
 
-    navigation.navigate('Home');
+    navigation.navigate('App');
   };
 
   const loadUser = async () => {
@@ -92,6 +92,9 @@ const useAuthCtx = () => {
 
   useEffect(() => {
     loadUser();
+
+    // if only frontend dev mode
+    // setLoad(false);
   }, []);
 
   return {

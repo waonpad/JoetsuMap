@@ -1,12 +1,14 @@
 import { View } from 'react-native';
 
+import { usePassingRoute } from '../../navigation/PassingNavigator/usePassingRoute';
+
 import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useUtils } from './useUtils';
 
-import type { PassingHistoryScreenProps } from './types';
+export const PassingHistoryScreen = () => {
+  const route = usePassingRoute<'PassingHistory'>();
 
-export const PassingHistoryScreen = ({}: PassingHistoryScreenProps) => {
   const {} = useUtils();
 
   return <View style={styles.container}></View>;

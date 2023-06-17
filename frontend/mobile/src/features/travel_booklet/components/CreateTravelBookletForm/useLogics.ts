@@ -1,5 +1,38 @@
 // APIとの通信を行う、コアなロジック
 
-export const useLogics = () => {
-  return {};
+import { useForm } from 'react-hook-form';
+
+import { useCreateTravelBooklet } from '../../api/createTravelBooklet';
+
+import type { UpdateTravelBookletFormInput } from '../UpdateTravelBookletForm/types';
+import type { SubmitHandler } from 'react-hook-form';
+
+export const useLogics = ({
+  defaultValues,
+}: {
+  defaultValues?: Partial<UpdateTravelBookletFormInput>;
+}) => {
+  const createTravelBookletQuery = useCreateTravelBooklet();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UpdateTravelBookletFormInput>({
+    mode: 'onBlur',
+    defaultValues: { ...defaultValues },
+  });
+
+  const onSubmit: SubmitHandler<UpdateTravelBookletFormInput> = (
+    data: UpdateTravelBookletFormInput,
+  ) => {
+    createTravelBookletQuery.mutate({ data });
+  };
+
+  return {
+    control,
+    handleSubmit,
+    onSubmit,
+    errors,
+  };
 };

@@ -1,7 +1,10 @@
+import type { TravelBooklet } from '../../types';
+
 export type UpdateTravelBookletFormProps = {
-  defaultValues?: UpdateTravelBookletFormInput;
+  travelBookletId: TravelBooklet['id'];
 };
 
 export type UpdateTravelBookletFormInput = {
-  //
+  title: TravelBooklet['title'];
+  text: TravelBooklet['text'];
 };

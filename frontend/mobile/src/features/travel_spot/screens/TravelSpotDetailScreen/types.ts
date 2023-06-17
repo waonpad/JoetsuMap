@@ -1,3 +1,3 @@
-export type TravelSpotDetailScreenProps = {
+export type TravelSpotDetailScreenParams = {
   //
 };

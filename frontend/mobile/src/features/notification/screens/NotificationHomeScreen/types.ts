@@ -1,3 +1,3 @@
-export type NotificationHomeScreenProps = {
+export type NotificationHomeScreenParams = {
   //
 };

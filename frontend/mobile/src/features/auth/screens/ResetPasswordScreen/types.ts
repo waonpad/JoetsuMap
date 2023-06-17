@@ -1,3 +1,3 @@
-export type ResetPasswordScreenProps = {
+export type ResetPasswordScreenParams = {
   //
 };

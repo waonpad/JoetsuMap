@@ -1,3 +1,3 @@
-export type UpdateProfileScreenProps = {
+export type UpdateProfileScreenParams = {
   //
 };

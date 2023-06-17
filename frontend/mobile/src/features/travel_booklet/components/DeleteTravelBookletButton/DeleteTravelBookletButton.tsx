@@ -1,16 +1,19 @@
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { DeleteTravelBookletButtonProps } from './types';
 
-export const DeleteTravelBookletButton = ({}: DeleteTravelBookletButtonProps) => {
-  const {} = useLogics();
+export const DeleteTravelBookletButton = ({ travelBookletId }: DeleteTravelBookletButtonProps) => {
+  const { deleteTravelBookletQuery, handlePressDelete } = useLogics({ travelBookletId });
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Button
+        title={deleteTravelBookletQuery.isLoading ? '削除中' : '削除'}
+        onPress={handlePressDelete}
+      />
+    </View>
+  );
 };

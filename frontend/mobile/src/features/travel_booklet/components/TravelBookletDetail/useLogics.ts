@@ -1,5 +1,13 @@
 // APIとの通信を行う、コアなロジック
 
-export const useLogics = () => {
-  return {};
+import { useTravelBooklet } from '../../api/getTravelBooklet';
+
+import type { TravelBookletDetailProps } from './types';
+
+export const useLogics = ({ travelBookletId }: TravelBookletDetailProps) => {
+  const travelBookletQuery = useTravelBooklet({ travelBookletId });
+
+  return {
+    travelBookletQuery,
+  };
 };

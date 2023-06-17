@@ -1,3 +1,3 @@
-export type PassingHistoryScreenProps = {
+export type PassingHistoryScreenParams = {
   //
 };

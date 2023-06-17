@@ -1,13 +1,35 @@
+import { useState } from 'react';
+
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { SearchTravelBookletForm } from '../../components/SearchTravelBookletForm';
+import { SearchedTravelBookletList } from '../../components/SearchedTravelBookletList';
+// import { TravelBookletList } from '../../components/TravelBookletList';
+import { useTravelBookletRoute } from '../../navigation/TravelBookletNavigator/useTravelBookletRoute';
+
 import { styles } from './styles';
-import { useUtils } from './useUtils';
 
-import type { TravelBookletHomeScreenProps } from './types';
+import type { SearchTravelBookletFormInput } from '../../components/SearchTravelBookletForm/types';
 
-export const TravelBookletHomeScreen = ({}: TravelBookletHomeScreenProps) => {
-  const {} = useUtils();
+export const TravelBookletHomeScreen = () => {
+  const route = useTravelBookletRoute<'TravelBookletHome'>();
 
-  return <View style={styles.container}></View>;
+  const [searchParams, setSearchParams] = useState<SearchTravelBookletFormInput>({
+    freeKeyword: '',
+  });
+
+  const handleSubmitSearch = (searchParams: SearchTravelBookletFormInput) => {
+    setSearchParams(searchParams);
+  };
+
+  return (
+    <View style={styles.container}>
+      <SearchTravelBookletForm
+        defaultValues={route.params?.searchTravelBookletFormDefaultValues}
+        onSubmitAction={handleSubmitSearch}
+      />
+      {/* <TravelBookletList /> */}
+      <SearchedTravelBookletList searchParams={searchParams} />
+    </View>
+  );
 };

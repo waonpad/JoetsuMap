@@ -1,3 +1,3 @@
-export type ModelCourseHomeScreenProps = {
+export type ModelCourseHomeScreenParams = {
   //
 };

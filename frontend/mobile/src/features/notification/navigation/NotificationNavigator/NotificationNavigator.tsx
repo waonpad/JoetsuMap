@@ -8,10 +8,10 @@ import type { BaseNavigationParamList } from '@/types';
 
 import { NotificationHomeScreen } from '../../screens/NotificationHomeScreen';
 
-import type { NotificationHomeScreenProps } from '../../screens/NotificationHomeScreen/types';
+import type { NotificationHomeScreenParams } from '../../screens/NotificationHomeScreen/types';
 
 export type NotificationNavigationParamList = {
-  NotificationHome: NotificationHomeScreenProps;
+  NotificationHome: NotificationHomeScreenParams;
 } & BaseNavigationParamList;
 
 const NotificationStack = createNativeStackNavigator<NotificationNavigationParamList>();

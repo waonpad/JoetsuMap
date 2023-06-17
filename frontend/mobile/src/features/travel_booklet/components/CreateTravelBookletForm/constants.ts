@@ -1,1 +1,3 @@
-export const CONSTANT_EXAMPLE = '' as const;
+export const TITLE_LABRL = 'タイトル';
+export const TEXT_LABEL = '本文';
+export const SUBMIT_LABEL = '投稿';

@@ -1,13 +1,7 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
-import { useUtils } from './useUtils';
 
-import type { CreateModelCourseScreenProps } from './types';
-
-export const CreateModelCourseScreen = ({}: CreateModelCourseScreenProps) => {
-  const {} = useUtils();
-
+export const CreateModelCourseScreen = () => {
   return <View style={styles.container}></View>;
 };
