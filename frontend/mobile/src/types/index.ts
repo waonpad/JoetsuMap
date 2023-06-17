@@ -1,4 +1,5 @@
 import type { ROLES as RoleTypes } from '@/lib/authorization';
+import type { UnAuthorizedScreenParams } from '@/screens/UnAuthorizedScreen/types';
 
 import type { FieldValues, Path, RegisterOptions } from 'react-hook-form';
 
@@ -27,4 +28,5 @@ export type ReactHookFormValidationRules<T extends FieldValues> = Record<
 
 export type BaseNavigationParamList = {
   PermissionDenied: undefined;
+  Unauthorized: UnAuthorizedScreenParams;
 };

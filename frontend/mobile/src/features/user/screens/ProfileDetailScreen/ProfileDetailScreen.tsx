@@ -1,12 +1,14 @@
 import { View } from 'react-native';
 
+import { useUserRoute } from '../../navigation/UserNavigator/useUserRoute';
+
 import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useUtils } from './useUtils';
 
-import type { ProfileDetailScreenProps } from './types';
+export const ProfileDetailScreen = () => {
+  const route = useUserRoute<'ProfileDetail'>();
 
-export const ProfileDetailScreen = ({}: ProfileDetailScreenProps) => {
   const {} = useUtils();
 
   return <View style={styles.container}></View>;

@@ -1,13 +1,16 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { TravelBookletDetail } from '../../components/TravelBookletDetail';
+import { useTravelBookletRoute } from '../../navigation/TravelBookletNavigator/useTravelBookletRoute';
+
 import { styles } from './styles';
-import { useUtils } from './useUtils';
 
-import type { TravelBookletDetailScreenProps } from './types';
+export const TravelBookletDetailScreen = () => {
+  const route = useTravelBookletRoute<'TravelBookletDetail'>();
 
-export const TravelBookletDetailScreen = ({}: TravelBookletDetailScreenProps) => {
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <TravelBookletDetail travelBookletId={route.params.travelBookletId} />
+    </View>
+  );
 };

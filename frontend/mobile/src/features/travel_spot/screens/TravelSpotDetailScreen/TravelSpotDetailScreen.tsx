@@ -1,12 +1,14 @@
 import { View } from 'react-native';
 
+import { useTravelSpotRoute } from '../../navigation/TravelSpotNavigator/useTravelSpotRoute';
+
 import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useUtils } from './useUtils';
 
-import type { TravelSpotDetailScreenProps } from './types';
+export const TravelSpotDetailScreen = () => {
+  const route = useTravelSpotRoute<'TravelSpotDetail'>();
 
-export const TravelSpotDetailScreen = ({}: TravelSpotDetailScreenProps) => {
   const {} = useUtils();
 
   return <View style={styles.container}></View>;

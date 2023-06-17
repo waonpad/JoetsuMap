@@ -9,16 +9,16 @@ import { ModelCourseDetailScreen } from '../../screens/ModelCourseDetailScreen';
 import { ModelCourseHomeScreen } from '../../screens/ModelCourseHomeScreen';
 import { UpdateModelCourseScreen } from '../../screens/UpdateModelCourseScreen';
 
-import type { CreateModelCourseScreenProps } from '../../screens/CreateModelCourseScreen/types';
-import type { ModelCourseDetailScreenProps } from '../../screens/ModelCourseDetailScreen/types';
-import type { ModelCourseHomeScreenProps } from '../../screens/ModelCourseHomeScreen/types';
-import type { UpdateModelCourseScreenProps } from '../../screens/UpdateModelCourseScreen/types';
+import type { CreateModelCourseScreenParams } from '../../screens/CreateModelCourseScreen/types';
+import type { ModelCourseDetailScreenParams } from '../../screens/ModelCourseDetailScreen/types';
+import type { ModelCourseHomeScreenParams } from '../../screens/ModelCourseHomeScreen/types';
+import type { UpdateModelCourseScreenParams } from '../../screens/UpdateModelCourseScreen/types';
 
 export type ModelCourseNavigationParamList = {
-  CreateModelCourse: CreateModelCourseScreenProps;
-  ModelCourseDetail: ModelCourseDetailScreenProps;
-  ModelCourseHome: ModelCourseHomeScreenProps;
-  UpdateModelCourse: UpdateModelCourseScreenProps;
+  CreateModelCourse: CreateModelCourseScreenParams;
+  ModelCourseDetail: ModelCourseDetailScreenParams;
+  ModelCourseHome: ModelCourseHomeScreenParams;
+  UpdateModelCourse: UpdateModelCourseScreenParams;
 } & BaseNavigationParamList;
 
 const ModelCourseStack = createNativeStackNavigator<ModelCourseNavigationParamList>();
