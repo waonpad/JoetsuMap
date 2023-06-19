@@ -6,6 +6,7 @@ declare module '@env' {
   export const RN_API_URL_DEV_IOS: string;
   export const RN_API_URL_DEV_ANDROID: string;
   export const RN_IS_TUNNEL: 'true' | 'false';
+  export const RN_LOCATION_TRACKING: 'true' | 'false';
 
   export const LOCAL_TUNNEL_SUBDOMAIN: string;
 }
