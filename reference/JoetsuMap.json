@@ -111,6 +111,149 @@
         ]
       }
     },
+    "/auth/me": {
+      "get": {
+        "summary": "認証ユーザー取得",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-auth-me",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "ログイン",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-auth-login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "ユーザー登録",
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/UserDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-auth-register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "email": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 8,
+                    "maxLength": 254
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 8,
+                    "maxLength": 254
+                  },
+                  "roles": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/Eroles"
+                    }
+                  }
+                }
+              },
+              "examples": {}
+            }
+          }
+        }
+      }
+    },
     "/travel_spots/{travelSpotId}": {
       "parameters": [
         {
@@ -497,6 +640,38 @@
         ]
       }
     },
+    "/notifications/my/unread": {
+      "get": {
+        "summary": "自分宛ての未読通知一覧を取得",
+        "tags": [
+          "Notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "notifications": {
+                      "$ref": "#/components/schemas/NotificationDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-notifications-my",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      },
+      "parameters": []
+    },
     "/notifications/read/{notificationId}": {
       "parameters": [
         {
@@ -740,28 +915,42 @@
         }
       }
     },
-    "/auth/me": {
-      "get": {
-        "summary": "認証ユーザー取得",
-        "tags": [],
+    "/model_courses/bookmarks/{modelCourseId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "modelCourseId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "モデルコースをブックマークする",
+        "tags": [
+          "ModelCourse"
+        ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         },
-        "operationId": "get-auth-me",
+        "operationId": "post-model_course-bookmark-modelCourseId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "モデルコースのブックマークを解除する",
+        "operationId": "delete-model_courses-bookmarks-modelCourseId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
         "security": [
           {
             "jwt": []
@@ -769,55 +958,11 @@
         ]
       }
     },
-    "/auth/login": {
-      "post": {
-        "summary": "ログイン",
-        "tags": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string"
-                    },
-                    "user": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "post-auth-login",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/register": {
-      "post": {
-        "summary": "ユーザー登録",
+    "/model_courses/bookmarks": {
+      "get": {
+        "summary": "自分がブックマークしたモデルコース一覧を取得する",
         "tags": [
-          "Auth"
+          "ModelCourse"
         ],
         "responses": {
           "200": {
@@ -827,11 +972,11 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string"
-                    },
-                    "user": {
-                      "$ref": "#/components/schemas/UserDTO"
+                    "modelCourses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ModelCourseDTO"
+                      }
                     }
                   }
                 }
@@ -839,48 +984,163 @@
             }
           }
         },
-        "operationId": "post-auth-register",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "maxLength": 50
-                  },
-                  "email": {
-                    "type": "string",
-                    "maxLength": 254,
-                    "format": "email"
-                  },
-                  "password": {
-                    "type": "string",
-                    "format": "password",
-                    "minLength": 8,
-                    "maxLength": 254
-                  },
-                  "confirmPassword": {
-                    "type": "string",
-                    "format": "password",
-                    "minLength": 8,
-                    "maxLength": 254
-                  },
-                  "roles": {
-                    "type": "array",
-                    "uniqueItems": true,
-                    "minItems": 1,
-                    "items": {
-                      "$ref": "#/components/schemas/Eroles"
+        "operationId": "get-model_courses-bookmarked",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/travel_spots/bookmarks/{travelSpotId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "travelSpotId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "観光地をブックマークする",
+        "tags": [
+          "TravelSpot"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "post-travel_spots-bookmarks-travelSpotId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "観光地のブックマークを解除する",
+        "tags": [
+          "TravelSpot"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "delete-travel_spots-bookmarks-travelSpotId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    },
+    "/travel_spots/bookmarks": {
+      "get": {
+        "summary": "ブックマークした観光地一覧を取得する",
+        "tags": [
+          "TravelSpot",
+          ""
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelSpots": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TravelSpotDTO"
+                      }
                     }
                   }
                 }
-              },
-              "examples": {}
+              }
             }
           }
+        },
+        "operationId": "get-travel_spots-bookmarks",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    },
+    "/travel_spots/types/{travelSpotTypeName}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "travelSpotTypeName",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "",
+          "in": "path",
+          "required": true
         }
+      ],
+      "get": {
+        "summary": "特定のタイプに属する観光地一覧を取得する",
+        "tags": [
+          "TravelSpot"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelSpots": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TravelSpotDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-travel_spots-types-travelSpotTypeName",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header"
+          }
+        ]
       }
     }
   },
@@ -933,7 +1193,15 @@
           "": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "username",
+          "email",
+          "roles",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "NotificationDTO": {
         "title": "NotificationDTO",
@@ -941,13 +1209,36 @@
           "id": "yov3oji5qy8yg"
         },
         "type": "object",
+        "x-tags": [
+          "Notification"
+        ],
         "properties": {
           "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "isRead": {
+            "type": "boolean",
+            "default": false
+          },
+          "sender": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "": {
             "type": "string"
           }
         },
-        "x-tags": [
-          "Notification"
+        "required": [
+          "id",
+          "title",
+          "text",
+          "isRead",
+          "sender"
         ]
       },
       "TravelSpotDTO": {
@@ -995,8 +1286,23 @@
             "items": {
               "$ref": "#/components/schemas/UserDTO"
             }
+          },
+          "exampleModelCourses": {
+            "$ref": "#/components/schemas/ModelCourseDTO"
           }
-        }
+        },
+        "required": [
+          "id",
+          "address",
+          "tel",
+          "name",
+          "type",
+          "photo",
+          "coords",
+          "author",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "TravelBookletDTO": {
         "title": "TravelBookletDTO",
@@ -1028,7 +1334,16 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "id",
+          "title",
+          "text",
+          "photo",
+          "author",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "TrackedLocationDTO": {
         "title": "TrackedLocationDTO",
@@ -1054,7 +1369,13 @@
           "": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "coords",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "PassingDTO": {
         "title": "PassingDTO",
@@ -1077,7 +1398,13 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "id",
+          "passedUser",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "ModelCourseDTO": {
         "title": "ModelCourseDTO",
@@ -1158,7 +1485,15 @@
           "": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "title",
+          "travelSpots",
+          "author",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "ERole": {
         "type": "string",
@@ -1172,6 +1507,19 @@
         "x-stoplight": {
           "id": "f7157066ab8c7"
         }
+      },
+      "ETravelSpotType": {
+        "title": "ETravelSpotType",
+        "x-stoplight": {
+          "id": "207myfg6jw0hb"
+        },
+        "type": "string",
+        "enum": [
+          "FUN",
+          "FOOD",
+          "LEARN"
+        ],
+        "examples": []
       },
       "LatLng": {
         "title": "LatLng",
@@ -1191,20 +1539,11 @@
           "": {
             "type": "string"
           }
-        }
-      },
-      "ETravelSpotType": {
-        "title": "ETravelSpotType",
-        "x-stoplight": {
-          "id": "207myfg6jw0hb"
         },
-        "type": "string",
-        "enum": [
-          "FUN",
-          "FOOD",
-          "LEARN"
-        ],
-        "examples": []
+        "required": [
+          "lat",
+          "lng"
+        ]
       }
     },
     "requestBodies": {},
