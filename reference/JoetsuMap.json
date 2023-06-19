@@ -124,7 +124,7 @@
                   "type": "object",
                   "properties": {
                     "user": {
-                      "type": "string"
+                      "$ref": "#/components/schemas/UserDTO"
                     }
                   }
                 }
@@ -156,7 +156,7 @@
                       "type": "string"
                     },
                     "user": {
-                      "type": "string"
+                      "$ref": "#/components/schemas/UserDTO"
                     }
                   }
                 }
@@ -392,7 +392,23 @@
         "tags": [
           "TravelBooklet"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelBooklet": {
+                      "$ref": "#/components/schemas/TravelBookletDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "patch-travel_booklets-travelBookletId",
         "requestBody": {
           "content": {
@@ -787,7 +803,23 @@
         "tags": [
           "ModelCourse"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "modelCourse": {
+                      "$ref": "#/components/schemas/ModelCourseDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "post-model_courses-modelCourseId",
         "security": [
           {
@@ -841,7 +873,23 @@
         "tags": [
           "ModelCourse"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "modelCourse": {
+                      "$ref": "#/components/schemas/ModelCourseDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "patch-model_courses-modelCourseId",
         "security": [
           {
