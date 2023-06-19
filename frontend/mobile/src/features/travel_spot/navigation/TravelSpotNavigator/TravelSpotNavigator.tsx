@@ -7,8 +7,8 @@ import type { BaseNavigationParamList } from '@/types';
 import { TravelSpotDetailScreen } from '../../screens/TravelSpotDetailScreen';
 import { TravelSpotHomeScreen } from '../../screens/TravelSpotHomeScreen';
 
-import type { TravelSpotDetailScreenParams } from '../../screens/TravelSpotDetailScreen';
-import type { TravelSpotHomeScreenParams } from '../../screens/TravelSpotHomeScreen';
+import type { TravelSpotDetailScreenParams } from '../../screens/TravelSpotDetailScreen/types';
+import type { TravelSpotHomeScreenParams } from '../../screens/TravelSpotHomeScreen/types';
 
 export type TravelSpotNavigationParamList = {
   TravelSpotDetail: TravelSpotDetailScreenParams;

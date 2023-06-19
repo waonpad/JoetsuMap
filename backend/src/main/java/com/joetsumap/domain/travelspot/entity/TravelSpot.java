@@ -42,8 +42,7 @@ public class TravelSpot extends BaseEntity {
 
   @Column(nullable = false)
   @NotBlank
-  @Size(max = 50)
-  // ほんとにString？
+  @Size(max = 21)
   private String tel;
 
   @Column(nullable = false)

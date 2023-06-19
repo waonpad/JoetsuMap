@@ -1,41 +1,15 @@
-import React from 'react';
+import { View } from 'react-native';
 
-import { Button } from 'native-base';
-import { StyleSheet, View, Text } from 'react-native';
+import { Map } from '@/components/Map';
+import { ModelCourseList } from '@/features/model_course/components/ModelCourseList';
 
-// import { useTestConnection } from '@/features/test';
-// import { useRootNavigation } from '@/navigation/RootNavigator/useRootNavigation';
-import { useTestNavigation } from '@/navigation/TestNavigator';
+import { styles } from './styles';
 
 export const HomeScreen = () => {
-  // const rootNavigation = useRootNavigation();
-
-  const testNavigation = useTestNavigation();
-
-  // const testConnectionQuery = useTestConnection();
-
-  const onPressNavigateToAuthTest = () => {
-    testNavigation.navigate('AuthTest');
-  };
-
-  const onPressNavigateToSecureStoreTest = () => {
-    testNavigation.navigate('SecureStoreTest');
-  };
-
   return (
     <View style={styles.container}>
-      <Text>HomeScreen</Text>
-      <Button onPress={onPressNavigateToAuthTest}>AuthTest画面に遷移する</Button>
-      <Button onPress={onPressNavigateToSecureStoreTest}>SecureStoreTest画面に遷移する</Button>
-      {/* <Text>{testConnectionQuery.data}</Text> */}
+      <Map />
+      <ModelCourseList />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

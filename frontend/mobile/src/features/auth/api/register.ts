@@ -10,7 +10,7 @@ export type RegisterCredentialsDTO = {
   password: string;
   confirmPassword: string;
   username: string;
-  role?: ROLES['name'][];
+  roles?: ROLES['name'][];
 };
 
 export const registerWithEmailAndPassword = (

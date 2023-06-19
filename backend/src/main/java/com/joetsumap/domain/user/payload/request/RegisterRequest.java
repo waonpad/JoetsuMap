@@ -9,22 +9,22 @@ import lombok.Data;
 public class RegisterRequest {
 
   @NotBlank
-  @Size(min = 3, max = 20)
+  @Size(max = 50)
   private String username;
 
   @NotBlank
-  @Size(max = 50)
+  @Size(max = 254)
   @Email
   private String email;
 
-  private List<String> role;
+  private List<String> roles;
 
   @NotBlank
-  @Size(min = 6, max = 40)
+  @Size(min = 8, max = 254)
   private String password;
 
   @NotBlank
-  @Size(min = 6, max = 40)
+  @Size(min = 8, max = 254)
   private String confirmPassword;
 
 	@AssertTrue
