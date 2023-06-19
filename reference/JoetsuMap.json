@@ -1,0 +1,427 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "rfgh8u9j3e5sa"
+  },
+  "info": {
+    "title": "JoetsuMap",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "Id of an existing user."
+        }
+      ],
+      "get": {
+        "summary": "ユーザー取得",
+        "tags": [
+          "User"
+        ],
+        "responses": {},
+        "operationId": "get-users-userId"
+      },
+      "patch": {
+        "summary": "プロフィール更新",
+        "tags": [],
+        "responses": {},
+        "operationId": "patch-users-userId"
+      }
+    },
+    "/travel_spots/{travelSpotId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "travelSpotId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "観光地取得",
+        "responses": {},
+        "operationId": "get-travel_spots-travelSpotId",
+        "tags": [
+          "TravelSpot"
+        ]
+      }
+    },
+    "/travel_spots": {
+      "get": {
+        "summary": "観光地一覧取得",
+        "tags": [
+          "TravelSpot"
+        ],
+        "responses": {},
+        "operationId": "get-travel_spots"
+      }
+    },
+    "/travel_booklets/{travelBookletId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "travelBookletId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "旅のしおり作成",
+        "tags": [
+          "TravelBooklet"
+        ],
+        "responses": {},
+        "operationId": "post-travel_booklets-travelBookletId"
+      },
+      "patch": {
+        "summary": "旅のしおり更新",
+        "tags": [
+          "TravelBooklet"
+        ],
+        "responses": {},
+        "operationId": "patch-travel_booklets-travelBookletId"
+      },
+      "delete": {
+        "summary": "旅のしおり削除",
+        "tags": [
+          "TravelBooklet"
+        ],
+        "responses": {},
+        "operationId": "delete-travel_booklets-travelBookletId"
+      },
+      "get": {
+        "summary": "旅のしおり取得",
+        "tags": [
+          "TravelBooklet"
+        ],
+        "responses": {},
+        "operationId": "get-travel_booklets-travelBookletId"
+      }
+    },
+    "/travel_booklets": {
+      "get": {
+        "summary": "旅のしおり一覧取得",
+        "tags": [
+          "TravelBooklet"
+        ],
+        "responses": {},
+        "operationId": "get-travel_booklets"
+      }
+    },
+    "/tracked_locations": {
+      "post": {
+        "summary": "位置情報送信",
+        "tags": [
+          "TrackedLocation"
+        ],
+        "responses": {},
+        "operationId": "post-tracked_locations"
+      }
+    },
+    "/tracked_locations/my": {
+      "get": {
+        "summary": "自分の位置情報履歴を取得",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-tracked_locations-my"
+      }
+    },
+    "/passings/my": {
+      "get": {
+        "summary": "自分のすれ違い履歴一覧を取得",
+        "tags": [
+          "Passing"
+        ],
+        "responses": {},
+        "operationId": "get-passings-my"
+      }
+    },
+    "/notifications/my": {
+      "get": {
+        "summary": "自分宛ての通知一覧を取得",
+        "tags": [
+          "Notification"
+        ],
+        "responses": {},
+        "operationId": "get-notifications-my"
+      }
+    },
+    "/notifications/read/{notificationId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "notificationId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "patch": {
+        "summary": "通知を既読にする",
+        "tags": [
+          "Notification"
+        ],
+        "responses": {},
+        "operationId": "patch-notifications-read-notificationId"
+      }
+    },
+    "/notifications/readall": {
+      "patch": {
+        "summary": "通知を全て既読にする",
+        "tags": [
+          "Notification"
+        ],
+        "responses": {},
+        "operationId": "patch-notifications-readall"
+      }
+    },
+    "/model_courses": {
+      "get": {
+        "summary": "モデルコース一覧を取得",
+        "tags": [
+          "ModelCourse"
+        ],
+        "responses": {},
+        "operationId": "get-model_courses"
+      }
+    },
+    "/model_courses/{modelCourseId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "modelCourseId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "モデルコース取得",
+        "tags": [
+          "ModelCourse"
+        ],
+        "responses": {},
+        "operationId": "get-model_courses-modelCourseId"
+      },
+      "post": {
+        "summary": "モデルコース作成",
+        "tags": [
+          "ModelCourse"
+        ],
+        "responses": {},
+        "operationId": "post-model_courses-modelCourseId"
+      },
+      "delete": {
+        "summary": "モデルコース削除",
+        "tags": [
+          "ModelCourse"
+        ],
+        "responses": {},
+        "operationId": "delete-model_courses-modelCourseId"
+      },
+      "patch": {
+        "summary": "モデルコース更新",
+        "tags": [
+          "ModelCourse"
+        ],
+        "responses": {},
+        "operationId": "patch-model_courses-modelCourseId"
+      }
+    },
+    "/model_courses/search": {
+      "get": {
+        "summary": "モデルコース検索",
+        "tags": [
+          "ModelCourse"
+        ],
+        "responses": {},
+        "operationId": "get-model_courses-search"
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "認証ユーザー取得",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-auth-me"
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "ログイン",
+        "tags": [],
+        "responses": {},
+        "operationId": "post-auth-login"
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "ユーザー登録",
+        "tags": [
+          "Auth"
+        ],
+        "responses": {},
+        "operationId": "post-auth-register"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserDTO": {
+        "title": "UserDTO",
+        "x-stoplight": {
+          "id": "a0dxlmf7u3zj7"
+        },
+        "type": "object",
+        "x-tags": [
+          "User"
+        ],
+        "examples": [],
+        "properties": {
+          "id": {
+            "type": "number",
+            "minimum": 1
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "roles": {
+            "type": "array",
+            "enum": [
+              "ROLE_USER",
+              "ROLE_ADMIN",
+              "ROLE_MODERATOR"
+            ],
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "ROLE_USER",
+                "ROLE_ADMIN",
+                "ROLE_MODERATOR"
+              ]
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "": {
+            "type": "string"
+          }
+        }
+      },
+      "NotificationDTO": {
+        "title": "NotificationDTO",
+        "x-stoplight": {
+          "id": "yov3oji5qy8yg"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Notification"
+        ]
+      },
+      "TravelSpotDTO": {
+        "title": "TravelSpotDTO",
+        "x-stoplight": {
+          "id": "8dvpb4zgjymyh"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelBookletDTO": {
+        "title": "TravelBookletDTO",
+        "x-stoplight": {
+          "id": "yl9p7j00ufthn"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "TrackedLocationDTO": {
+        "title": "TrackedLocationDTO",
+        "x-stoplight": {
+          "id": "s7uycin73xvty"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PassingDTO": {
+        "title": "PassingDTO",
+        "x-stoplight": {
+          "id": "9vc9pjw22k33i"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "ModelCourseDTO": {
+        "title": "ModelCourseDTO",
+        "x-stoplight": {
+          "id": "npd2zgealg358"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
