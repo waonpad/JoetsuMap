@@ -9,7 +9,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://localhost:8080"
     }
   ],
   "paths": {
@@ -38,14 +38,77 @@
         "tags": [
           "User"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/UserDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-users-userId"
       },
       "patch": {
         "summary": "プロフィール更新",
         "tags": [],
-        "responses": {},
-        "operationId": "patch-users-userId"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/UserDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch-users-userId",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/travel_spots/{travelSpotId}": {
@@ -61,7 +124,23 @@
       ],
       "get": {
         "summary": "観光地取得",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelSpot": {
+                      "$ref": "#/components/schemas/TravelSpotDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-travel_spots-travelSpotId",
         "tags": [
           "TravelSpot"
@@ -74,7 +153,26 @@
         "tags": [
           "TravelSpot"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelSpots": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TravelSpotDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-travel_spots"
       }
     },
@@ -94,8 +192,57 @@
         "tags": [
           "TravelBooklet"
         ],
-        "responses": {},
-        "operationId": "post-travel_booklets-travelBookletId"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelBooklet": {
+                      "$ref": "#/components/schemas/TravelBookletDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-travel_booklets-travelBookletId",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "title",
+                  "text",
+                  "photo"
+                ]
+              },
+              "examples": {}
+            }
+          },
+          "description": ""
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       },
       "patch": {
         "summary": "旅のしおり更新",
@@ -103,22 +250,82 @@
           "TravelBooklet"
         ],
         "responses": {},
-        "operationId": "patch-travel_booklets-travelBookletId"
+        "operationId": "patch-travel_booklets-travelBookletId",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "photo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       },
       "delete": {
         "summary": "旅のしおり削除",
         "tags": [
           "TravelBooklet"
         ],
-        "responses": {},
-        "operationId": "delete-travel_booklets-travelBookletId"
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "delete-travel_booklets-travelBookletId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       },
       "get": {
         "summary": "旅のしおり取得",
         "tags": [
           "TravelBooklet"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelBooklet": {
+                      "$ref": "#/components/schemas/TravelBookletDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-travel_booklets-travelBookletId"
       }
     },
@@ -128,7 +335,26 @@
         "tags": [
           "TravelBooklet"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelBooklets": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TravelBookletDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-travel_booklets"
       }
     },
@@ -138,16 +364,75 @@
         "tags": [
           "TrackedLocation"
         ],
-        "responses": {},
-        "operationId": "post-tracked_locations"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trackedLocation": {
+                      "$ref": "#/components/schemas/TrackedLocationDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-tracked_locations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "coords": {
+                    "$ref": "#/components/schemas/LatLng"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/tracked_locations/my": {
       "get": {
         "summary": "自分の位置情報履歴を取得",
         "tags": [],
-        "responses": {},
-        "operationId": "get-tracked_locations-my"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trackedLocations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TrackedLocationDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-tracked_locations-my",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/passings/my": {
@@ -156,8 +441,29 @@
         "tags": [
           "Passing"
         ],
-        "responses": {},
-        "operationId": "get-passings-my"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "passings": {
+                      "$ref": "#/components/schemas/PassingDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-passings-my",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/notifications/my": {
@@ -166,8 +472,29 @@
         "tags": [
           "Notification"
         ],
-        "responses": {},
-        "operationId": "get-notifications-my"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "notifications": {
+                      "$ref": "#/components/schemas/NotificationDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-notifications-my",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/notifications/read/{notificationId}": {
@@ -186,8 +513,17 @@
         "tags": [
           "Notification"
         ],
-        "responses": {},
-        "operationId": "patch-notifications-read-notificationId"
+        "operationId": "patch-notifications-read-notificationId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/notifications/readall": {
@@ -196,8 +532,17 @@
         "tags": [
           "Notification"
         ],
-        "responses": {},
-        "operationId": "patch-notifications-readall"
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "patch-notifications-readall",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/model_courses": {
@@ -206,7 +551,23 @@
         "tags": [
           "ModelCourse"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "modeCourses": {
+                      "$ref": "#/components/schemas/ModelCourseDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-model_courses"
       }
     },
@@ -226,8 +587,25 @@
         "tags": [
           "ModelCourse"
         ],
-        "responses": {},
-        "operationId": "get-model_courses-modelCourseId"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "modelCourse": {
+                      "$ref": "#/components/schemas/ModelCourseDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-model_courses-modelCourseId",
+        "parameters": []
       },
       "post": {
         "summary": "モデルコース作成",
@@ -235,15 +613,53 @@
           "ModelCourse"
         ],
         "responses": {},
-        "operationId": "post-model_courses-modelCourseId"
+        "operationId": "post-model_courses-modelCourseId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "travelSpotIds": {
+                    "type": "array",
+                    "minItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "examples": {}
+            }
+          },
+          "description": ""
+        }
       },
       "delete": {
         "summary": "モデルコース削除",
         "tags": [
           "ModelCourse"
         ],
-        "responses": {},
-        "operationId": "delete-model_courses-modelCourseId"
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "delete-model_courses-modelCourseId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       },
       "patch": {
         "summary": "モデルコース更新",
@@ -251,7 +667,34 @@
           "ModelCourse"
         ],
         "responses": {},
-        "operationId": "patch-model_courses-modelCourseId"
+        "operationId": "patch-model_courses-modelCourseId",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "travelSpotIds": {
+                    "type": "array",
+                    "minItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/model_courses/search": {
@@ -260,24 +703,114 @@
         "tags": [
           "ModelCourse"
         ],
-        "responses": {},
-        "operationId": "get-model_courses-search"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "modeCourses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ModelCourseDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-model_courses-search",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "freeKeyword": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/auth/me": {
       "get": {
         "summary": "認証ユーザー取得",
         "tags": [],
-        "responses": {},
-        "operationId": "get-auth-me"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-auth-me",
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/auth/login": {
       "post": {
         "summary": "ログイン",
         "tags": [],
-        "responses": {},
-        "operationId": "post-auth-login"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-auth-login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/auth/register": {
@@ -286,8 +819,68 @@
         "tags": [
           "Auth"
         ],
-        "responses": {},
-        "operationId": "post-auth-register"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/UserDTO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-auth-register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "email": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 8,
+                    "maxLength": 254
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 8,
+                    "maxLength": 254
+                  },
+                  "roles": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/Eroles"
+                    }
+                  }
+                }
+              },
+              "examples": {}
+            }
+          }
+        }
       }
     }
   },
@@ -306,7 +899,7 @@
         "properties": {
           "id": {
             "type": "number",
-            "minimum": 1
+            "minimum": 0
           },
           "username": {
             "type": "string"
@@ -326,12 +919,7 @@
             "minItems": 1,
             "uniqueItems": true,
             "items": {
-              "type": "string",
-              "enum": [
-                "ROLE_USER",
-                "ROLE_ADMIN",
-                "ROLE_MODERATOR"
-              ]
+              "$ref": "#/components/schemas/Eroles"
             }
           },
           "createdAt": {
@@ -370,7 +958,43 @@
         "type": "object",
         "properties": {
           "id": {
+            "type": "number"
+          },
+          "address": {
             "type": "string"
+          },
+          "tel": {
+            "type": "string",
+            "maxLength": 21
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ETravelSpotType"
+          },
+          "photo": {
+            "type": "string"
+          },
+          "coords": {
+            "$ref": "#/components/schemas/LatLng"
+          },
+          "author": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bookmarkedUsers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserDTO"
+            }
           }
         }
       },
@@ -382,7 +1006,27 @@
         "type": "object",
         "properties": {
           "id": {
+            "type": "number"
+          },
+          "title": {
             "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "photo": {
+            "type": "string"
+          },
+          "author": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -394,6 +1038,20 @@
         "type": "object",
         "properties": {
           "id": {
+            "type": "number"
+          },
+          "coords": {
+            "$ref": "#/components/schemas/LatLng"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "": {
             "type": "string"
           }
         }
@@ -406,7 +1064,18 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "number"
+          },
+          "passedUser": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -416,12 +1085,139 @@
           "id": "npd2zgealg358"
         },
         "type": "object",
+        "examples": [
+          {
+            "id": 0,
+            "title": "string",
+            "travelSpots": [
+              {
+                "id": 0,
+                "address": "string",
+                "tel": "string",
+                "name": "string",
+                "type": "FUN",
+                "photo": "string",
+                "coords": {
+                  "lat": 0,
+                  "lng": 0,
+                  "": "string"
+                },
+                "author": {
+                  "id": 0,
+                  "username": "string",
+                  "email": "user@example.com",
+                  "roles": "ROLE_USER",
+                  "createdAt": "2019-08-24T14:15:22Z",
+                  "updatedAt": "2019-08-24T14:15:22Z",
+                  "": "string"
+                },
+                "createdAt": "2019-08-24T14:15:22Z",
+                "updatedAt": "2019-08-24T14:15:22Z"
+              }
+            ],
+            "author": {
+              "id": 0,
+              "username": "string",
+              "email": "user@example.com",
+              "roles": "ROLE_USER",
+              "createdAt": "2019-08-24T14:15:22Z",
+              "updatedAt": "2019-08-24T14:15:22Z",
+              "": "string"
+            },
+            "createdAt": "2019-08-24T14:15:22Z",
+            "updatedAt": "2019-08-24T14:15:22Z"
+          }
+        ],
         "properties": {
           "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "travelSpots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TravelSpotDTO"
+            }
+          },
+          "author": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bookmarkedUsers": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "": {
             "type": "string"
           }
         }
+      },
+      "ERole": {
+        "type": "string",
+        "enum": [
+          "ROLE_USER",
+          "ROLE_ADMIN",
+          "ROLE_MODERATOR"
+        ],
+        "title": "ERole",
+        "examples": [],
+        "x-stoplight": {
+          "id": "f7157066ab8c7"
+        }
+      },
+      "LatLng": {
+        "title": "LatLng",
+        "x-stoplight": {
+          "id": "gpwba86avs6qs"
+        },
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "lng": {
+            "type": "number",
+            "format": "double"
+          },
+          "": {
+            "type": "string"
+          }
+        }
+      },
+      "ETravelSpotType": {
+        "title": "ETravelSpotType",
+        "x-stoplight": {
+          "id": "207myfg6jw0hb"
+        },
+        "type": "string",
+        "enum": [
+          "FUN",
+          "FOOD",
+          "LEARN"
+        ],
+        "examples": []
+      }
+    },
+    "requestBodies": {},
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "API Key - 1": []
+    }
+  ]
 }
