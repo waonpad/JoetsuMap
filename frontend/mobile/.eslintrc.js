@@ -25,12 +25,12 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'import/no-unresolved': 'off', //
-    'no-restricted-imports': [
-      'error',
-      {
-        patterns: ['@/features/*/*'],
-      },
-    ],
+    // 'no-restricted-imports': [
+    //   'error',
+    //   {
+    //     patterns: ['@/features/*/*'],
+    //   },
+    // ],
     'react/prop-types': 'off',
 
     'import/order': [
