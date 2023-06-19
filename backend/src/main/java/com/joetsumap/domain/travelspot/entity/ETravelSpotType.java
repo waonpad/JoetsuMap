@@ -1,9 +1,7 @@
 package com.joetsumap.domain.travelspot.entity;
 
 public enum ETravelSpotType {
-  NATURE,
-  HISTORICAL,
+  FUN,
   FOOD,
-  SHOPPING,
-  OTHER
+  LEARN,
 }
