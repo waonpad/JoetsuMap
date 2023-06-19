@@ -1,16 +1,33 @@
-import { View } from 'react-native';
+import { Controller } from 'react-hook-form';
+import { Button, TextInput, View, Text } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
+import { validationSchema } from './validationSchema';
 
 import type { SearchModelCourseFormProps } from './types';
 
-export const SearchModelCourseForm = ({}: SearchModelCourseFormProps) => {
-  const {} = useLogics();
+export const SearchModelCourseForm = ({
+  defaultValues,
+  onSubmitAction,
+}: SearchModelCourseFormProps) => {
+  const { control, handleSubmit, onSubmit, errors } = useLogics({ defaultValues, onSubmitAction });
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Controller
+        name={'freeKeyword'}
+        control={control}
+        rules={validationSchema.freeKeyword}
+        render={({ field }) => (
+          <>
+            <Text>キーワード</Text>
+            <TextInput {...field} />
+            {!!errors.freeKeyword && <Text>{errors.freeKeyword.message}</Text>}
+          </>
+        )}
+      />
+      <Button title="検索" onPress={handleSubmit(onSubmit)} />
+    </View>
+  );
 };

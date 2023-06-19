@@ -21,6 +21,19 @@ public class Notification extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
+  private String title;
+
+  @Column(nullable = false)
+  private String text;
+
+  @Column(nullable = false)
+  private Boolean isRead;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "sender_id")
+  private User sender;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "recipient_id")
   private User recipient;

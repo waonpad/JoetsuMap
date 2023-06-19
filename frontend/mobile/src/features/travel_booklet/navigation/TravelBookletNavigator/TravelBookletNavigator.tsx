@@ -9,10 +9,10 @@ import { TravelBookletDetailScreen } from '../../screens/TravelBookletDetailScre
 import { TravelBookletHomeScreen } from '../../screens/TravelBookletHomeScreen';
 import { UpdateTravelBookletScreen } from '../../screens/UpdateTravelBookletScreen';
 
-import type { CreateTravelBookletScreenParams } from '../../screens/CreateTravelBookletScreen';
-import type { TravelBookletDetailScreenParams } from '../../screens/TravelBookletDetailScreen';
-import type { TravelBookletHomeScreenParams } from '../../screens/TravelBookletHomeScreen';
-import type { UpdateTravelBookletScreenParams } from '../../screens/UpdateTravelBookletScreen';
+import type { CreateTravelBookletScreenParams } from '../../screens/CreateTravelBookletScreen/types';
+import type { TravelBookletDetailScreenParams } from '../../screens/TravelBookletDetailScreen/types';
+import type { TravelBookletHomeScreenParams } from '../../screens/TravelBookletHomeScreen/types';
+import type { UpdateTravelBookletScreenParams } from '../../screens/UpdateTravelBookletScreen/types';
 
 export type TravelBookletNavigationParamList = {
   CreateTravelBooklet: CreateTravelBookletScreenParams;

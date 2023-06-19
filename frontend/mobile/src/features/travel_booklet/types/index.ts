@@ -4,7 +4,7 @@ import type { BaseEntity, Photo } from '@/types';
 export type TravelBooklet = {
   title: string;
   text: string;
-  photos: Photo[];
+  photo: Photo;
   author: User;
 } & BaseEntity;
 

@@ -1,14 +1,14 @@
 import type { User } from '@/features/user';
 import type { BaseEntity, Photo, LatLng } from '@/types';
 
-type SPOTTYPE = 'NATURE' | 'HISTORICAL' | 'FOOD' | 'SHOPPING' | 'OTHER';
+type SPOTTYPE = 'FUN' | 'FOOD' | 'LEARN';
 
 export type TravelSpot = {
   address: string;
   tel: string;
   name: string;
-  types: SPOTTYPE[];
-  photos: Photo[];
+  type: SPOTTYPE;
+  photo: Photo;
   coords: LatLng;
   author: User;
 } & BaseEntity;

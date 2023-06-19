@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NotificationNavigator } from '@/features/notification';
 import { PassingNavigator } from '@/features/passing';
 // import { TravelBookletNavigator } from '@/features/travel_booklet'; // 通信をしてしまうので今は使わない
+import { TravelSpotNavigator } from '@/features/travel_spot';
 import { UserNavigator } from '@/features/user';
 import { HomeScreen } from '@/screens/HomeScreen';
 import type { BaseNavigationParamList } from '@/types';
@@ -14,7 +15,8 @@ export type AppNavigationParamList = {
   TravelBooklet: undefined;
   Passing: undefined;
   Notification: undefined;
-  Setting: undefined;
+  User: undefined;
+  TravelSopt: undefined;
 } & BaseNavigationParamList;
 
 const AppTab = createBottomTabNavigator<AppNavigationParamList>();
@@ -26,8 +28,8 @@ export const AppNavigator = () => {
       <AppTab.Screen name="TravelBooklet" component={HomeScreen} />
       <AppTab.Screen name="Passing" component={PassingNavigator} />
       <AppTab.Screen name="Notification" component={NotificationNavigator} />
-      <AppTab.Screen name="Setting" component={UserNavigator} />
-      {/* TravelSpotとModelCourse、Userにはどうやってアクセスする？ */}
+      <AppTab.Screen name="User" component={UserNavigator} />
+      <AppTab.Screen name="TravelSopt" component={TravelSpotNavigator} />
     </AppTab.Navigator>
   );
 };

@@ -47,7 +47,7 @@ public class AuthLogic {
     user.setEmail(registerRequest.getEmail());
     user.setPassword(encoder.encode(registerRequest.getPassword()));
 
-    List<String> strRoles = registerRequest.getRole();
+    List<String> strRoles = registerRequest.getRoles();
 
     addRole(user, strRoles);
   }

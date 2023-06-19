@@ -1,4 +1,4 @@
-export type SearchedTravelBookletListProps = {
+export type SearchedModelCourseListProps = {
   searchParams: {
     freeKeyword: string;
   };
