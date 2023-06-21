@@ -35,3 +35,7 @@ start-tunnel:
 	${IN_MOBILE_DIR} start npx expo start --tunnel
 # 直接実行すると動かないのでコマンドを挟む
 	break && start lt --port 8080 --subdomain ${LOCAL_TUNNEL_SUBDOMAIN}
+
+mobile-build-previewAndroid:
+	${IN_MOBILE_DIR} start eas secret:push --scope project --env-file .env --force
+	${IN_MOBILE_DIR} start eas build --platform android --profile previewAndroid
