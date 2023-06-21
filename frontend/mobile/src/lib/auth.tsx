@@ -81,11 +81,30 @@ const useAuthCtx = () => {
     return null;
   };
 
+  // テスト用
+  const registerAsTestUser = async () => {
+    await register({
+      username: 'testuser',
+      email: 'testuser@example.com',
+      password: 'testpassword',
+      confirmPassword: 'testpassword',
+      roles: ['ROLE_USER'],
+    });
+  };
+
+  // テスト用
+  const loginAsTestUser = async () => {
+    await login({
+      username: 'testuser',
+      password: 'testpassword',
+    });
+  };
+
   useEffect(() => {
-    // loadUser();
+    loadUser();
 
     // if only frontend dev mode
-    setLoad(false);
+    // setLoad(false);
   }, []);
 
   return {
@@ -94,5 +113,7 @@ const useAuthCtx = () => {
     login,
     logout,
     load,
+    registerAsTestUser,
+    loginAsTestUser,
   };
 };
