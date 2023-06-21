@@ -1,25 +1,27 @@
-import {
-  RN_APP_NAME,
-  RN_APP_ENV,
-  RN_API_MOCK,
-  RN_API_URL_PROD,
-  RN_API_URL_DEV_IOS,
-  RN_API_URL_DEV_ANDROID,
-  RN_IS_TUNNEL,
-  LOCAL_TUNNEL_SUBDOMAIN,
-  RN_LOCATION_TRACKING,
-} from '@env';
+type Env = {
+  RN_APP_NAME: string;
+  RN_APP_ENV: 'development' | 'production' | 'test';
+  RN_API_MOCK: 'true' | 'false';
+  RN_API_URL_PROD: string;
+  RN_API_URL_DEV_IOS: string;
+  RN_API_URL_DEV_ANDROID: string;
+  RN_IS_TUNNEL: 'true' | 'false';
+  RN_LOCATION_TRACKING: 'true' | 'false';
+  LOCAL_TUNNEL_SUBDOMAIN: string;
+};
 
-export const APP_NAME = RN_APP_NAME;
-export const APP_ENV = RN_APP_ENV;
-export const API_MOCK = RN_API_MOCK;
-export const API_URL_PROD = RN_API_URL_PROD;
-export const API_URL_DEV_IOS = RN_API_URL_DEV_IOS;
-export const API_URL_DEV_ANDROID = RN_API_URL_DEV_ANDROID;
-export const IS_TUNNEL = RN_IS_TUNNEL;
-export const LOCATION_TRACKING = RN_LOCATION_TRACKING;
+const env: Env = process.env as any;
 
-export const API_URL_DEV_TUNNEL = `http://${LOCAL_TUNNEL_SUBDOMAIN}.loca.lt/api`;
+export const APP_NAME = env.RN_APP_NAME;
+export const APP_ENV = env.RN_APP_ENV;
+export const API_MOCK = env.RN_API_MOCK;
+export const API_URL_PROD = env.RN_API_URL_PROD;
+export const API_URL_DEV_IOS = env.RN_API_URL_DEV_IOS;
+export const API_URL_DEV_ANDROID = env.RN_API_URL_DEV_ANDROID;
+export const IS_TUNNEL = env.RN_IS_TUNNEL;
+export const LOCATION_TRACKING = env.RN_LOCATION_TRACKING;
+
+export const API_URL_DEV_TUNNEL = `http://${env.LOCAL_TUNNEL_SUBDOMAIN}.loca.lt/api`;
 
 export const JWT_SECRET = '123456' as string;
 
