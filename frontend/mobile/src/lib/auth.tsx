@@ -10,17 +10,8 @@ import {
 } from '@/features/auth';
 import { useRootNavigation } from '@/navigation/RootNavigator/useRootNavigation';
 import { omitToken } from '@/utils/compute';
+import createCtx from '@/utils/createCtx';
 import storage from '@/utils/storage';
-
-function createCtx<ContextType>() {
-  const ctx = React.createContext<ContextType | undefined>(undefined);
-  function useCtx() {
-    const c = React.useContext(ctx);
-    if (!c) throw new Error('useCtx must be inside a Provider with a value');
-    return c;
-  }
-  return [useCtx, ctx.Provider] as const;
-}
 
 const [createdUseAuth, SetAuthProvider] = createCtx<ReturnType<typeof useAuthCtx>>();
 
@@ -91,10 +82,10 @@ const useAuthCtx = () => {
   };
 
   useEffect(() => {
-    loadUser();
+    // loadUser();
 
     // if only frontend dev mode
-    // setLoad(false);
+    setLoad(false);
   }, []);
 
   return {
