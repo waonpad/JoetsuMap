@@ -1,12 +1,14 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { View, ActivityIndicator } from 'react-native';
 
+import { saveNotificationToken } from '@/features/notification/api/saveNotificationToken';
+import { sendNotification } from '@/features/notification/api/sendNotification';
 import createCtx from '@/utils/createCtx';
 
-import { secureStore } from './expo-secure-store';
+import { useAuth } from './auth';
 
 const [createdUseNotification, SetNotificationProvider] =
   createCtx<ReturnType<typeof useNotificationCtx>>();
@@ -29,6 +31,9 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
 
 export const useNotification = createdUseNotification;
 
+// ISSUE: ログアウトしても通知が届く
+// 参考 https://github.com/expo/expo/issues/10684
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -39,7 +44,7 @@ Notifications.setNotificationHandler({
 
 // https://blog.sbworks.jp/2021/04/01/reactnative%EF%BC%86expo%E3%81%AB%E3%82%88%E3%82%8Bpush%E9%80%9A%E7%9F%A5%EF%BC%88ios%EF%BC%89%E3%81%AE%E5%AE%9F%E8%A3%85/
 export const useNotificationCtx = () => {
-  const [token, setToken] = useState<string | null>(null);
+  const auth = useAuth();
 
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
@@ -62,9 +67,10 @@ export const useNotificationCtx = () => {
       //③通知用トークンの取得
       const token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
-      setToken(token);
 
-      // secureStore.save('expoPushToken', token);
+      //④サーバにトークンを送信
+      // 毎回送信するのは冗長かも？
+      await saveNotificationToken({ token });
 
       return token;
     } else {
@@ -106,26 +112,18 @@ export const useNotificationCtx = () => {
 
   // テスト用 /////////////////////////////////////////////////////////////////////////
   const sendPushNotification = async () => {
-    const message = {
-      to: token,
-      sound: 'default',
-      title: '通知タイトル',
-      body: '通知内容',
-      data: { someData: 'いろんなことに必要なデータ' },
-    };
+    const token = await registerForPushNotificationsAsync();
 
-    await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Accept-encoding': 'gzip, deflate',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
+    if (token) {
+      await sendNotification({ token });
+    }
   };
 
   useEffect(() => {
+    if (!auth.user?.id) {
+      return;
+    }
+
     (async () => {
       const token = await registerForPushNotificationsAsync();
 
@@ -139,7 +137,7 @@ export const useNotificationCtx = () => {
       removeNotificationSubscription();
       removeResponseSubscription();
     };
-  }, []);
+  }, [auth.user?.id]);
 
   return {
     registerForPushNotificationsAsync,

@@ -5,9 +5,10 @@ import * as TaskManager from 'expo-task-manager';
 import { View, ActivityIndicator } from 'react-native';
 
 import { BACK_LOCATION_TRACKING_TASK_NAME, IS_TUNNEL, LOCATION_TRACKING } from '@/constants';
+import { createTrackedLocation } from '@/features/tracked_location/api/createTrackedLocation';
 import createCtx from '@/utils/createCtx';
 
-import { secureStore } from './expo-secure-store';
+import { useAuth } from './auth';
 
 import type { LocationObject } from 'expo-location';
 
@@ -52,42 +53,22 @@ TaskManager.defineTask(BACK_LOCATION_TRACKING_TASK_NAME, async ({ data, error })
     if (location) {
       console.log('Location in background', location.coords);
 
-      // await secureStore.setItemAsync(
-      //   'location',
-      //   JSON.stringify({
-      //     latitude: location.coords.latitude,
-      //     longitude: location.coords.longitude,
-      //     datetime: new Date().toISOString(),
-      //   }),
-      // );
-
-      // const token = await secureStore.getItemAsync('expoPushToken');
-
-      // if (!token) {
-      //   return;
-      // }
-      // const message = {
-      //   to: token,
-      //   sound: 'default',
-      //   title: 'Original Title',
-      //   body: 'And here is the body!',
-      //   data: { someData: 'goes here' },
-      // };
-
-      // await fetch('https://exp.host/--/api/v2/push/send', {
-      //   method: 'POST',
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Accept-encoding': 'gzip, deflate',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(message),
-      // });
+      // サーバーに位置情報を送信する
+      createTrackedLocation({
+        data: {
+          coords: {
+            lat: location.coords.latitude,
+            lng: location.coords.longitude,
+          },
+        },
+      });
     }
   }
 });
 
 export const useLocationTrackingCtx = () => {
+  const auth = useAuth();
+
   const [foregroundSubscription, setForegroundSubscription] =
     useState<Location.LocationSubscription | null>(null);
 
@@ -120,9 +101,20 @@ export const useLocationTrackingCtx = () => {
     const subscription = await Location.watchPositionAsync(
       {
         accuracy: Location.Accuracy.BestForNavigation,
+        timeInterval: 30000,
       },
       (location) => {
         console.log('Location in foreground', location.coords);
+
+        // サーバーに位置情報を送信する
+        createTrackedLocation({
+          data: {
+            coords: {
+              lat: location.coords.latitude,
+              lng: location.coords.longitude,
+            },
+          },
+        });
       },
     );
 
@@ -163,6 +155,7 @@ export const useLocationTrackingCtx = () => {
       accuracy: Location.Accuracy.BestForNavigation,
       // バックグラウンドで位置情報を取得していることを示すインジケーター
       showsBackgroundLocationIndicator: true,
+      timeInterval: 30000,
       // バックグラウンドで位置情報を取得していることを示す通知
       foregroundService: {
         notificationTitle: 'Location',
@@ -183,12 +176,39 @@ export const useLocationTrackingCtx = () => {
     }
   };
 
+  // どちらかの権限を取得して位置情報の取得を開始する関数
+  const startLocationTracking = async () => {
+    // バックグラウンド権限取得
+    const background = await Location.getBackgroundPermissionsAsync();
+    if (background.granted) {
+      await startBackgroundUpdate();
+      return;
+    }
+
+    // フォアグラウンド権限取得
+    const foreground = await Location.requestForegroundPermissionsAsync();
+    if (foreground.granted) {
+      await startForegroundUpdate();
+      return;
+    }
+  };
+
+  // 位置情報の取得を停止する関数
+  const stopLocationTracking = () => {
+    stopForegroundUpdate();
+    stopBackgroundUpdate();
+  };
+
   useEffect(() => {
+    if (!auth.user?.id) {
+      stopLocationTracking();
+      return;
+    }
+
     if (IS_TUNNEL === 'false' && LOCATION_TRACKING === 'true') {
       (async () => {
         await requestPermissions();
-        await startForegroundUpdate();
-        await startBackgroundUpdate();
+        await startLocationTracking();
       })();
     }
 
@@ -196,7 +216,7 @@ export const useLocationTrackingCtx = () => {
     // stopBackgroundUpdate();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [auth.user?.id]);
 
   return {
     requestPermissions,
@@ -204,5 +224,7 @@ export const useLocationTrackingCtx = () => {
     stopForegroundUpdate,
     startBackgroundUpdate,
     stopBackgroundUpdate,
+    startLocationTracking,
+    stopLocationTracking,
   };
 };
