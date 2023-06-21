@@ -8,6 +8,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClientProvider } from 'react-query';
 
 import { AuthProvider } from '@/lib/auth';
+import { LocationTrackingProvider } from '@/lib/locationTracking';
+import { NotificationProvider } from '@/lib/notification';
 import { queryClient } from '@/lib/react-query';
 import { ErrorFallbackScreen } from '@/screens/ErrorFallbackScreen';
 import { theme } from '@/styles/theme';
@@ -24,7 +26,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         <NavigationContainer>
           <ErrorBoundary FallbackComponent={ErrorFallbackScreen}>
             <QueryClientProvider client={queryClient}>
-              <AuthProvider>{children}</AuthProvider>
+              <AuthProvider>
+                <NotificationProvider>
+                  <LocationTrackingProvider>{children}</LocationTrackingProvider>
+                </NotificationProvider>
+              </AuthProvider>
             </QueryClientProvider>
           </ErrorBoundary>
         </NavigationContainer>

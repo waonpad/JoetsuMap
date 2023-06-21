@@ -11,17 +11,18 @@ module.exports = function (api) {
           },
         },
       ],
-      [
-        'dotenv-import',
-        {
-          moduleName: '@env',
-          path: '.env',
-          blacklist: null,
-          whitelist: null,
-          safe: false,
-          allowUndefined: false,
-        },
-      ],
+      // [
+      //   'dotenv-import',
+      //   {
+      //     moduleName: '@env',
+      //     path: '.env',
+      //     blacklist: null,
+      //     whitelist: null,
+      //     safe: false,
+      //     allowUndefined: false,
+      //   },
+      // ],
+      'babel-plugin-transform-inline-environment-variables',
       'react-native-reanimated/plugin',
     ],
   };

@@ -38,3 +38,7 @@ start-tunnel:
 	${IN_BACKEND_DIR} ${RUN_TERMINAL} ./gradlew bootRun
 	${IN_MOBILE_DIR} ${RUN_TERMINAL} npx expo start --tunnel
 	${RUN_TERMINAL} lt --port 8080 --subdomain ${LOCAL_TUNNEL_SUBDOMAIN}
+
+mobile-build-previewAndroid:
+	${IN_MOBILE_DIR} ${RUN_TERMINAL} eas secret:push --scope project --env-file .env --force
+	${IN_MOBILE_DIR} ${RUN_TERMINAL} eas build --platform android --profile previewAndroid

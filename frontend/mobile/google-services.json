@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "843313127790",
+    "project_id": "joetsumap-a2694",
+    "storage_bucket": "joetsumap-a2694.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843313127790:android:3ba48c0938ffdb7f38a17f",
+        "android_client_info": {
+          "package_name": "com.waonpad.joetsumap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843313127790-7nnumd4kipfksu0nrqf90kvrc2tcgqrm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzDbiB1ZZ3N5JjixmFZ6o6v-9q8I6icVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843313127790-7nnumd4kipfksu0nrqf90kvrc2tcgqrm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

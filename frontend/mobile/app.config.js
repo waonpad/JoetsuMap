@@ -4,11 +4,11 @@ const COMMON_CONFIGS = {
   expo: {
     extra: {
       eas: {
-        projectId: '81689f22-1c10-4528-9c47-21fa392495b7',
+        projectId: 'dcf2b1df-dd2d-4b60-8179-f7ab3d0afdac',
       },
     },
-    name: 'hello-world',
-    slug: 'hello-world',
+    name: 'joetsumap',
+    slug: 'joetsumap',
     version: '1.0.0',
     sdkVersion: '48.0.0',
     orientation: 'portrait',
@@ -33,13 +33,13 @@ const COMMON_CONFIGS = {
           "The Beep App will use your location to provide ETA's to yourself and others",
         UIBackgroundModes: ['location', 'fetch'],
       },
-      bundleIdentifier: 'com.waonpad.helloworld',
+      bundleIdentifier: 'com.waonpad.joetsumap',
       config: {
         usesNonExemptEncryption: false,
       },
     },
     android: {
-      package: 'com.waonpad.helloworld',
+      package: 'com.waonpad.joetsumap',
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#ffffff',
@@ -50,6 +50,7 @@ const COMMON_CONFIGS = {
         'FOREGROUND_SERVICE',
         'ACCESS_BACKGROUND_LOCATION',
       ],
+      googleServicesFile: './google-services.json',
     },
     web: {
       favicon: './assets/favicon.png',
