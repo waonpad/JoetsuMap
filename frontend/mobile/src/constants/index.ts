@@ -1,3 +1,5 @@
+import Constants from 'expo-constants';
+
 type Env = {
   RN_APP_NAME: string;
   RN_APP_ENV: 'development' | 'production' | 'test';
@@ -10,7 +12,7 @@ type Env = {
   LOCAL_TUNNEL_SUBDOMAIN: string;
 };
 
-const env: Env = process.env as any;
+const env: Env = Constants.expoConfig?.extra as any;
 
 export const APP_NAME = env.RN_APP_NAME;
 export const APP_ENV = env.RN_APP_ENV;

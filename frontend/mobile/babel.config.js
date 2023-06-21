@@ -22,7 +22,6 @@ module.exports = function (api) {
       //     allowUndefined: false,
       //   },
       // ],
-      'babel-plugin-transform-inline-environment-variables',
       'react-native-reanimated/plugin',
     ],
   };

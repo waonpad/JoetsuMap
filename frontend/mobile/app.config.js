@@ -1,11 +1,22 @@
 // const PROFILE = process.env.EAS_BUILD_PROFILE ?? 'development';
 
+import 'dotenv/config';
+
 const COMMON_CONFIGS = {
   expo: {
     extra: {
       eas: {
         projectId: 'dcf2b1df-dd2d-4b60-8179-f7ab3d0afdac',
       },
+      RN_APP_NAME: process.env.RN_APP_NAME,
+      RN_APP_ENV: process.env.RN_APP_ENV,
+      RN_API_MOCK: process.env.RN_API_MOCK,
+      RN_API_URL_PROD: process.env.RN_API_URL_PROD,
+      RN_API_URL_DEV_IOS: process.env.RN_API_URL_DEV_IOS,
+      RN_API_URL_DEV_ANDROID: process.env.RN_API_URL_DEV_ANDROID,
+      LOCAL_TUNNEL_SUBDOMAIN: process.env.LOCAL_TUNNEL_SUBDOMAIN,
+      RN_IS_TUNNEL: process.env.RN_IS_TUNNEL,
+      RN_LOCATION_TRACKING: process.env.RN_LOCATION_TRACKING,
     },
     name: 'joetsumap',
     slug: 'joetsumap',

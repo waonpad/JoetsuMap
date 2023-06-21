@@ -24,10 +24,10 @@ public class Role extends BaseEntity {
   @Column(length = 20, nullable = false)
   private ERole name;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "user_roles", 
-        joinColumns = @JoinColumn(name = "role_id"), 
-        inverseJoinColumns = @JoinColumn(name = "user_id"))
-  private List<User> users = new ArrayList<>();
+  // @ManyToMany(fetch = FetchType.LAZY)
+  // @JoinTable(  name = "user_roles", 
+  //       joinColumns = @JoinColumn(name = "role_id"), 
+  //       inverseJoinColumns = @JoinColumn(name = "user_id"))
+  // private List<User> users = new ArrayList<>();
 
 }

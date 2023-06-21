@@ -30,7 +30,7 @@ public class TrackedLocationService {
 
   public void create(UserDetailsImpl userDetails, CreateTrackedLocationRequest createRequest) {
 
-    TrackedLocation trackedlocation = new TrackedLocation();
+    TrackedLocation trackedlocation = new TrackedLocation(null, createRequest.getCoords().getLat(), createRequest.getCoords().getLng(), userDetails.getUser());
 
     trackedlocationRepository.save(trackedlocation);
   }
