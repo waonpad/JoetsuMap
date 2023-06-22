@@ -1,10 +1,7 @@
-import type { TravelBooklet } from '../../types';
+import type { CreateTravelBookletDTO } from '../../api/createTravelBooklet';
 
 export type CreateTravelBookletFormProps = {
   defaultValues?: CreateTravelBookletFormInput;
 };
 
-export type CreateTravelBookletFormInput = {
-  title: TravelBooklet['title'];
-  text: TravelBooklet['text'];
-};
+export type CreateTravelBookletFormInput = CreateTravelBookletDTO['data'];

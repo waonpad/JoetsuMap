@@ -1,5 +1,6 @@
 import { useMutation } from 'react-query';
 
+import type { TravelSpot } from '@/features/travel_spot';
 import { axios } from '@/lib/axios';
 import type { MutationConfig } from '@/lib/react-query';
 import { queryClient } from '@/lib/react-query';
@@ -10,7 +11,10 @@ import type { ModelCourse, ModelCourseResponse } from '../types';
 
 export type CreateModelCourseDTO = {
   // TODO: Fix this type
-  data: Partial<ModelCourse>;
+  data: {
+    title: ModelCourse['title'];
+    travelSpotIds: TravelSpot['id'][];
+  };
 };
 
 export const createModelCourse = ({ data }: CreateModelCourseDTO): Promise<ModelCourseResponse> => {

@@ -1,16 +1,43 @@
-import { View } from 'react-native';
+import { Controller } from 'react-hook-form';
+import { Button, TextInput, View, Text } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { USERNAME_LABRL, PASSWORD_LABEL, SUBMIT_LABEL } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
+import { validationSchema } from './validationSchema';
 
 import type { LoginFormProps } from './types';
 
-export const LoginForm = ({}: LoginFormProps) => {
-  const {} = useLogics();
+export const LoginForm = ({ defaultValues }: LoginFormProps) => {
+  const { control, handleSubmit, onSubmit, errors } = useLogics({ defaultValues });
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Controller
+        name={'username'}
+        control={control}
+        rules={validationSchema.username}
+        render={({ field }) => (
+          <>
+            <Text>{USERNAME_LABRL}</Text>
+            <TextInput {...field} />
+            {!!errors.username && <Text>{errors.username.message}</Text>}
+          </>
+        )}
+      />
+      <Controller
+        name={'password'}
+        control={control}
+        rules={validationSchema.password}
+        render={({ field }) => (
+          <>
+            <Text>{PASSWORD_LABEL}</Text>
+            <TextInput {...field} />
+            {!!errors.password && <Text>{errors.password.message}</Text>}
+          </>
+        )}
+      />
+      <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
+    </View>
+  );
 };

@@ -1,16 +1,31 @@
-import { View } from 'react-native';
+import { Controller } from 'react-hook-form';
+import { Button, Text, TextInput, View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { USERNAME_LABRL, SUBMIT_LABEL } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
+import { validationSchema } from './validationSchema';
 
 import type { UpdateProfileFormProps } from './types';
 
-export const UpdateProfileForm = ({}: UpdateProfileFormProps) => {
-  const {} = useLogics();
+export const UpdateProfileForm = ({ userId }: UpdateProfileFormProps) => {
+  const { control, handleSubmit, onSubmit, errors } = useLogics({ userId });
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Controller
+        name={'username'}
+        control={control}
+        rules={validationSchema.username}
+        render={({ field }) => (
+          <>
+            <Text>{USERNAME_LABRL}</Text>
+            <TextInput {...field} />
+            {!!errors.username && <Text>{errors.username.message}</Text>}
+          </>
+        )}
+      />
+      <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
+    </View>
+  );
 };

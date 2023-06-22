@@ -3,11 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 
 import type { LoginCredentialsDTO, RegisterCredentialsDTO, AuthUser } from '@/features/auth';
-import {
-  loginWithEmailAndPassword,
-  getAuthUser,
-  registerWithEmailAndPassword,
-} from '@/features/auth';
+import { loginFn, getAuthUser, registerFn } from '@/features/auth';
 import { useRootNavigation } from '@/navigation/RootNavigator/useRootNavigation';
 import { omitToken } from '@/utils/compute';
 import createCtx from '@/utils/createCtx';
@@ -39,14 +35,14 @@ const useAuthCtx = () => {
   const navigation = useRootNavigation();
 
   const register = async (data: RegisterCredentialsDTO) => {
-    const response = await registerWithEmailAndPassword(data);
+    const response = await registerFn(data);
 
     setUser(omitToken(response));
     storage.setToken(response.token);
   };
 
   const login = async (data: LoginCredentialsDTO) => {
-    const response = await loginWithEmailAndPassword(data);
+    const response = await loginFn(data);
 
     setUser(omitToken(response));
     storage.setToken(response.token);

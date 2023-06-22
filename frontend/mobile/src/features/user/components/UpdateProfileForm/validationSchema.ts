@@ -1,6 +1,10 @@
-// import { validations } from '@/messages/validation';
+import { validations } from '@/messages/validation';
 import type { ReactHookFormValidationRules } from '@/types';
 
 import type { UpdateProfileFormInput } from './types';
 
-export const validationSchema: ReactHookFormValidationRules<UpdateProfileFormInput> = {};
+export const validationSchema: ReactHookFormValidationRules<UpdateProfileFormInput> = {
+  username: {
+    required: validations.required,
+  },
+};
