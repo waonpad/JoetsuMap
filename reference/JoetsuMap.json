@@ -177,7 +177,11 @@
                   "password": {
                     "type": "string"
                   }
-                }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
               }
             }
           }
@@ -246,7 +250,13 @@
                       "$ref": "#/components/schemas/Eroles"
                     }
                   }
-                }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "password",
+                  "confirmPassword"
+                ]
               },
               "examples": {}
             }
@@ -550,7 +560,10 @@
                   "coords": {
                     "$ref": "#/components/schemas/LatLng"
                   }
-                }
+                },
+                "required": [
+                  "coords"
+                ]
               }
             }
           }
@@ -843,7 +856,11 @@
                       "type": "number"
                     }
                   }
-                }
+                },
+                "required": [
+                  "title",
+                  "travelSpotIds"
+                ]
               },
               "examples": {}
             }
@@ -913,7 +930,11 @@
                       "type": "number"
                     }
                   }
-                }
+                },
+                "required": [
+                  "title",
+                  "travelSpotIds"
+                ]
               }
             }
           }
@@ -1190,6 +1211,37 @@
           }
         ]
       }
+    },
+    "/notifications/token": {
+      "post": {
+        "summary": "プッシュ通知用トークンの保存",
+        "tags": [
+          "Notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "post-notifications-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1267,7 +1319,7 @@
           "title": {
             "type": "string"
           },
-          "text": {
+          "body": {
             "type": "string"
           },
           "isRead": {
@@ -1277,16 +1329,20 @@
           "sender": {
             "$ref": "#/components/schemas/UserDTO"
           },
-          "": {
-            "type": "string"
+          "data": {
+            "type": [
+              "object",
+              "null"
+            ]
           }
         },
         "required": [
           "id",
           "title",
-          "text",
+          "body",
           "isRead",
-          "sender"
+          "sender",
+          "data"
         ]
       },
       "TravelSpotDTO": {
