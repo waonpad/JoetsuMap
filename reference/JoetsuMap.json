@@ -249,6 +249,13 @@
                     "items": {
                       "$ref": "#/components/schemas/Eroles"
                     }
+                  },
+                  "icon": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "binary"
                   }
                 },
                 "required": [
@@ -1290,7 +1297,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "": {
+          "icon": {
             "type": "string"
           }
         },
@@ -1366,7 +1373,10 @@
             "type": "string"
           },
           "type": {
-            "$ref": "#/components/schemas/ETravelSpotType"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ETravelSpotType"
+            }
           },
           "photo": {
             "type": "string"
