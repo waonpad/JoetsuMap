@@ -1,5 +1,7 @@
 package com.joetsumap.domain.notification.entity;
 
+import java.util.Map;
+
 import com.joetsumap.common.entity.BaseEntity;
 import com.joetsumap.domain.user.entity.User;
 
@@ -22,10 +24,16 @@ public class Notification extends BaseEntity {
   private Long id;
 
   @Column(nullable = false)
+  private String to;
+
+  @Column(nullable = false)
   private String title;
 
   @Column(nullable = false)
-  private String text;
+  private String body;
+
+  @Column
+  private Map<String, Object> data;
 
   @Column(nullable = false)
   private Boolean isRead;

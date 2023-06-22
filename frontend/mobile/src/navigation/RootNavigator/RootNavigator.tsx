@@ -16,7 +16,7 @@ const RootStack = createNativeStackNavigator<RootNavigationParamList>();
 
 export const RootNavigator = () => {
   return (
-    <RootStack.Navigator initialRouteName="App">
+    <RootStack.Navigator initialRouteName="Auth">
       <RootStack.Screen name="Auth" component={AuthNavigator} />
       <RootStack.Screen name="App" component={AppNavigator} />
     </RootStack.Navigator>

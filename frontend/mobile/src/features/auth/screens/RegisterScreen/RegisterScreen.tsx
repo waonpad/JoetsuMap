@@ -1,13 +1,13 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { RegisterForm } from '../../components/RegisterForm/RegisterForm';
+
 import { styles } from './styles';
-import { useUtils } from './useUtils';
 
-import type { RegisterScreenProps } from './types';
-
-export const RegisterScreen = ({}: RegisterScreenProps) => {
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+export const RegisterScreen = () => {
+  return (
+    <View style={styles.container}>
+      <RegisterForm />
+    </View>
+  );
 };

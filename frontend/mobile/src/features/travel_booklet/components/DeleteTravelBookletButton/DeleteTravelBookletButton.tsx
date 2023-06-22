@@ -6,12 +6,12 @@ import { useLogics } from './useLogics';
 import type { DeleteTravelBookletButtonProps } from './types';
 
 export const DeleteTravelBookletButton = ({ travelBookletId }: DeleteTravelBookletButtonProps) => {
-  const { deleteTravelBookletQuery, handlePressDelete } = useLogics({ travelBookletId });
+  const { deleteTravelBookletMutation, handlePressDelete } = useLogics({ travelBookletId });
 
   return (
     <View style={styles.container}>
       <Button
-        title={deleteTravelBookletQuery.isLoading ? '削除中' : '削除'}
+        title={deleteTravelBookletMutation.isLoading ? '削除中' : '削除'}
         onPress={handlePressDelete}
       />
     </View>

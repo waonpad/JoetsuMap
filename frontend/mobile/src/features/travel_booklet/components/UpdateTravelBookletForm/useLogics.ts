@@ -11,7 +11,7 @@ import type { SubmitHandler } from 'react-hook-form';
 export const useLogics = ({ travelBookletId }: UpdateTravelBookletFormProps) => {
   const travelBookletQuery = useTravelBooklet({ travelBookletId });
 
-  const updateTravelBookletQuery = useUpdateTravelBooklet();
+  const updateTravelBookletMutation = useUpdateTravelBooklet();
 
   const {
     control,
@@ -25,7 +25,7 @@ export const useLogics = ({ travelBookletId }: UpdateTravelBookletFormProps) => 
   const onSubmit: SubmitHandler<UpdateTravelBookletFormInput> = (
     data: UpdateTravelBookletFormInput,
   ) => {
-    updateTravelBookletQuery.mutate({ travelBookletId, data });
+    updateTravelBookletMutation.mutate({ travelBookletId, data });
   };
 
   return {

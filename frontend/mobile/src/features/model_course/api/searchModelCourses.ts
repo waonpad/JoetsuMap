@@ -13,7 +13,7 @@ export const searchModelCourses = (): Promise<ModelCourseListResponse> => {
 
 type QueryFnType = typeof searchModelCourses;
 
-type UseModelCoursesOptions = {
+type UseSearchModelCoursesOptions = {
   params: {
     freeKeyword: string;
   };
@@ -21,7 +21,7 @@ type UseModelCoursesOptions = {
 };
 
 export const useSearchModelCourses = (
-  { params, config }: UseModelCoursesOptions = { params: { freeKeyword: '' } },
+  { params, config }: UseSearchModelCoursesOptions = { params: { freeKeyword: '' } },
 ) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,

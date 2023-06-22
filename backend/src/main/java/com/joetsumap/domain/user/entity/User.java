@@ -56,6 +56,9 @@ public class User extends BaseEntity {
   private String password;
 
   @Column
+  private String icon;
+
+  @Column
   @JsonIgnore
   private String expoPushToken;
 

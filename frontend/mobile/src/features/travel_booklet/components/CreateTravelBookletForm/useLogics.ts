@@ -12,7 +12,7 @@ export const useLogics = ({
 }: {
   defaultValues?: Partial<UpdateTravelBookletFormInput>;
 }) => {
-  const createTravelBookletQuery = useCreateTravelBooklet();
+  const createTravelBookletMutation = useCreateTravelBooklet();
 
   const {
     control,
@@ -26,7 +26,7 @@ export const useLogics = ({
   const onSubmit: SubmitHandler<UpdateTravelBookletFormInput> = (
     data: UpdateTravelBookletFormInput,
   ) => {
-    createTravelBookletQuery.mutate({ data });
+    createTravelBookletMutation.mutate({ data });
   };
 
   return {

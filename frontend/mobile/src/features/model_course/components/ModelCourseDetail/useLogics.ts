@@ -1,5 +1,13 @@
 // APIとの通信を行う、コアなロジック
 
-export const useLogics = () => {
-  return {};
+import { useModelCourse } from '../../api/getModelCourse';
+
+import type { ModelCourseDetailProps } from './types';
+
+export const useLogics = ({ modelCourseId }: ModelCourseDetailProps) => {
+  const modelCourseQuery = useModelCourse({ modelCourseId });
+
+  return {
+    modelCourseQuery,
+  };
 };

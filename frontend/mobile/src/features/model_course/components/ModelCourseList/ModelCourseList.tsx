@@ -1,16 +1,21 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { ModelCourseListItem } from '../ModelCourseListItem';
+
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { ModelCourseListProps } from './types';
 
+// eslint-disable-next-line no-empty-pattern
 export const ModelCourseList = ({}: ModelCourseListProps) => {
-  const {} = useLogics();
+  const { modelCoursesQuery } = useLogics();
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      {modelCoursesQuery.data?.modelCourses.map((modelCourse) => {
+        return <ModelCourseListItem key={modelCourse.id} modelCourse={modelCourse} />;
+      })}
+    </View>
+  );
 };

@@ -9,8 +9,10 @@ import { API_ENDPOINT, QUERY_KEY } from '../constants';
 import type { TravelBooklet, TravelBookletResponse } from '../types';
 
 export type UpdateTravelBookletDTO = {
-  // TODO: Fix this type
-  data: Partial<TravelBooklet>;
+  data: {
+    title: TravelBooklet['title'];
+    text: TravelBooklet['text'];
+  };
   travelBookletId: TravelBooklet['id'];
 };
 

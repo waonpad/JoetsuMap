@@ -5,14 +5,14 @@ import { useDeleteTravelBooklet } from '../../api/deleteTravelBooklet';
 import type { DeleteTravelBookletButtonProps } from './types';
 
 export const useLogics = ({ travelBookletId }: DeleteTravelBookletButtonProps) => {
-  const deleteTravelBookletQuery = useDeleteTravelBooklet();
+  const deleteTravelBookletMutation = useDeleteTravelBooklet();
 
   const handlePressDelete = () => {
-    deleteTravelBookletQuery.mutate({ travelBookletId });
+    deleteTravelBookletMutation.mutate({ travelBookletId });
   };
 
   return {
-    deleteTravelBookletQuery,
+    deleteTravelBookletMutation,
     handlePressDelete,
   };
 };

@@ -8,13 +8,14 @@ import { API_ENDPOINT, QUERY_KEY } from '../constants';
 
 import type { User, UserResponse } from '../types';
 
-export type UpdateUserDTO = {
-  // TODO: Fix this type
-  data: Partial<User>;
+export type UpdateProfileDTO = {
+  data: {
+    username: User['username'];
+  };
   userId: User['id'];
 };
 
-export const updateUser = ({ data, userId }: UpdateUserDTO): Promise<UserResponse> => {
+export const updateUser = ({ data, userId }: UpdateProfileDTO): Promise<UserResponse> => {
   return axios.patch(`${API_ENDPOINT}/${userId}`, data);
 };
 

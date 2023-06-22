@@ -1,16 +1,19 @@
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { DeleteModelCourseButtonProps } from './types';
 
-export const DeleteModelCourseButton = ({}: DeleteModelCourseButtonProps) => {
-  const {} = useLogics();
+export const DeleteModelCourseButton = ({ modelCourseId }: DeleteModelCourseButtonProps) => {
+  const { deleteModelCourseMutation, handlePressDelete } = useLogics({ modelCourseId });
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Button
+        title={deleteModelCourseMutation.isLoading ? '削除中' : '削除'}
+        onPress={handlePressDelete}
+      />
+    </View>
+  );
 };

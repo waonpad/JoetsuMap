@@ -1,13 +1,12 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
-import { useUtils } from './useUtils';
+import { useLogics } from './useLogics';
 
 import type { TravelSpotDetailProps } from './types';
 
-export const TravelSpotDetail = ({ TravelSpotId }: TravelSpotDetailProps) => {
-  const {} = useUtils();
+export const TravelSpotDetail = ({ travelSpotId }: TravelSpotDetailProps) => {
+  const { travelSpotQuery } = useLogics({ travelSpotId });
 
-  return <View style={styles.container}></View>;
+  return <View style={styles.container}>{travelSpotQuery.data?.travelSpot?.name}</View>;
 };

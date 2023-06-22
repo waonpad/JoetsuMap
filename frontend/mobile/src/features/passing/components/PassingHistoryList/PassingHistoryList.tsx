@@ -1,16 +1,21 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { PassingHistoryListItem } from '../PassingHistoryListItem';
+
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { PassingHistoryListProps } from './types';
 
+// eslint-disable-next-line no-empty-pattern
 export const PassingHistoryList = ({}: PassingHistoryListProps) => {
-  const {} = useLogics();
+  const { myPassingsQuery } = useLogics();
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      {myPassingsQuery.data?.passings.map((passing) => {
+        return <PassingHistoryListItem key={passing.id} passing={passing} />;
+      })}
+    </View>
+  );
 };

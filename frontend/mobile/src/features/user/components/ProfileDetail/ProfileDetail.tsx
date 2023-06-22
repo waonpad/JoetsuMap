@@ -1,13 +1,12 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
-import { useUtils } from './useUtils';
+import { useLogics } from './useLogics';
 
 import type { ProfileDetailProps } from './types';
 
 export const ProfileDetail = ({ userId }: ProfileDetailProps) => {
-  const {} = useUtils();
+  const { userQuery } = useLogics({ userId });
 
-  return <View style={styles.container}></View>;
+  return <View style={styles.container}>{userQuery.data?.user?.username}</View>;
 };

@@ -4,6 +4,7 @@ export type User = {
   email: string;
   username: string;
   roles: ROLES[];
+  icon: string;
 } & BaseEntity;
 
 export type UserResponse = {

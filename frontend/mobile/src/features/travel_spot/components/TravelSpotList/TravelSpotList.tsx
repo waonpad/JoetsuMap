@@ -1,16 +1,21 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { TravelSpotListItem } from '../TravelSpotListItem';
+
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { TravelSpotListProps } from './types';
 
+// eslint-disable-next-line no-empty-pattern
 export const TravelSpotList = ({}: TravelSpotListProps) => {
-  const {} = useLogics();
+  const { travelSpotsQuery } = useLogics();
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      {travelSpotsQuery.data?.travelSpots.map((travelSpot) => {
+        return <TravelSpotListItem key={travelSpot.id} travelSpot={travelSpot} />;
+      })}
+    </View>
+  );
 };

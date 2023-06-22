@@ -11,10 +11,9 @@ export type RegisterCredentialsDTO = {
   confirmPassword: string;
   username: string;
   roles?: ROLES['name'][];
+  icon?: string;
 };
 
-export const registerWithEmailAndPassword = (
-  data: RegisterCredentialsDTO,
-): Promise<JwtResponse> => {
+export const registerFn = (data: RegisterCredentialsDTO): Promise<JwtResponse> => {
   return axios.post(`${API_ENDPOINT}/${REGISTER}`, data);
 };

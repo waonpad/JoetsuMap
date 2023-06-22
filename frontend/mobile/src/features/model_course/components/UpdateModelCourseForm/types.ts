@@ -1,7 +1,8 @@
+import type { UpdateModelCourseDTO } from '../../api/updateModelCourse';
+import type { ModelCourse } from '../../types';
+
 export type UpdateModelCourseFormProps = {
-  defaultValues?: UpdateModelCourseFormInput;
+  modelCourseId: ModelCourse['id'];
 };
 
-export type UpdateModelCourseFormInput = {
-  //
-};
+export type UpdateModelCourseFormInput = UpdateModelCourseDTO['data'];

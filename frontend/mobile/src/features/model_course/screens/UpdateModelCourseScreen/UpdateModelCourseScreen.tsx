@@ -1,11 +1,16 @@
 import { View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { UpdateModelCourseForm } from '../../components/UpdateModelCourseForm';
+import { useModelCourseRoute } from '../../navigation/ModelCourseNavigator/useModelCourseRoute';
+
 import { styles } from './styles';
-import { useUtils } from './useUtils';
 
 export const UpdateModelCourseScreen = () => {
-  const {} = useUtils();
+  const route = useModelCourseRoute<'UpdateModelCourse'>();
 
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <UpdateModelCourseForm modelCourseId={route.params.modelCourseId} />
+    </View>
+  );
 };

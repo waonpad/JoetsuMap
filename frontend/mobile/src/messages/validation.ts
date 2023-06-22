@@ -2,10 +2,10 @@ import type { ValidationRule } from 'react-hook-form';
 
 type Validations = {
   required: string | ValidationRule<boolean>;
-  max: (max: number) => ValidationRule<number | string>;
-  min: (min: number) => ValidationRule<number | string>;
-  maxLength: (max: number) => ValidationRule<number | string>;
-  minLength: (min: number) => ValidationRule<number | string>;
+  max: (max: number) => ValidationRule<number>;
+  min: (min: number) => ValidationRule<number>;
+  maxLength: (max: number) => ValidationRule<number>;
+  minLength: (min: number) => ValidationRule<number>;
   pattern: (pattern: RegExp) => ValidationRule<RegExp>;
   email: ValidationRule<RegExp>;
 };

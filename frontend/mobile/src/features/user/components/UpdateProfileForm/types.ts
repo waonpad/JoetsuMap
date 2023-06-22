@@ -1,7 +1,8 @@
+import type { UpdateProfileDTO } from '../../api/updateProfile';
+import type { User } from '../../types';
+
 export type UpdateProfileFormProps = {
-  defaultValues?: UpdateProfileFormInput;
+  userId: User['id'];
 };
 
-export type UpdateProfileFormInput = {
-  //
-};
+export type UpdateProfileFormInput = UpdateProfileDTO['data'];

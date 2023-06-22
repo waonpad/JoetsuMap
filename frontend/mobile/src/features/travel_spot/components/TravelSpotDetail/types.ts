@@ -1,5 +1,5 @@
 import type { TravelSpot } from '../../types';
 
 export type TravelSpotDetailProps = {
-  TravelSpotId: TravelSpot['id'];
+  travelSpotId: TravelSpot['id'];
 };

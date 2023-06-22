@@ -9,8 +9,10 @@ import { API_ENDPOINT, QUERY_KEY_PLURAL } from '../constants';
 import type { TravelBooklet, TravelBookletResponse } from '../types';
 
 export type CreateTravelBookletDTO = {
-  // TODO: Fix this type
-  data: Partial<TravelBooklet>;
+  data: {
+    title: TravelBooklet['title'];
+    text: TravelBooklet['text'];
+  };
 };
 
 export const createTravelBooklet = ({
