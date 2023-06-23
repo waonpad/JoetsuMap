@@ -1,6 +1,7 @@
 import type { ROLES as RoleTypes } from '@/lib/authorization';
 import type { UnAuthorizedScreenParams } from '@/screens/UnAuthorizedScreen/types';
 
+import type * as ImagePicker from 'expo-image-picker';
 import type { FieldValues, Path, RegisterOptions } from 'react-hook-form';
 
 export type BaseEntity = {
@@ -30,3 +31,5 @@ export type BaseNavigationParamList = {
   PermissionDenied: undefined;
   Unauthorized: UnAuthorizedScreenParams;
 };
+
+export type PickedImage = ImagePicker.ImagePickerSuccessResult['assets'][number];
