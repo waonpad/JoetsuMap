@@ -32,8 +32,9 @@ public class Notification extends BaseEntity {
   @Column(nullable = false)
   private String body;
 
-  @Column
-  private Map<String, Object> data;
+  // TODO: Mapが使えないので、dataをどう保存するか考える・・・
+  // @Column
+  // private Map<String, Object> data;
 
   @Column(nullable = false)
   private Boolean isRead;

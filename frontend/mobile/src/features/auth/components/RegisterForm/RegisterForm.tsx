@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form';
-import { Button, TextInput, View, Text } from 'react-native';
+import { Button, TextInput, View, Text, Image, ScrollView } from 'react-native';
 
 import {
   USERNAME_LABRL,
@@ -15,20 +15,29 @@ import { validationSchema } from './validationSchema';
 import type { RegisterFormProps } from './types';
 
 export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
-  const { control, handleSubmit, onSubmit, register, errors } = useLogics({ defaultValues });
+  const { control, handleSubmit, onSubmit, errors, icon, handleChoosePhoto } = useLogics({
+    defaultValues,
+  });
 
   return (
-    <View style={styles.container}>
+    // 画像を選択すると画面からはみ出るので、ScrollViewにした
+    <ScrollView style={styles.container}>
+      {/* 簡易実装 */}
+      {icon && (
+        <>
+          <Image source={{ uri: icon?.uri }} style={{ width: 300, height: 300 }} />
+        </>
+      )}
+      <Button title="Choose Photo" onPress={handleChoosePhoto} />
       <Controller
         name={'username'}
         control={control}
         rules={validationSchema.username}
-        render={() => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{USERNAME_LABRL}</Text>
-            {/* {...field}だと型エラーで動かない？？？？？？？？？ */}
-            <TextInput {...register('username')} />
-            {!!errors.username && <Text>{errors.username.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.username && <Text>{errors.username.message}</Text>}
           </>
         )}
       />
@@ -36,11 +45,11 @@ export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
         name={'email'}
         control={control}
         rules={validationSchema.email}
-        render={() => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{EMAIL_LABEL}</Text>
-            <TextInput {...register('email')} />
-            {!!errors.email && <Text>{errors.email.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.email && <Text>{errors.email.message}</Text>}
           </>
         )}
       />
@@ -48,11 +57,11 @@ export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
         name={'password'}
         control={control}
         rules={validationSchema.password}
-        render={() => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{PASSWORD_LABEL}</Text>
-            <TextInput {...register('password')} />
-            {!!errors.password && <Text>{errors.password.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.password && <Text>{errors.password.message}</Text>}
           </>
         )}
       />
@@ -60,17 +69,17 @@ export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
         name={'confirmPassword'}
         control={control}
         rules={validationSchema.confirmPassword}
-        render={() => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{CONFIRM_PASSWORD_LABEL}</Text>
-            <TextInput {...register('confirmPassword')} />
-            {!!errors.confirmPassword && <Text>{errors.confirmPassword.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.confirmPassword && <Text>{errors.confirmPassword.message}</Text>}
           </>
         )}
       />
       {/* ロールを設定するコンポーネントは多分不要 */}
       {/* アイコンを設定するコンポーネントを配置 */}
       <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
-    </View>
+    </ScrollView>
   );
 };

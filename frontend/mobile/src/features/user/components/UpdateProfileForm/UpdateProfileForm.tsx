@@ -17,11 +17,11 @@ export const UpdateProfileForm = ({ userId }: UpdateProfileFormProps) => {
         name={'username'}
         control={control}
         rules={validationSchema.username}
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{USERNAME_LABRL}</Text>
-            <TextInput {...field} />
-            {!!errors.username && <Text>{errors.username.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.username && <Text>{errors.username.message}</Text>}
           </>
         )}
       />

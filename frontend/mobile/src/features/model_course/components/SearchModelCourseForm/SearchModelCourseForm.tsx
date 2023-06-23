@@ -19,11 +19,11 @@ export const SearchModelCourseForm = ({
         name={'freeKeyword'}
         control={control}
         rules={validationSchema.freeKeyword}
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>キーワード</Text>
-            <TextInput {...field} />
-            {!!errors.freeKeyword && <Text>{errors.freeKeyword.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value} />
+            {errors.freeKeyword && <Text>{errors.freeKeyword.message}</Text>}
           </>
         )}
       />

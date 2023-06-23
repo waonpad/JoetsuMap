@@ -17,11 +17,11 @@ export const CreateModelCourseForm = ({ defaultValues }: CreateModelCourseFormPr
         name={'title'}
         control={control}
         rules={validationSchema.title}
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{TITLE_LABRL}</Text>
-            <TextInput {...field} />
-            {!!errors.title && <Text>{errors.title.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.title && <Text>{errors.title.message}</Text>}
           </>
         )}
       />

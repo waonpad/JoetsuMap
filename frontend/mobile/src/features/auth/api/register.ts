@@ -1,5 +1,6 @@
 import { axios } from '@/lib/axios';
-import type { ROLES } from '@/types';
+import type { PickedImage, ROLES } from '@/types';
+import { createFormData } from '@/utils/form';
 
 import { API_ENDPOINT, REGISTER } from '../constants';
 
@@ -11,9 +12,19 @@ export type RegisterCredentialsDTO = {
   confirmPassword: string;
   username: string;
   roles?: ROLES['name'][];
-  icon?: string;
+  icon?: PickedImage;
 };
 
-export const registerFn = (data: RegisterCredentialsDTO): Promise<JwtResponse> => {
-  return axios.post(`${API_ENDPOINT}/${REGISTER}`, data);
+export const registerFn = async (data: RegisterCredentialsDTO): Promise<JwtResponse> => {
+  return axios.post(
+    `${API_ENDPOINT}/${REGISTER}`,
+    // createFormData((data.icon && { icon: data.icon }) || {}, data),
+    // {
+    //   transformRequest: (data) => data,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // },
+    data,
+  );
 };

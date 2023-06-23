@@ -17,11 +17,11 @@ export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFo
         name={'title'}
         control={control}
         rules={validationSchema.title}
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{TITLE_LABRL}</Text>
-            <TextInput {...field} />
-            {!!errors.title && <Text>{errors.title.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.title && <Text>{errors.title.message}</Text>}
           </>
         )}
       />
@@ -29,11 +29,11 @@ export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFo
         name={'text'}
         control={control}
         rules={validationSchema.text}
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{TEXT_LABEL}</Text>
-            <TextInput {...field} />
-            {!!errors.text && <Text>{errors.text.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            {errors.text && <Text>{errors.text.message}</Text>}
           </>
         )}
       />

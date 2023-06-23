@@ -17,11 +17,11 @@ export const LoginForm = ({ defaultValues }: LoginFormProps) => {
         name={'username'}
         control={control}
         rules={validationSchema.username}
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{USERNAME_LABRL}</Text>
-            <TextInput {...field} />
-            {!!errors.username && <Text>{errors.username.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value} />
+            {errors.username && <Text>{errors.username.message}</Text>}
           </>
         )}
       />
@@ -29,11 +29,11 @@ export const LoginForm = ({ defaultValues }: LoginFormProps) => {
         name={'password'}
         control={control}
         rules={validationSchema.password}
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{PASSWORD_LABEL}</Text>
-            <TextInput {...field} />
-            {!!errors.password && <Text>{errors.password.message}</Text>}
+            <TextInput onBlur={onBlur} onChangeText={onChange} value={value} />
+            {errors.password && <Text>{errors.password.message}</Text>}
           </>
         )}
       />

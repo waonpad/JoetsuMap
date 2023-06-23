@@ -2,6 +2,7 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import { AuthNavigator } from '@/features/auth';
 import { NotificationNavigator } from '@/features/notification';
 import { PassingNavigator } from '@/features/passing';
 // import { TravelBookletNavigator } from '@/features/travel_booklet'; // 通信をしてしまうので今は使わない
@@ -17,6 +18,7 @@ export type AppNavigationParamList = {
   Notification: undefined;
   User: undefined;
   TravelSopt: undefined;
+  Auth: undefined; // テスト用にアクセスしやすいよう配置
 } & BaseNavigationParamList;
 
 const AppTab = createBottomTabNavigator<AppNavigationParamList>();
@@ -30,6 +32,8 @@ export const AppNavigator = () => {
       <AppTab.Screen name="Notification" component={NotificationNavigator} />
       <AppTab.Screen name="User" component={UserNavigator} />
       <AppTab.Screen name="TravelSopt" component={TravelSpotNavigator} />
+      {/* テスト用 */}
+      <AppTab.Screen name="Auth" component={AuthNavigator} />
     </AppTab.Navigator>
   );
 };

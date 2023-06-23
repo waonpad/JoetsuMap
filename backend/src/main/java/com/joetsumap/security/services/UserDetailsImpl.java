@@ -12,9 +12,6 @@ import com.joetsumap.domain.user.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-// import com.fasterxml.jackson.annotation.JsonIgnore;
-// passwordについてた、関係あるかも？
-
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class UserDetailsImpl implements UserDetails {
