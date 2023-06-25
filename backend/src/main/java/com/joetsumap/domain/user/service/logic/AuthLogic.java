@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.joetsumap.common.file.service.Base64FileService;
 import com.joetsumap.domain.role.entity.ERole;
 import com.joetsumap.domain.role.entity.Role;
 import com.joetsumap.domain.role.repository.RoleRepository;
@@ -39,13 +40,20 @@ public class AuthLogic {
   @Autowired
   PasswordEncoder encoder;
 
+  @Autowired
+  Base64FileService base64FileService;
+
   public void createUser(RegisterRequest registerRequest) {
+
+    String iconFileName = base64FileService.uploadImageFromBase64(registerRequest.getIcon(), "users/icons/");
 
     User user = new User();
 
     user.setUsername(registerRequest.getUsername());
     user.setEmail(registerRequest.getEmail());
     user.setPassword(encoder.encode(registerRequest.getPassword()));
+
+    user.setIcon(iconFileName);
 
     List<String> strRoles = registerRequest.getRoles();
 

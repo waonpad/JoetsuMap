@@ -30,6 +30,8 @@ export const useAuth = createdUseAuth;
 const useAuthCtx = () => {
   const [user, setUser] = useState<AuthUser | null>(null);
 
+  const [token, setToken] = useState<string | null>(null);
+
   const [load, setLoad] = useState(true);
 
   const navigation = useRootNavigation();
@@ -38,6 +40,7 @@ const useAuthCtx = () => {
     const response = await registerFn(data);
 
     setUser(omitToken(response));
+    setToken(response.token);
     storage.setToken(response.token);
   };
 
@@ -45,11 +48,13 @@ const useAuthCtx = () => {
     const response = await loginFn(data);
 
     setUser(omitToken(response));
+    setToken(response.token);
     storage.setToken(response.token);
   };
 
   const logout = () => {
     setUser(null);
+    setToken(null);
     storage.clearToken();
 
     navigation.navigate('App');
@@ -69,31 +74,13 @@ const useAuthCtx = () => {
       }
 
       setUser(data.user);
+      setToken(token);
       setLoad(false);
       return data;
     }
 
     setLoad(false);
     return null;
-  };
-
-  // テスト用
-  const registerAsTestUser = async () => {
-    await register({
-      username: 'testuser',
-      email: 'testuser@example.com',
-      password: 'testpassword',
-      confirmPassword: 'testpassword',
-      roles: ['ROLE_USER'],
-    });
-  };
-
-  // テスト用
-  const loginAsTestUser = async () => {
-    await login({
-      username: 'testuser',
-      password: 'testpassword',
-    });
   };
 
   useEffect(() => {
@@ -105,11 +92,10 @@ const useAuthCtx = () => {
 
   return {
     user,
+    token,
     register,
     login,
     logout,
     load,
-    registerAsTestUser,
-    loginAsTestUser,
   };
 };

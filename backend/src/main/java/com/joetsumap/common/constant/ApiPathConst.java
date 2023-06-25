@@ -18,6 +18,10 @@ public final class ApiPathConst {
   public static final String API_AUTH_REGISTER = "/register";
   public static final String API_AUTH_ME = "/me";
 
+  // File
+  // Image
+  public static final String API_IMAGE_PREFIX = API_PATH + "/images";
+
   // Role
   // Not used
 
