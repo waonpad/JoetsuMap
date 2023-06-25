@@ -36,18 +36,24 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterF
     formState: { errors },
   } = useForm<RegisterFormInput>({
     mode: 'onBlur',
-    defaultValues: { ...defaultValues, roles: ['ROLE_USER'] },
-    // defaultValues: {
-    //   username: 'testuser',
-    //   email: 'testuser@example.com',
-    //   password: 'password',
-    //   confirmPassword: 'password',
-    //   roles: ['ROLE_USER'],
-    // },
+    // defaultValues: { ...defaultValues, roles: ['ROLE_USER'] },
+    defaultValues: {
+      username: 'testuser',
+      email: 'testuser@example.com',
+      password: 'password',
+      confirmPassword: 'password',
+      roles: ['ROLE_USER'],
+    },
   });
 
   const onSubmit: SubmitHandler<RegisterFormInput> = (data: RegisterFormInput) => {
-    data.icon = icon; // 型を無視しているが、取り敢えずこれで実装
+    if (!icon?.base64) {
+      // 工数削減のため、アイコン必須化？
+      alert('アイコンを選択してください');
+      return;
+    }
+
+    data.icon = icon?.base64;
 
     register(data);
   };

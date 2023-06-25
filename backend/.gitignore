@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# テスト用に作成した画像はgit官営しない
+**/src/main/resources/static/images/**/*.jpeg

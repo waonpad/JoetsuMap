@@ -27,6 +27,9 @@ public class RegisterRequest {
   @Size(min = 8, max = 254)
   private String confirmPassword;
 
+  @NotBlank
+  private String icon;
+
 	@AssertTrue
 	public boolean isPasswordValid() {
 		if(password == null || confirmPassword == null) {

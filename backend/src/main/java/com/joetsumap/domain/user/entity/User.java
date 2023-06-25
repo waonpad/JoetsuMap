@@ -55,7 +55,7 @@ public class User extends BaseEntity {
   @JsonIgnore
   private String password;
 
-  @Column
+  @Column(nullable = false)
   private String icon;
 
   @Column

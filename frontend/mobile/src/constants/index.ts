@@ -34,3 +34,7 @@ export const FORE_LOCATION_TRACKING_SUBSCRIPTION_KEY =
   `${APP_NAME}_fore_location_tracking_subscription` as const;
 export const BACK_LOCATION_TRACKING_SUBSCRIPTION_KEY =
   `${APP_NAME}_back_location_tracking_subscription` as const;
+
+export const IMAGE_SOURCE_ENDPOINT = '/images' as const;
+export const IMAGE_SOURCE_BINARY = `${IMAGE_SOURCE_ENDPOINT}/byte` as const;
+export const IMAGE_SOURCE_BASE64 = `${IMAGE_SOURCE_ENDPOINT}/base64` as const;
