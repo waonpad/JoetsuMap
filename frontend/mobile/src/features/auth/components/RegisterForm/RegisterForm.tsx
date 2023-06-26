@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form';
-import { Button, TextInput, View, Text, Image, ScrollView } from 'react-native';
+import { Button, TextInput, View, Text, Image } from 'react-native';
 
 import {
   USERNAME_LABRL,
@@ -20,8 +20,7 @@ export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
   });
 
   return (
-    // 画像を選択すると画面からはみ出るので、ScrollViewにした
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {/* 簡易実装 */}
       {icon && (
         <>
@@ -80,6 +79,6 @@ export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
       {/* ロールを設定するコンポーネントは多分不要 */}
       {/* アイコンを設定するコンポーネントを配置 */}
       <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
-    </ScrollView>
+    </View>
   );
 };

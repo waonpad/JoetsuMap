@@ -6,6 +6,7 @@ import { View, ActivityIndicator } from 'react-native';
 
 import { BACK_LOCATION_TRACKING_TASK_NAME, IS_TUNNEL, LOCATION_TRACKING } from '@/constants';
 import { createTrackedLocation } from '@/features/tracked_location/api/createTrackedLocation';
+import type { LatLng } from '@/types';
 import createCtx from '@/utils/createCtx';
 
 import { useAuth } from './auth';
@@ -69,6 +70,8 @@ TaskManager.defineTask(BACK_LOCATION_TRACKING_TASK_NAME, async ({ data, error })
 export const useLocationTrackingCtx = () => {
   const auth = useAuth();
 
+  const [currentLocation, setCurrentLocation] = useState<LatLng | null>(null);
+
   const [foregroundSubscription, setForegroundSubscription] =
     useState<Location.LocationSubscription | null>(null);
 
@@ -105,6 +108,11 @@ export const useLocationTrackingCtx = () => {
       },
       (location) => {
         console.log('Location in foreground', location.coords);
+
+        setCurrentLocation({
+          lat: location.coords.latitude,
+          lng: location.coords.longitude,
+        });
 
         // サーバーに位置情報を送信する
         createTrackedLocation({
@@ -219,6 +227,7 @@ export const useLocationTrackingCtx = () => {
   }, [auth.user?.id]);
 
   return {
+    currentLocation,
     requestPermissions,
     startForegroundUpdate,
     stopForegroundUpdate,

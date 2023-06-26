@@ -47,6 +47,7 @@ const COMMON_CONFIGS = {
       bundleIdentifier: 'com.waonpad.joetsumap',
       config: {
         usesNonExemptEncryption: false,
+        googleMapsApiKey: process.env.RN_GOOGLE_MAPS_API_KEY_IOS,
       },
     },
     android: {
@@ -62,6 +63,11 @@ const COMMON_CONFIGS = {
         'ACCESS_BACKGROUND_LOCATION',
       ],
       googleServicesFile: './google-services.json',
+      config: {
+        googleMaps: {
+          apiKey: process.env.RN_GOOGLE_MAPS_API_KEY_ANDROID,
+        },
+      },
     },
     web: {
       favicon: './assets/favicon.png',

@@ -10,5 +10,6 @@ export const validationSchema: ReactHookFormValidationRules<CreateModelCourseFor
   travelSpotIds: {
     required: validations.required,
     minLength: validations.minLength(2),
+    maxLength: validations.maxLength(10),
   },
 };
