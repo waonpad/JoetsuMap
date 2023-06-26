@@ -859,6 +859,7 @@
                     "type": "array",
                     "minItems": 2,
                     "uniqueItems": true,
+                    "maxItems": 10,
                     "items": {
                       "type": "number"
                     }
@@ -933,6 +934,7 @@
                     "type": "array",
                     "minItems": 2,
                     "uniqueItems": true,
+                    "maxItems": 10,
                     "items": {
                       "type": "number"
                     }
@@ -1249,6 +1251,68 @@
           }
         }
       }
+    },
+    "/images/byte": {
+      "get": {
+        "summary": "指定されたパスにある画像を取得する",
+        "tags": [
+          "Image"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "byte[]を返す"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-images-byte",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "imagePath": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "components": {
@@ -1335,12 +1399,6 @@
           },
           "sender": {
             "$ref": "#/components/schemas/UserDTO"
-          },
-          "data": {
-            "type": [
-              "object",
-              "null"
-            ]
           }
         },
         "required": [
@@ -1348,8 +1406,7 @@
           "title",
           "body",
           "isRead",
-          "sender",
-          "data"
+          "sender"
         ]
       },
       "TravelSpotDTO": {
