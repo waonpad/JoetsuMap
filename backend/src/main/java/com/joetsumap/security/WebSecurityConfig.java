@@ -91,6 +91,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
           auth.requestMatchers("/api/auth/**").permitAll()
               .requestMatchers("/api/test/**").permitAll()
               .requestMatchers("/error").permitAll() // 追加
+              .requestMatchers("/api/images/**").permitAll() // 画像へのアクセスは認可不要
               .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // 静的リソースへのアクセスは認可不要
               .anyRequest().authenticated()
               // auth.anyRequest().permitAll() // 全許可 テスト用
