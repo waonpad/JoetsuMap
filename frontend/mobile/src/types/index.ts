@@ -5,7 +5,7 @@ import type * as ImagePicker from 'expo-image-picker';
 import type { FieldValues, Path, RegisterOptions } from 'react-hook-form';
 
 export type BaseEntity = {
-  id: string;
+  id: number;
   createdAt: Date;
   updatedAt: Date;
 };
