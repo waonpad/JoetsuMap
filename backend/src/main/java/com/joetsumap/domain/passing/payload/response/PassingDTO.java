@@ -3,7 +3,7 @@ package com.joetsumap.domain.passing.payload.response;
 import java.time.LocalDateTime;
 
 import com.joetsumap.domain.passing.entity.Passing;
-import com.joetsumap.domain.user.entity.User;
+import com.joetsumap.domain.user.payload.response.UserDTO;
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class PassingDTO {
   private Long id;
 
   @NotNull
-  private User passedUser;
+  private UserDTO passedUser;
 
   @NotNull
   private LocalDateTime createdAt;
@@ -29,9 +29,9 @@ public class PassingDTO {
   @NotNull
   private LocalDateTime updatedAt;
   
-  public PassingDTO(Passing passing, Long id) {
+  public PassingDTO(Passing passing, Long myId) {
     this.id = passing.getId();
-    this.passedUser = passing.getUser1().getId().equals(id) ? passing.getUser2() : passing.getUser1();
+    this.passedUser = new UserDTO(passing.getUser1().getId().equals(myId) ? passing.getUser2() : passing.getUser1());
     this.createdAt = passing.getCreatedAt();
     this.updatedAt = passing.getUpdatedAt();
   }

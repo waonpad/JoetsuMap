@@ -1,12 +1,10 @@
 package com.joetsumap.domain.modelcourse.entity;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.joetsumap.common.entity.BaseEntity;
-import com.joetsumap.db.customizedjointable.ModelCourseTravelSpot;
+import com.joetsumap.db.customizedjointable.ModelCourseTravelSpot.entity.ModelCourseTravelSpot;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -14,8 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import com.joetsumap.domain.travelspot.entity.TravelSpot;
 import com.joetsumap.domain.user.entity.User;
 
 @Entity
@@ -24,6 +22,7 @@ import com.joetsumap.domain.user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"author", "modelCourseTravelSpots"})
 public class ModelCourse extends BaseEntity {
 
   @Id
@@ -35,26 +34,16 @@ public class ModelCourse extends BaseEntity {
   private String title;
 
   @OneToMany(mappedBy = "modelCourse", fetch = FetchType.LAZY)
+  @OrderBy("spotOrder ASC") // 追加
   private List<ModelCourseTravelSpot> modelCourseTravelSpots = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id")
   private User author;
 
-  // NOTICE: 未検証
-  public void setTravelSpots(List<TravelSpot> travelSpots) {
-    modelCourseTravelSpots.clear();
-
-    for (int i = 0; i < travelSpots.size(); i++) {
-      modelCourseTravelSpots.add(new ModelCourseTravelSpot(this, travelSpots.get(i), i + 1));
-    }
-  }
-
-  // NOTICE: 未検証
-  public List<TravelSpot> getTravelSpots() {
-    return modelCourseTravelSpots.stream()
-        .sorted(Comparator.comparingInt(ModelCourseTravelSpot::getSpotOrder))
-        .map(ModelCourseTravelSpot::getTravelSpot)
-        .collect(Collectors.toList());
-  }
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(name = "bookmarked_model_courses",
+      joinColumns = @JoinColumn(name = "model_course_id"),
+      inverseJoinColumns = @JoinColumn(name = "user_id"))
+  private List<User> bookmarkedUsers = new ArrayList<>();
 }

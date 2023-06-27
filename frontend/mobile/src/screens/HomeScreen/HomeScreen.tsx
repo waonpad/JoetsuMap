@@ -61,15 +61,21 @@ export const HomeScreen = () => {
     <ScrollView style={styles.container}>
       <Text>{JSON.stringify(auth.user)}</Text>
       {/* https://docs.expo.dev/versions/latest/sdk/image/ */}
-      <Image
+      {/* <Image
         style={{ width: 100, height: 100 }}
         source={{
           uri: `${API_URL}${IMAGE_SOURCE_BINARY}?imagePath=${auth.user?.icon}`,
           // headers: { Authorization: `Bearer ${auth.token}` }, // 画像リソースへのアクセスは認可不要に
         }}
-      />
+      /> */}
       <Text>{APP_NAME}</Text>
       <Text>{JSON.stringify(location)}</Text>
+      <Button
+        title="ロードユーザー"
+        onPress={() => {
+          auth.loadUser();
+        }}
+      />
       <Button
         title="登録画面へ(テスト用)"
         onPress={() => {

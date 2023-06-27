@@ -1,6 +1,7 @@
 package com.joetsumap.domain.user.service.logic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,12 @@ import com.joetsumap.domain.role.repository.RoleRepository;
 import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.payload.request.RegisterRequest;
 import com.joetsumap.domain.user.payload.response.JwtResponse;
+import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.security.jwt.JwtUtils;
 import com.joetsumap.security.services.UserDetailsImpl;
+
+import com.joetsumap.domain.user.constant.UserConst;
 
 @Service
 public class AuthLogic {
@@ -45,7 +49,7 @@ public class AuthLogic {
 
   public void createUser(RegisterRequest registerRequest) {
 
-    String iconFileName = base64FileService.uploadImageFromBase64(registerRequest.getIcon(), "users/icons/");
+    String iconFileName = base64FileService.uploadImageFromBase64(registerRequest.getIcon(), UserConst.ICON_SAVE_DIR);
 
     User user = new User();
 
@@ -95,7 +99,7 @@ public class AuthLogic {
     
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-    return new JwtResponse(jwt, userDetails.getUser());
+    return new JwtResponse(jwt, new UserDTO(userDetails.getUser()));
   }
 
   public void existsUserCheck(String username, String email) {

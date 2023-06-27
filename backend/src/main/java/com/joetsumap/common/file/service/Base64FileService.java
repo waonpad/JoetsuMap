@@ -24,14 +24,14 @@ import org.springframework.stereotype.Service;
 public class Base64FileService {
 
   public String uploadImageFromBase64(String base64Image, String saveDir) {
-    String fileName = UUID.randomUUID().toString() + ".jpeg";
+    String fileName = UUID.randomUUID().toString() + FileConst.IMAGE_SAVE_FORMAT;
 
-    saveDir = "src/main/resources/static/images/" + saveDir;
+    String realSaveDir = FileConst.IMAGE_SAVE_DIR + saveDir;
 
     try {
       byte[] imageBytes = Base64.getDecoder().decode(base64Image);
 
-      Path destinationFile = Path.of(saveDir + fileName);
+      Path destinationFile = Path.of(realSaveDir + fileName);
       Files.copy(
         new ByteArrayInputStream(imageBytes),
         destinationFile,
@@ -48,7 +48,9 @@ public class Base64FileService {
   }
 
   public byte[] getImageToByteArray(String imagePath) throws Exception {
-    Path filePath = Paths.get(imagePath);
+    String realImagePath = FileConst.IMAGE_SAVE_DIR + imagePath;
+
+    Path filePath = Paths.get(realImagePath);
 
     if (!Files.exists(filePath)) {
       throw new Exception("File doesn't exist.");
@@ -67,7 +69,9 @@ public class Base64FileService {
   }
   
   public Base64ResponseDTO getImageToBase64(String imagePath) throws Exception {
-    Path filePath = Paths.get(imagePath);
+    String realImagePath = FileConst.IMAGE_SAVE_DIR + imagePath;
+
+    Path filePath = Paths.get(realImagePath);
 
     if (!Files.exists(filePath)) {
       throw new Exception("File doesn't exist.");

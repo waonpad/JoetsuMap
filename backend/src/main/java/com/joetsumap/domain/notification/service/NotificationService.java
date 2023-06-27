@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.domain.notification.entity.Notification;
+import com.joetsumap.domain.notification.payload.response.NotificationDTO;
 import com.joetsumap.domain.notification.payload.response.NotificationListResponse;
 import com.joetsumap.domain.notification.repository.NotificationRepository;
 import com.joetsumap.domain.user.repository.UserRepository;
@@ -39,7 +40,9 @@ public class NotificationService {
     // TODO: 本来はユーザーIDを元に取得
     List<Notification> notification = notificationRepository.findAll();
 
-    return new NotificationListResponse(notification);
+    List<NotificationDTO> notificationDTOList = notification.stream().map(NotificationDTO::new).toList();
+
+    return new NotificationListResponse(notificationDTOList);
   }
 
   public void read(UserDetailsImpl userDetails, Long id) {
@@ -68,6 +71,8 @@ public class NotificationService {
 
   // 通知を送信するメソッド
   public void sendNotification(UserDetailsImpl sender, String token, String title, String message, Map<String, Object> data) throws PushClientException {
+    // TODO: 送信したら、出たーベースに保存する
+    
     if (!PushClient.isExponentPushToken(token)) throw new Error("Token:" + token + " is not a valid token.");
 
     ExpoPushMessage expoPushMessage = new ExpoPushMessage();

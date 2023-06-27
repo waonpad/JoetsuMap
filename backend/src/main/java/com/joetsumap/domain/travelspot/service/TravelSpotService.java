@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.joetsumap.domain.travelspot.entity.TravelSpot;
 import com.joetsumap.domain.travelspot.payload.request.CreateTravelSpotRequest;
 import com.joetsumap.domain.travelspot.payload.request.UpdateTravelSpotRequest;
+import com.joetsumap.domain.travelspot.payload.response.TravelSpotDTO;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotListResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
 import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
@@ -26,14 +27,16 @@ public class TravelSpotService {
 
     List<TravelSpot> travelspot = travelspotRepository.findAll();
 
-    return new TravelSpotListResponse(travelspot);
+    List<TravelSpotDTO> travelspotDTOList = travelspot.stream().map(TravelSpotDTO::new).toList();
+
+    return new TravelSpotListResponse(travelspotDTOList);
   }
 
   public TravelSpotResponse findById(Long id) {
 
     TravelSpot travelspot = travelspotRepository.findById(id).get();
 
-    return new TravelSpotResponse(travelspot);
+    return new TravelSpotResponse(new TravelSpotDTO(travelspot));
   }
 
   public TravelSpotResponse create(UserDetailsImpl userDetails, CreateTravelSpotRequest createRequest) {
@@ -42,7 +45,7 @@ public class TravelSpotService {
 
     travelspotRepository.save(travelspot);
 
-    return new TravelSpotResponse(travelspot);
+    return new TravelSpotResponse(new TravelSpotDTO(travelspot));
   }
 
   public TravelSpotResponse update(UserDetailsImpl userDetails, UpdateTravelSpotRequest updateRequest, Long id) {
@@ -51,7 +54,7 @@ public class TravelSpotService {
 
     // Update Entity Logic Here ...
 
-    return new TravelSpotResponse(travelspot);
+    return new TravelSpotResponse(new TravelSpotDTO(travelspot));
   }
 
   public void delete(UserDetailsImpl userDetails, Long id) {

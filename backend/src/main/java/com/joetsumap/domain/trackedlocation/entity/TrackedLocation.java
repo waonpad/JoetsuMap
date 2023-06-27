@@ -7,13 +7,18 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import com.joetsumap.domain.user.entity.User;
 
 @Entity
 @Data
 @Table(name = "tracked_locations")
+@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"author"})
 public class TrackedLocation extends BaseEntity {
 
   @Id
@@ -24,6 +29,7 @@ public class TrackedLocation extends BaseEntity {
   @NotNull
   private double latitude;
 
+  @Column(nullable = false)
   @NotNull
   private double longitude;
 

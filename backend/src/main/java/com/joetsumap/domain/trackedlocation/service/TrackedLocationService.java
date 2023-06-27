@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.joetsumap.domain.trackedlocation.entity.TrackedLocation;
 import com.joetsumap.domain.trackedlocation.payload.request.CreateTrackedLocationRequest;
+import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationDTO;
 import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationListResponse;
 import com.joetsumap.domain.trackedlocation.repository.TrackedLocationRepository;
 import com.joetsumap.security.services.UserDetailsImpl;
@@ -25,7 +26,9 @@ public class TrackedLocationService {
     // TODO: 本来はユーザーIDを元に取得
     List<TrackedLocation> trackedlocation = trackedlocationRepository.findAll();
 
-    return new TrackedLocationListResponse(trackedlocation);
+    List<TrackedLocationDTO> trackedlocationDTOList = trackedlocation.stream().map(TrackedLocationDTO::new).toList();
+
+    return new TrackedLocationListResponse(trackedlocationDTOList);
   }
 
   public void create(UserDetailsImpl userDetails, CreateTrackedLocationRequest createRequest) {

@@ -69,4 +69,6 @@ public class TravelSpotController {
 
     return ResponseEntity.noContent().build();
   }
+
+  // TODO: ブックマーク機能
 }

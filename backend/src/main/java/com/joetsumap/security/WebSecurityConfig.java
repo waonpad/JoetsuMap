@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 //import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -92,6 +93,12 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
               .requestMatchers("/api/test/**").permitAll()
               .requestMatchers("/error").permitAll() // 追加
               .requestMatchers("/api/images/**").permitAll() // 画像へのアクセスは認可不要
+              .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+              .requestMatchers(HttpMethod.GET, "/api/travel_spots/**").permitAll()
+              .requestMatchers("/api/travel_spots/bookmarks/**").authenticated()
+              .requestMatchers(HttpMethod.GET, "/api/travel_booklets/**").permitAll()
+              .requestMatchers(HttpMethod.GET, "/api/model_courses/**").permitAll()
+              .requestMatchers("/api/model_courses/bookmarks/**").authenticated()
               .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // 静的リソースへのアクセスは認可不要
               .anyRequest().authenticated()
               // auth.anyRequest().permitAll() // 全許可 テスト用

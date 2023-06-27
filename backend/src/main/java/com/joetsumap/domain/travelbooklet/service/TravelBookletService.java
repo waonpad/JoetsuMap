@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.joetsumap.domain.travelbooklet.entity.TravelBooklet;
 import com.joetsumap.domain.travelbooklet.payload.request.CreateTravelBookletRequest;
 import com.joetsumap.domain.travelbooklet.payload.request.UpdateTravelBookletRequest;
+import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletDTO;
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletListResponse;
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletResponse;
 import com.joetsumap.domain.travelbooklet.repository.TravelBookletRepository;
@@ -26,14 +27,16 @@ public class TravelBookletService {
 
     List<TravelBooklet> travelbooklet = travelbookletRepository.findAll();
 
-    return new TravelBookletListResponse(travelbooklet);
+    List<TravelBookletDTO> travelbookletDTOList = travelbooklet.stream().map(TravelBookletDTO::new).toList();
+
+    return new TravelBookletListResponse(travelbookletDTOList);
   }
 
   public TravelBookletResponse findById(Long id) {
 
     TravelBooklet travelbooklet = travelbookletRepository.findById(id).get();
 
-    return new TravelBookletResponse(travelbooklet);
+    return new TravelBookletResponse(new TravelBookletDTO(travelbooklet));
   }
 
   public TravelBookletResponse create(UserDetailsImpl userDetails, CreateTravelBookletRequest createRequest) {
@@ -42,7 +45,7 @@ public class TravelBookletService {
 
     travelbookletRepository.save(travelbooklet);
 
-    return new TravelBookletResponse(travelbooklet);
+    return new TravelBookletResponse(new TravelBookletDTO(travelbooklet));
   }
 
   public TravelBookletResponse update(UserDetailsImpl userDetails, UpdateTravelBookletRequest updateRequest, Long id) {
@@ -51,7 +54,7 @@ public class TravelBookletService {
 
     // Update Entity Logic Here ...
 
-    return new TravelBookletResponse(travelbooklet);
+    return new TravelBookletResponse(new TravelBookletDTO(travelbooklet));
   }
 
   public TravelBookletResponse delete(UserDetailsImpl userDetails, Long id) {
@@ -60,6 +63,6 @@ public class TravelBookletService {
 
     travelbookletRepository.delete(travelbooklet);
 
-    return new TravelBookletResponse(travelbooklet);
+    return new TravelBookletResponse(new TravelBookletDTO(travelbooklet));
   }
 }

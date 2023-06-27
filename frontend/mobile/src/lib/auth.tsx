@@ -97,5 +97,6 @@ const useAuthCtx = () => {
     login,
     logout,
     load,
+    loadUser, // テスト用に追加
   };
 };

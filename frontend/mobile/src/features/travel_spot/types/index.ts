@@ -7,10 +7,11 @@ export type TravelSpot = {
   address: string;
   tel: string;
   name: string;
-  type: SPOTTYPE;
+  types: SPOTTYPE[];
   photo: Photo;
   coords: LatLng;
-  author: User;
+  author?: User;
+  bookmarkedUsers?: User[];
 } & BaseEntity;
 
 export type TravelSpotResponse = {

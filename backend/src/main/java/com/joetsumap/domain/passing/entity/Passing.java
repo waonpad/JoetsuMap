@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import com.joetsumap.domain.user.entity.User;
 
@@ -19,6 +20,7 @@ import com.joetsumap.domain.user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"user1", "user2"})
 public class Passing extends BaseEntity {
 
   @Id

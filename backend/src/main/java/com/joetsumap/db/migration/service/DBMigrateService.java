@@ -1,16 +1,18 @@
 package com.joetsumap.db.migration.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.joetsumap.domain.role.entity.ERole;
-import com.joetsumap.domain.role.entity.Role;
-import com.joetsumap.domain.role.repository.RoleRepository;
+import com.joetsumap.db.migration.service.logic.ModelCourseMigrateLogic;
+import com.joetsumap.db.migration.service.logic.NotificationMigrateLogic;
+import com.joetsumap.db.migration.service.logic.PassingMigrateLogic;
+import com.joetsumap.db.migration.service.logic.RoleMigrateLogic;
+import com.joetsumap.db.migration.service.logic.TrackedLocationMigrateLogic;
+import com.joetsumap.db.migration.service.logic.TravelBookletMigrateLogic;
+import com.joetsumap.db.migration.service.logic.TravelSpotMigrateLogic;
+import com.joetsumap.db.migration.service.logic.TravelSpotTypeMigrateLogic;
+import com.joetsumap.db.migration.service.logic.UserMigrateLogic;
+import com.joetsumap.domain.user.entity.User;
 
 import jakarta.transaction.Transactional;
 
@@ -19,22 +21,62 @@ import jakarta.transaction.Transactional;
 public class DBMigrateService {
   
   @Autowired
-  private RoleRepository roleRepository;
+  private RoleMigrateLogic roleMigrateLogic;
+
+  @Autowired
+  private TravelSpotTypeMigrateLogic travelSpotTypeMigrateLogic;
+
+  @Autowired
+  private UserMigrateLogic userMigrateLogic;
+
+  @Autowired
+  private TravelSpotMigrateLogic travelSpotMigrateLogic;
+
+  @Autowired
+  private TravelBookletMigrateLogic travelBookletMigrateLogic;
+
+  @Autowired
+  private TrackedLocationMigrateLogic trackedLocationMigrateLogic;
+
+  @Autowired
+  private PassingMigrateLogic passingMigrateLogic;
+
+  @Autowired
+  private NotificationMigrateLogic notificationMigrateLogic;
+
+  @Autowired
+  private ModelCourseMigrateLogic modelCourseMigrateLogic;
 
   public void migrate() {
-    List<Role> roles = new ArrayList<>();
 
-    Arrays.asList(ERole.values()).forEach(name -> {
-      Optional<Role> targetRole = roleRepository.findByName(name);
-      if (!targetRole.isPresent()) {
-          Role role = new Role();
-          role.setName(name);
-          roles.add(role);
-      }
-    });
-    
-    if (roles.size() > 0) {
-      roleRepository.saveAll(roles);
-    }
+    // ロールのマイグレーション
+    roleMigrateLogic.migrate();
+
+    // 観光地タイプのマイグレーション
+    travelSpotTypeMigrateLogic.migrate();
+
+    // 管理者のマイグレーション
+    User admin = userMigrateLogic.migrateAdmin();
+
+    // ユーザーのマイグレーション
+    userMigrateLogic.migrate();
+
+    // 観光地のマイグレーション
+    travelSpotMigrateLogic.migrate(admin);
+
+    // 旅のしおりのマイグレーション
+    travelBookletMigrateLogic.migrate();
+
+    // 位置情報のマイグレーション
+    trackedLocationMigrateLogic.migrate();
+
+    // すれ違い情報のマイグレーション
+    passingMigrateLogic.migrate();
+
+    // 通知のマイグレーション
+    notificationMigrateLogic.migrate();
+
+    // モデルコースのマイグレーション
+    modelCourseMigrateLogic.migrate();
   }
 }

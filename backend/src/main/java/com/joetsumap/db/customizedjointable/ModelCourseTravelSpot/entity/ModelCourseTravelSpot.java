@@ -1,4 +1,4 @@
-package com.joetsumap.db.customizedjointable;
+package com.joetsumap.db.customizedjointable.ModelCourseTravelSpot.entity;
 
 import com.joetsumap.domain.modelcourse.entity.ModelCourse;
 import com.joetsumap.domain.travelspot.entity.TravelSpot;
@@ -6,20 +6,18 @@ import com.joetsumap.domain.travelspot.entity.TravelSpot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "model_course_travel_spot")
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude= {"modelCourse", "travelSpot"})
 public class ModelCourseTravelSpot {
-
-  public ModelCourseTravelSpot(ModelCourse modelCourse, TravelSpot travelSpot, int i) {
-    this.modelCourse = modelCourse;
-    this.travelSpot = travelSpot;
-    this.spotOrder = i;
-  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +35,6 @@ public class ModelCourseTravelSpot {
 
   @Column(nullable = false)
   @NotNull
-  @Min(1)
+  @Min(0)
   private Integer spotOrder;
 }

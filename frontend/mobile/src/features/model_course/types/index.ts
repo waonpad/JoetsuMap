@@ -6,6 +6,7 @@ export type ModelCourse = {
   title: string;
   travelSpots: TravelSpot[];
   author: User;
+  bookmarkedUsers?: User[];
 } & BaseEntity;
 
 export type ModelCourseResponse = {
