@@ -9,6 +9,7 @@ import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.payload.request.UpdateProfileRequest;
 import com.joetsumap.domain.user.payload.response.UserListResponse;
 import com.joetsumap.domain.user.payload.response.UserResponse;
+import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -23,16 +24,19 @@ public class UserService {
 
   public UserListResponse findAll() {
 
-    List<User> user = userRepository.findAll();
+    List<User> users = userRepository.findAll();
 
-    return new UserListResponse(user);
+    // userをUserDTOに変換する
+    List<UserDTO> userDTOList = users.stream().map(user -> new UserDTO(user)).toList();
+
+    return new UserListResponse(userDTOList);
   }
 
   public UserResponse findById(Long id) {
 
     User user = userRepository.findById(id).get();
 
-    return new UserResponse(user);
+    return new UserResponse(new UserDTO(user));
   }
 
   public UserResponse updateProfile(UserDetailsImpl userDetails, UpdateProfileRequest updateRequest, Long id) {
@@ -41,7 +45,7 @@ public class UserService {
 
     // Update Entity Logic Here ...
 
-    return new UserResponse(user);
+    return new UserResponse(new UserDTO(user));
   }
 
   public UserResponse delete(UserDetailsImpl userDetails, Long id) {
@@ -50,6 +54,6 @@ public class UserService {
 
     userRepository.delete(user);
 
-    return new UserResponse(user);
+    return new UserResponse(new UserDTO(user));
   }
 }

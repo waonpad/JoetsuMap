@@ -18,7 +18,11 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<LoginForm
     formState: { errors },
   } = useForm<LoginFormInput>({
     mode: 'onBlur',
-    defaultValues: { ...defaultValues },
+    // defaultValues: { ...defaultValues },
+    defaultValues: {
+      username: 'testuser',
+      password: 'password',
+    },
   });
 
   const onSubmit: SubmitHandler<LoginFormInput> = (data: LoginFormInput) => {

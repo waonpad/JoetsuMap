@@ -1,9 +1,12 @@
 package com.joetsumap.domain.user.entity;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joetsumap.common.entity.BaseEntity;
 import com.joetsumap.domain.modelcourse.entity.ModelCourse;
 import com.joetsumap.domain.notification.entity.Notification;
@@ -21,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -32,6 +36,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"roles", "notifications", "travelBooklets", "trackedLocations", "travelSpots", "modelCourses", "passings1", "passings2"})
 public class User extends BaseEntity {
 
   @Id
@@ -62,32 +67,36 @@ public class User extends BaseEntity {
   @JsonIgnore
   private String expoPushToken;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "user_roles", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(	name = "user_roles", 
+              joinColumns = @JoinColumn(name = "user_id"), 
+              inverseJoinColumns = @JoinColumn(name = "role_id"))
   private List<Role> roles = new ArrayList<>();
 
-  // TODO: 参照 http://sparkling-software.club/pekublog/?p=1945
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<TravelBooklet> travelBooklets = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  // private List<TravelSpot> travelSpots = new ArrayList<>();
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<TravelSpot> travelSpots = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  // private List<ModelCourse> modelCourses = new ArrayList<>();
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<ModelCourse> modelCourses = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  // private List<TravelBooklet> travelBooklets = new ArrayList<>();
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<TrackedLocation> trackedLocations = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  // private List<TrackedLocation> trackedLocations = new ArrayList<>();
+  @OneToMany(mappedBy = "recipient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Notification> notifications = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "recipient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  // private List<Notification> notifications = new ArrayList<>();
+  @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Passing> passings1 = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "user1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  // private List<Passing> passings1 = new ArrayList<>();
+  @OneToMany(mappedBy = "user2", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Passing> passings2 = new ArrayList<>();
 
-  // @OneToMany(mappedBy = "user2", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  // private List<Passing> passings2 = new ArrayList<>();
+  @ManyToMany(mappedBy = "bookmarkedUsers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<TravelSpot> bookmarkedTravelSpots = new ArrayList<>();
+
+  @ManyToMany(mappedBy = "bookmarkedUsers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<ModelCourse> bookmarkedModelCourses = new ArrayList<>();
 }

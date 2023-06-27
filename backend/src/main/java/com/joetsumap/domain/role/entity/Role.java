@@ -7,27 +7,30 @@ import com.joetsumap.common.entity.BaseEntity;
 import com.joetsumap.domain.user.entity.User;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @Table(name = "roles")
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = "users")
 public class Role extends BaseEntity {
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private Long id;
 
   @Enumerated(EnumType.STRING)
   @Column(length = 20, nullable = false)
   private ERole name;
 
-  // @ManyToMany(fetch = FetchType.LAZY)
-  // @JoinTable(  name = "user_roles", 
-  //       joinColumns = @JoinColumn(name = "role_id"), 
-  //       inverseJoinColumns = @JoinColumn(name = "user_id"))
-  // private List<User> users = new ArrayList<>();
+  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
+  private List<User> users = new ArrayList<>();
 
 }

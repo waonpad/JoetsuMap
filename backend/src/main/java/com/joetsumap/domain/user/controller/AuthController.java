@@ -45,6 +45,6 @@ public class AuthController {
   @GetMapping(API_AUTH_ME)
   public UserResponse getMe(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-    return  authService.getMe(userDetails);
+    return authService.getMe(userDetails);
   }
 }

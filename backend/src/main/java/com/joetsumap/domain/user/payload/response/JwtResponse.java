@@ -1,7 +1,5 @@
 package com.joetsumap.domain.user.payload.response;
 
-import com.joetsumap.domain.user.entity.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +11,6 @@ public class JwtResponse {
   
   private String token;
 
-  private User user;
+  private UserDTO user;
   
 }

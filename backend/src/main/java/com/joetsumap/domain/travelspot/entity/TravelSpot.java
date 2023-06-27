@@ -1,18 +1,22 @@
 package com.joetsumap.domain.travelspot.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.joetsumap.common.entity.BaseEntity;
-import com.joetsumap.db.customizedjointable.ModelCourseTravelSpot;
+import com.joetsumap.db.customizedjointable.ModelCourseTravelSpot.entity.ModelCourseTravelSpot;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import com.joetsumap.domain.user.entity.User;
 
@@ -26,6 +30,7 @@ import com.joetsumap.domain.user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"modelCourseTravelSpots", "author"})
 public class TravelSpot extends BaseEntity {
 
   @Id
@@ -45,26 +50,39 @@ public class TravelSpot extends BaseEntity {
   @Size(max = 21)
   private String tel;
 
-  @Column(nullable = false)
-  @NotBlank
-  private ETravelSpotType type;
+  // リレーションでの定義に変更
+  // @Column(nullable = false)
+  // @NotBlank
+  // private ETravelSpotType type;
 
   @Column(nullable = false)
   @NotBlank
-  private List<String> photos = new ArrayList<>();
+  private String photo;
 
   @Column(nullable = false)
-  @NotBlank
+  @NotNull
   private double latitude;
 
   @Column(nullable = false)
-  @NotBlank
+  @NotNull
   private double longitude;
 
-  @OneToMany(mappedBy = "travelSpot", fetch = FetchType.LAZY)
-  private List<ModelCourseTravelSpot> modelCourseTravelSpots = new ArrayList<>();
+  // @OneToMany(mappedBy = "travelSpot", fetch = FetchType.LAZY)
+  // private Set<ModelCourseTravelSpot> modelCourseTravelSpots = new HashSet<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id")
   private User author;
+
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(	name = "bookmarked_travel_spots",
+              joinColumns = @JoinColumn(name = "travel_spot_id"),
+              inverseJoinColumns = @JoinColumn(name = "user_id"))
+  private List<User> bookmarkedUsers = new ArrayList<>();
+
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(	name = "granted_travel_spot_types",
+              joinColumns = @JoinColumn(name = "travel_spot_id"),
+              inverseJoinColumns = @JoinColumn(name = "travel_spot_type_id"))
+  private List<TravelSpotType> types = new ArrayList<>();
 }

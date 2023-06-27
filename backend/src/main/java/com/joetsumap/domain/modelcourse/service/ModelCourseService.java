@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.joetsumap.domain.modelcourse.entity.ModelCourse;
 import com.joetsumap.domain.modelcourse.payload.request.CreateModelCourseRequest;
 import com.joetsumap.domain.modelcourse.payload.request.UpdateModelCourseRequest;
+import com.joetsumap.domain.modelcourse.payload.response.ModelCourseDTO;
 import com.joetsumap.domain.modelcourse.payload.response.ModelCourseListResponse;
 import com.joetsumap.domain.modelcourse.payload.response.ModelCourseResponse;
 import com.joetsumap.domain.modelcourse.repository.ModelCourseRepository;
@@ -26,14 +27,16 @@ public class ModelCourseService {
 
     List<ModelCourse> modelcourse = modelcourseRepository.findAll();
 
-    return new ModelCourseListResponse(modelcourse);
+    List<ModelCourseDTO> modelcourseDTOList = modelcourse.stream().map(ModelCourseDTO::new).toList();
+
+    return new ModelCourseListResponse(modelcourseDTOList);
   }
 
   public ModelCourseResponse findById(Long id) {
 
     ModelCourse modelcourse = modelcourseRepository.findById(id).get();
 
-    return new ModelCourseResponse(modelcourse);
+    return new ModelCourseResponse(new ModelCourseDTO(modelcourse));
   }
 
   public ModelCourseResponse create(UserDetailsImpl userDetails, CreateModelCourseRequest createRequest) {
@@ -42,7 +45,7 @@ public class ModelCourseService {
 
     modelcourseRepository.save(modelcourse);
 
-    return new ModelCourseResponse(modelcourse);
+    return new ModelCourseResponse(new ModelCourseDTO(modelcourse));
   }
 
   public ModelCourseResponse update(UserDetailsImpl userDetails, UpdateModelCourseRequest updateRequest, Long id) {
@@ -51,7 +54,7 @@ public class ModelCourseService {
 
     // Update Entity Logic Here ...
 
-    return new ModelCourseResponse(modelcourse);
+    return new ModelCourseResponse(new ModelCourseDTO(modelcourse));
   }
 
   public void delete(UserDetailsImpl userDetails, Long id) {

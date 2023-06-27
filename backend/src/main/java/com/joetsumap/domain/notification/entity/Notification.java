@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"sender", "recipient"})
 public class Notification extends BaseEntity {
 
   @Id
@@ -24,7 +26,7 @@ public class Notification extends BaseEntity {
   private Long id;
 
   @Column(nullable = false)
-  private String to;
+  private String recipientToken; // toが予約語なので、recipientTokenに変更
 
   @Column(nullable = false)
   private String title;

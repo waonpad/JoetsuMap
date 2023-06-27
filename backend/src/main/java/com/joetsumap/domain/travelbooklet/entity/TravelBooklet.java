@@ -3,6 +3,9 @@ package com.joetsumap.domain.travelbooklet.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.joetsumap.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import com.joetsumap.domain.user.entity.User;
 
@@ -19,6 +23,7 @@ import com.joetsumap.domain.user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"author"})
 public class TravelBooklet extends BaseEntity {
 
   @Id
@@ -35,7 +40,7 @@ public class TravelBooklet extends BaseEntity {
 
   @Column(nullable = false)
   @NotBlank
-  private List<String> photos = new ArrayList<>();
+  private String photo;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id")

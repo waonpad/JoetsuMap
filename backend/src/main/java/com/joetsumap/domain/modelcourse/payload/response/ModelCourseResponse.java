@@ -1,7 +1,5 @@
 package com.joetsumap.domain.modelcourse.payload.response;
 
-import com.joetsumap.domain.modelcourse.entity.ModelCourse;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,5 +9,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class ModelCourseResponse {
   
-  private ModelCourse modelcourse;
+  private ModelCourseDTO modelcourse;
 }
