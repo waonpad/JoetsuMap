@@ -132,12 +132,7 @@
             }
           }
         },
-        "operationId": "get-auth-me",
-        "security": [
-          {
-            "jwt": []
-          }
-        ]
+        "operationId": "get-auth-me"
       }
     },
     "/auth/login": {
@@ -1249,7 +1244,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
       }
     },
     "/images/byte": {
@@ -1399,6 +1399,14 @@
           },
           "sender": {
             "$ref": "#/components/schemas/UserDTO"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "required": [
@@ -1429,7 +1437,7 @@
           "name": {
             "type": "string"
           },
-          "type": {
+          "types": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ETravelSpotType"
@@ -1457,9 +1465,6 @@
             "items": {
               "$ref": "#/components/schemas/UserDTO"
             }
-          },
-          "exampleModelCourses": {
-            "$ref": "#/components/schemas/ModelCourseDTO"
           }
         },
         "required": [
@@ -1467,7 +1472,7 @@
           "address",
           "tel",
           "name",
-          "type",
+          "types",
           "photo",
           "coords",
           "author",
