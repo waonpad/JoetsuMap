@@ -61,6 +61,7 @@ public class AuthLogic {
 
     List<String> strRoles = registerRequest.getRoles();
 
+    // データベースへの反映はaddRoleメソッドで行っている
     addRole(user, strRoles);
   }
 
@@ -99,17 +100,22 @@ public class AuthLogic {
     
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-    return new JwtResponse(jwt, new UserDTO(userDetails.getUser()));
+    UserDTO userDTO = new UserDTO(userDetails.getUser());
+    userDTO.setRoles(userDetails.getUser().getRoles().stream().map(role -> role.getName()).toList());
+
+    return new JwtResponse(jwt, userDTO);
   }
 
-  public void existsUserCheck(String username, String email) {
+  public boolean existsUserCheck(String username, String email) {
 
     if (userRepository.existsByUsername(username)) {
-      throw new RuntimeException("Error: Username is already taken!");
+      return true;
     }
 
     if (userRepository.existsByEmail(email)) {
-      throw new RuntimeException("Error: Email is already in use!");
+      return true;
     }
+
+    return false;
   }
 }

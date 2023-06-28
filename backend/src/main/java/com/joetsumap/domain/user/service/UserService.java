@@ -11,7 +11,9 @@ import com.joetsumap.domain.user.payload.response.UserListResponse;
 import com.joetsumap.domain.user.payload.response.UserResponse;
 import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
+import com.joetsumap.error.constant.ExceptionMessageConst;
 import com.joetsumap.security.services.UserDetailsImpl;
+import com.joetsumap.error.util.ErrorUtil;
 
 import jakarta.transaction.Transactional;
 
@@ -22,38 +24,53 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
+  /**
+   * ユーザーを全件取得する
+   */
   public UserListResponse findAll() {
 
     List<User> users = userRepository.findAll();
 
-    // userをUserDTOに変換する
-    List<UserDTO> userDTOList = users.stream().map(user -> new UserDTO(user)).toList();
+    List<UserDTO> userDTOList = users.stream().map(user -> {
+      UserDTO userDTO = new UserDTO(user);
+      userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());
+
+      return userDTO;
+  }).toList();
 
     return new UserListResponse(userDTOList);
   }
 
+  /**
+   * ユーザーをIDで取得する
+   */
   public UserResponse findById(Long id) {
 
     User user = userRepository.findById(id).get();
 
-    return new UserResponse(new UserDTO(user));
+    UserDTO userDTO = new UserDTO(user);
+    userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());
+
+    return new UserResponse(userDTO);
   }
 
+  /**
+   * ユーザーのプロフィールを更新する
+   */
   public UserResponse updateProfile(UserDetailsImpl userDetails, UpdateProfileRequest updateRequest, Long id) {
 
     User user = userRepository.findById(id).get();
 
-    // Update Entity Logic Here ...
+    ErrorUtil.checkAuthorWithException(userDetails, user.getId());
 
-    return new UserResponse(new UserDTO(user));
-  }
+    // ユーザーのプロフィールを更新する
+    user.setUsername(updateRequest.getUsername() != null ? updateRequest.getUsername() : user.getUsername());
 
-  public UserResponse delete(UserDetailsImpl userDetails, Long id) {
+    UserDTO userDTO = new UserDTO(user);
+    userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());
 
-    User user = userRepository.findById(id).get();
+    userRepository.saveAndFlush(user);
 
-    userRepository.delete(user);
-
-    return new UserResponse(new UserDTO(user));
+    return new UserResponse(userDTO);
   }
 }

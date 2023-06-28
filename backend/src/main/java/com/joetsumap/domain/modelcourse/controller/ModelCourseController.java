@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.domain.modelcourse.payload.request.CreateModelCourseRequest;
 import com.joetsumap.domain.modelcourse.payload.request.UpdateModelCourseRequest;
 import com.joetsumap.domain.modelcourse.payload.response.ModelCourseListResponse;
@@ -31,39 +32,49 @@ import static com.joetsumap.common.constant.ApiPathConst.*;
 public class ModelCourseController {
 
   @Autowired
-  ModelCourseService modelcourseService;
+  ModelCourseService modelCourseService;
 
   @GetMapping("")
   public ModelCourseListResponse findAll() {
 
-    return modelcourseService.findAll();
+    return modelCourseService.findAll();
   }
 
   @GetMapping("/{id}")
   public ModelCourseResponse findById(@PathVariable Long id) {
 
-    return modelcourseService.findById(id);
+    return modelCourseService.findById(id);
   }
 
   @PostMapping("/")
   public ModelCourseResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateModelCourseRequest createRequest) {
 
-    return modelcourseService.create(userDetails, createRequest);
+    return modelCourseService.create(userDetails, createRequest);
   }
 
   @PatchMapping("/{id}")
   public ModelCourseResponse update(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @Valid @RequestBody UpdateModelCourseRequest updateRequest) {
 
-    return modelcourseService.update(userDetails, updateRequest, id);
+    return modelCourseService.update(userDetails, updateRequest, id);
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
 
-    modelcourseService.delete(userDetails, id);
+    modelCourseService.delete(userDetails, id);
 
     return ResponseEntity.noContent().build();
   }
+  
+  @GetMapping("/bookmarks")
+  public ModelCourseListResponse findAllBookmarks(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-  // TODO: ブックマーク機能
+    return modelCourseService.findAllBookmarks(userDetails);
+  }
+
+  @PostMapping("bookmarks/{id}")
+  public ToggleBookmarkResponse toggleBookmark(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+
+    return modelCourseService.toggleBookmark(userDetails, id);
+  }
 }

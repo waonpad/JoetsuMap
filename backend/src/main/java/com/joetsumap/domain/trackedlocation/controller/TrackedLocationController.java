@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.domain.trackedlocation.payload.request.CreateTrackedLocationRequest;
 import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationListResponse;
+import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationResponse;
 import com.joetsumap.domain.trackedlocation.service.TrackedLocationService;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -26,19 +27,17 @@ import static com.joetsumap.common.constant.ApiPathConst.*;
 public class TrackedLocationController {
 
   @Autowired
-  TrackedLocationService trackedlocationService;
+  TrackedLocationService trackedLocationService;
 
   @GetMapping("/my")
   public TrackedLocationListResponse findMy(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-    return trackedlocationService.findMy(userDetails);
+    return trackedLocationService.findMy(userDetails);
   }
 
   @PostMapping("")
-  public ResponseEntity<Void> create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateTrackedLocationRequest createRequest) {
+  public TrackedLocationResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateTrackedLocationRequest createRequest) {
 
-    trackedlocationService.create(userDetails, createRequest);
-
-    return ResponseEntity.ok().build();
+    return trackedLocationService.create(userDetails, createRequest);
   }
 }

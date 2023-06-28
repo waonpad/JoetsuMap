@@ -75,7 +75,7 @@ public class NotificationController {
     data.put("送信者", userDetails.getUsername());
 
     try {
-      notificationService.sendNotification(userDetails, sendRequest.getToken(), title, body, data);
+      notificationService.sendNotification(userDetails, userDetails.getUser(), title, body, data);
     } catch (Exception e) {
       e.printStackTrace();
     }

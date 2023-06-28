@@ -25,7 +25,7 @@ public class Notification extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
+  @Column // トークンが無くてもデータベースには保存できるように、nullable = trueにしておく
   private String recipientToken; // toが予約語なので、recipientTokenに変更
 
   @Column(nullable = false)

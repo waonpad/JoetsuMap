@@ -33,3 +33,7 @@ export type BaseNavigationParamList = {
 };
 
 export type PickedImage = ImagePicker.ImagePickerSuccessResult['assets'][number];
+
+export type ToggleBookmarkResponse = {
+  isBookmarked: boolean;
+};
