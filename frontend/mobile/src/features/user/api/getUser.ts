@@ -7,7 +7,7 @@ import { API_ENDPOINT, QUERY_KEY } from '../constants';
 
 import type { User, UserResponse } from '../types';
 
-export const getUser = ({ userId }: { userId: string }): Promise<UserResponse> => {
+export const getUser = ({ userId }: { userId: User['id'] }): Promise<UserResponse> => {
   return axios.get(`${API_ENDPOINT}/${userId}`);
 };
 

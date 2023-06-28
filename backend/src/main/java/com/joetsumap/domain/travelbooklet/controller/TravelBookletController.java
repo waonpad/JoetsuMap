@@ -3,6 +3,7 @@ package com.joetsumap.domain.travelbooklet.controller;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,35 +31,37 @@ import static com.joetsumap.common.constant.ApiPathConst.*;
 public class TravelBookletController {
 
   @Autowired
-  TravelBookletService travelbookletService;
+  TravelBookletService travelBookletService;
 
   @GetMapping("")
   public TravelBookletListResponse findAll() {
 
-    return travelbookletService.findAll();
+    return travelBookletService.findAll();
   }
 
   @GetMapping("/{id}")
   public TravelBookletResponse findById(@PathVariable Long id) {
 
-    return travelbookletService.findById(id);
+    return travelBookletService.findById(id);
   }
 
   @PostMapping("")
   public TravelBookletResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateTravelBookletRequest createRequest) {
 
-    return travelbookletService.create(userDetails, createRequest);
+    return travelBookletService.create(userDetails, createRequest);
   }
 
   @PatchMapping("/{id}")
   public TravelBookletResponse update(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @Valid @RequestBody UpdateTravelBookletRequest updateRequest) {
 
-    return travelbookletService.update(userDetails, updateRequest, id);
+    return travelBookletService.update(userDetails, updateRequest, id);
   }
 
   @DeleteMapping("/{id}")
-  public TravelBookletResponse delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+  public ResponseEntity<Void> delete(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
 
-    return travelbookletService.delete(userDetails, id);
+    travelBookletService.delete(userDetails, id);
+
+    return ResponseEntity.ok().build();
   }
 }

@@ -20,18 +20,23 @@ public class PassingService {
   @Autowired
   PassingRepository passingRepository;
 
+  /**
+   * ログインユーザーに関連するすれ違い情報を取得する
+   */
   public PassingListResponse findMy(UserDetailsImpl userDetails) {
 
     // ログインユーザーに関連するすれ違い情報を取得し、最新のすれ違い情報から順に表示する
+    // TODO: 動作検証
 
-    List<Passing> passing1 = passingRepository.findByUser1Id(userDetails.getUser().getId());
-    List<Passing> passing2 = passingRepository.findByUser2Id(userDetails.getUser().getId());
+    List<Passing> passings1 = passingRepository.findByUser1Id(userDetails.getUser().getId());
+    List<Passing> passings2 = passingRepository.findByUser2Id(userDetails.getUser().getId());
 
-    passing1.addAll(passing2);
+    // すれ違い情報を結合する
+    passings1.addAll(passings2);
 
-    List<PassingDTO> passingDTO = passing1.stream().map(p -> new PassingDTO(p, userDetails.getUser().getId()))
+    List<PassingDTO> passingDTOList = passings1.stream().map(p -> new PassingDTO(p, userDetails.getUser().getId()))
         .toList().stream().sorted((p1, p2) -> p2.getCreatedAt().compareTo(p1.getCreatedAt())).toList();
 
-    return new PassingListResponse(passingDTO);
+    return new PassingListResponse(passingDTOList);
   }
 }

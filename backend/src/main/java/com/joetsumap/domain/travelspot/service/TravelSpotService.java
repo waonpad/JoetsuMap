@@ -5,14 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.domain.travelspot.entity.TravelSpot;
-import com.joetsumap.domain.travelspot.payload.request.CreateTravelSpotRequest;
-import com.joetsumap.domain.travelspot.payload.request.UpdateTravelSpotRequest;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotDTO;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotListResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
 import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
+import com.joetsumap.domain.travelspot.repository.TravelSpotTypeRepository;
+import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.security.services.UserDetailsImpl;
+import com.joetsumap.domain.travelspot.entity.ETravelSpotType;
 
 import jakarta.transaction.Transactional;
 
@@ -21,46 +23,126 @@ import jakarta.transaction.Transactional;
 public class TravelSpotService {
 
   @Autowired
-  TravelSpotRepository travelspotRepository;
+  TravelSpotRepository travelSpotRepository;
 
+  @Autowired
+  TravelSpotTypeRepository travelSpotTypeRepository;
+
+  /**
+   * 観光地を全件取得する
+   */
   public TravelSpotListResponse findAll() {
 
-    List<TravelSpot> travelspot = travelspotRepository.findAll();
+    List<TravelSpot> travelSpots = travelSpotRepository.findAll();
 
-    List<TravelSpotDTO> travelspotDTOList = travelspot.stream().map(TravelSpotDTO::new).toList();
+    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+      TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
+      travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
+      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type -> type.getName()).toList());
 
-    return new TravelSpotListResponse(travelspotDTOList);
+      return travelSpotDTO;
+    }).toList();
+
+    return new TravelSpotListResponse(travelSpotDTOList);
   }
 
   public TravelSpotResponse findById(Long id) {
 
-    TravelSpot travelspot = travelspotRepository.findById(id).get();
+    TravelSpot travelSpot = travelSpotRepository.findById(id).get();
 
-    return new TravelSpotResponse(new TravelSpotDTO(travelspot));
+    return new TravelSpotResponse(new TravelSpotDTO(travelSpot));
   }
 
-  public TravelSpotResponse create(UserDetailsImpl userDetails, CreateTravelSpotRequest createRequest) {
+  /**
+   * ブックマークしている観光地を全件取得する
+   */
+  public TravelSpotListResponse findAllBookmarks(UserDetailsImpl userDetails) {
 
-    TravelSpot travelspot = new TravelSpot();
+    List<TravelSpot> travelSpots = userDetails.getUser().getBookmarkedTravelSpots();
 
-    travelspotRepository.save(travelspot);
+    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+      TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
+      travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
+      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type -> type.getName()).toList());
 
-    return new TravelSpotResponse(new TravelSpotDTO(travelspot));
+      return travelSpotDTO;
+    }).toList();
+
+    return new TravelSpotListResponse(travelSpotDTOList);
   }
 
-  public TravelSpotResponse update(UserDetailsImpl userDetails, UpdateTravelSpotRequest updateRequest, Long id) {
+  /**
+   * ブックマーク状態の切り替え
+   */
+  public ToggleBookmarkResponse toggleBookmark(UserDetailsImpl userDetails, Long id) {
 
-    TravelSpot travelspot = travelspotRepository.findById(id).get();
+    TravelSpot travelSpot = travelSpotRepository.findById(id).get();
 
-    // Update Entity Logic Here ...
+    boolean isBookmarked = false;
 
-    return new TravelSpotResponse(new TravelSpotDTO(travelspot));
+    if (travelSpot.getBookmarkedUsers().contains(userDetails.getUser())) {
+      travelSpot.getBookmarkedUsers().remove(userDetails.getUser());
+
+      isBookmarked = false;
+    } else {
+      travelSpot.getBookmarkedUsers().add(userDetails.getUser());
+
+      isBookmarked = true;
+    }
+
+    travelSpotRepository.save(travelSpot);
+
+    return new ToggleBookmarkResponse(isBookmarked);
   }
 
-  public void delete(UserDetailsImpl userDetails, Long id) {
+  /**
+   * 観光地のタイプで絞り込みを行う
+   */
+  public TravelSpotListResponse findAllByType(String type) {
 
-    TravelSpot travelspot = travelspotRepository.findById(id).get();
+    // TODO: 例外処理を追加する
+    // ETravelSpotTypeに無いものを指定されるとエラーになる
+    // https://www.sejuku.net/blog/14628
+    ETravelSpotType travelSpotType = ETravelSpotType.valueOf(type);
 
-    travelspotRepository.delete(travelspot);
+    List<TravelSpot> travelSpots = travelSpotTypeRepository.findByName(travelSpotType).get().getTravelSpots();
+
+    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+      TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
+      travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
+      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type_ -> type_.getName()).toList());
+
+      return travelSpotDTO;
+    }).toList();
+
+    return new TravelSpotListResponse(travelSpotDTOList);
   }
+
+  // 観光地を操作するメソッドは工数削減のため一旦作成しない
+  // 管理者用サイトを作成する際に作成する
+
+  // public TravelSpotResponse create(UserDetailsImpl userDetails, CreateTravelSpotRequest createRequest) {
+
+  //   TravelSpot travelSpot = new TravelSpot();
+
+  //   travelSpotRepository.save(travelSpot);
+
+  //   return new TravelSpotResponse(new TravelSpotDTO(travelSpot));
+  // }
+
+  // public TravelSpotResponse update(UserDetailsImpl userDetails, UpdateTravelSpotRequest updateRequest, Long id) {
+
+  //   TravelSpot travelSpot = travelSpotRepository.findById(id).get();
+
+  //   // Update Entity Logic Here ...
+
+  //   return new TravelSpotResponse(new TravelSpotDTO(travelSpot));
+  // }
+
+  // public void delete(UserDetailsImpl userDetails, Long id) {
+
+  //   TravelSpot travelSpot = travelSpotRepository.findById(id).get();
+
+  //   travelSpotRepository.delete(travelSpot);
+  // }
 }

@@ -1,13 +1,8 @@
 package com.joetsumap.domain.user.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.joetsumap.domain.travelbooklet.entity.TravelBooklet;
-import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletDTO;
 import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.payload.request.LoginRequest;
 import com.joetsumap.domain.user.payload.request.RegisterRequest;
@@ -30,22 +25,40 @@ public class AuthService {
   @Autowired
   UserRepository userRepository;
   
+  /**
+   * ログインするロジックを呼び出す
+   */
   public JwtResponse login(LoginRequest loginRequest) {
 
     return authLogic.login(loginRequest.getUsername(), loginRequest.getPassword());
   }
 
+  /**
+   * ユーザーを作成してログインする
+   */
   public JwtResponse register(RegisterRequest registerRequest) {
 
-    authLogic.existsUserCheck(registerRequest.getUsername(), registerRequest.getPassword());
+    // ユーザーが既に存在するかどうかを確認する
+    boolean exists = authLogic.existsUserCheck(registerRequest.getUsername(), registerRequest.getPassword());
 
+    // 既に存在する場合はエラーをスローする
+    if (exists) {
+      throw new RuntimeException("Error: User is already taken!");
+    }
+
+    // ユーザーを作成する
     authLogic.createUser(registerRequest);
 
+    // ユーザーを作成した後、ログインする
     return authLogic.login(registerRequest.getUsername(), registerRequest.getPassword());
   }
 
+  /**
+   * ログインユーザーの情報を取得する
+   */
   public UserResponse getMe(UserDetailsImpl userDetails) {
     
+    // ユーザーが存在しない場合はnullを返す
     if (userDetails == null) {
       return null;
     }
@@ -53,15 +66,8 @@ public class AuthService {
     User user = userRepository.findById(userDetails.getUser().getId()).get();
 
     UserDTO userDTO = new UserDTO(user);
+    userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());
 
-    List<TravelBookletDTO> travelBooklets = new ArrayList<>();
-    for (TravelBooklet travelBooklet : user.getTravelBooklets()) {
-      travelBooklets.add(new TravelBookletDTO(travelBooklet));
-    }
-
-    userDTO.setTravelBooklets(travelBooklets);
-
-    UserResponse userResponse = new UserResponse(userDTO);
-    return userResponse;
+    return new UserResponse(userDTO);
   }
 }
