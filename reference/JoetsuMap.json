@@ -429,16 +429,10 @@
                 "type": "object",
                 "properties": {
                   "title": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": "string"
                   },
                   "text": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": "string"
                   },
                   "photo": {
                     "type": [
@@ -670,38 +664,6 @@
           }
         ]
       }
-    },
-    "/notifications/my/unread": {
-      "get": {
-        "summary": "自分宛ての未読通知一覧を取得",
-        "tags": [
-          "Notification"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "notifications": {
-                      "$ref": "#/components/schemas/NotificationDTO"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-notifications-my",
-        "security": [
-          {
-            "jwt": []
-          }
-        ]
-      },
-      "parameters": []
     },
     "/notifications/read/{notificationId}": {
       "parameters": [
@@ -941,7 +903,8 @@
                 ]
               }
             }
-          }
+          },
+          "description": ""
         }
       }
     },
@@ -1000,13 +963,28 @@
         }
       ],
       "post": {
-        "summary": "モデルコースをブックマークする",
+        "summary": "モデルコースをブックマークする/解除する",
         "tags": [
           "ModelCourse"
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "isBookmarked": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isBookmarked"
+                  ]
+                }
+              }
+            }
           }
         },
         "operationId": "post-model_course-bookmark-modelCourseId",
@@ -1014,21 +992,8 @@
           {
             "jwt": []
           }
-        ]
-      },
-      "delete": {
-        "summary": "モデルコースのブックマークを解除する",
-        "operationId": "delete-model_courses-bookmarks-modelCourseId",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "jwt": []
-          }
-        ]
+        ],
+        "description": ""
       }
     },
     "/model_courses/bookmarks": {
@@ -1078,33 +1043,31 @@
         }
       ],
       "post": {
-        "summary": "観光地をブックマークする",
+        "summary": "観光地をブックマークする/解除する",
         "tags": [
           "TravelSpot"
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "isBookmarked": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isBookmarked"
+                  ]
+                }
+              }
+            }
           }
         },
         "operationId": "post-travel_spots-bookmarks-travelSpotId",
-        "security": [
-          {
-            "jwt": []
-          }
-        ]
-      },
-      "delete": {
-        "summary": "観光地のブックマークを解除する",
-        "tags": [
-          "TravelSpot"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "operationId": "delete-travel_spots-bookmarks-travelSpotId",
         "security": [
           {
             "jwt": []
