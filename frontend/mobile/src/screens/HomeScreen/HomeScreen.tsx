@@ -64,7 +64,7 @@ export const HomeScreen = () => {
       {/* <Image
         style={{ width: 100, height: 100 }}
         source={{
-          uri: `${API_URL}${IMAGE_SOURCE_BINARY}?imagePath=${auth.user?.icon}`,
+          uri: `${API_URL}${IMAGE_SOURCE_BINARY}?image_path=${auth.user?.icon}`,
           // headers: { Authorization: `Bearer ${auth.token}` }, // 画像リソースへのアクセスは認可不要に
         }}
       /> */}
