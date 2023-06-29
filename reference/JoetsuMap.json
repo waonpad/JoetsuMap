@@ -342,63 +342,6 @@
           "required": true
         }
       ],
-      "post": {
-        "summary": "旅のしおり作成",
-        "tags": [
-          "TravelBooklet"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "travelBooklet": {
-                      "$ref": "#/components/schemas/TravelBookletDTO"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "post-travel_booklets-travelBookletId",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "text": {
-                    "type": "string"
-                  },
-                  "photo": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                },
-                "required": [
-                  "title",
-                  "text",
-                  "photo"
-                ]
-              },
-              "examples": {}
-            }
-          },
-          "description": ""
-        },
-        "security": [
-          {
-            "jwt": []
-          }
-        ]
-      },
       "patch": {
         "summary": "旅のしおり更新",
         "tags": [
@@ -521,6 +464,41 @@
           }
         },
         "operationId": "get-travel_booklets"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-travel_booklets",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/tracked_locations": {
@@ -737,6 +715,43 @@
           }
         },
         "operationId": "get-model_courses"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-model_courses",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "travelSpotIds": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 2,
+                    "maxItems": 10,
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/model_courses/{modelCourseId}": {
@@ -774,64 +789,6 @@
         },
         "operationId": "get-model_courses-modelCourseId",
         "parameters": []
-      },
-      "post": {
-        "summary": "モデルコース作成",
-        "tags": [
-          "ModelCourse"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "modelCourse": {
-                      "$ref": "#/components/schemas/ModelCourseDTO"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "post-model_courses-modelCourseId",
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "travelSpotIds": {
-                    "type": "array",
-                    "minItems": 2,
-                    "uniqueItems": true,
-                    "maxItems": 10,
-                    "items": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "required": [
-                  "title",
-                  "travelSpotIds"
-                ]
-              },
-              "examples": {}
-            }
-          },
-          "description": ""
-        }
       },
       "delete": {
         "summary": "モデルコース削除",
@@ -949,7 +906,17 @@
             }
           }
         }
-      }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "",
+          "in": "path",
+          "required": true
+        }
+      ]
     },
     "/model_courses/bookmarks/{modelCourseId}": {
       "parameters": [
@@ -1241,7 +1208,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "imagePath": {
+                  "image_path": {
                     "type": "string"
                   }
                 }
@@ -1276,6 +1243,36 @@
           "required": true
         }
       ]
+    },
+    "/travel_spots/search": {
+      "get": {
+        "summary": "観光地検索",
+        "tags": [
+          "TravelSpot",
+          ""
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelSpots": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TravelSpotDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-travel_spots-search"
+      }
     }
   },
   "components": {
