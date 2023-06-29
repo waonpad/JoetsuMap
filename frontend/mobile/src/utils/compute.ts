@@ -17,3 +17,10 @@ export const API_URL =
   // prettier-ignore
   // eslint-disable-next-line prettier/prettier
   APP_ENV === 'production' ? API_URL_PROD : IS_TUNNEL === 'true' ? API_URL_DEV_TUNNEL : Platform.OS === 'ios' ? API_URL_DEV_IOS : API_URL_DEV_ANDROID;
+
+export const buildQueryString = (params: Record<string, string | number | boolean>) => {
+  const queryItems = Object.entries(params).map(
+    ([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+  );
+  return queryItems.join('&');
+};

@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
+import com.joetsumap.domain.modelcourse.payload.response.ModelCourseListResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotListResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
 import com.joetsumap.domain.travelspot.service.TravelSpotService;
@@ -55,6 +57,12 @@ public class TravelSpotController {
   public TravelSpotListResponse findAllByType(@PathVariable("travelSpotTypeName") String travelSpotType) {
 
     return travelSpotService.findAllByType(travelSpotType);
+  }
+  
+  @GetMapping("/search")
+  public TravelSpotListResponse searchAll(@RequestParam(value = "freeKeyword") String freeKeyword) {
+
+    return travelSpotService.searchAll(freeKeyword);
   }
 
   // 観光地を操作するメソッドは工数削減のため一旦作成しない

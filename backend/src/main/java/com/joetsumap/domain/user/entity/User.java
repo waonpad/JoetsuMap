@@ -36,7 +36,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@ToString(exclude = {"roles", "notifications", "travelBooklets", "trackedLocations", "travelSpots", "modelCourses", "passings1", "passings2"})
+@ToString(exclude = {"roles", "notifications", "travelBooklets", "trackedLocations", "travelSpots", "modelCourses", "passings1", "passings2", "bookmarkedTravelSpots", "bookmarkedModelCourses"})
 public class User extends BaseEntity {
 
   @Id

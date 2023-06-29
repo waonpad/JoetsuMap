@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.domain.user.entity.User;
@@ -23,6 +24,9 @@ public class UserMigrateLogic {
 
   @Autowired
   private RoleRepository roleRepository;
+
+  @Autowired
+  PasswordEncoder encoder;
 
   public User migrateAdmin() {
     
@@ -47,7 +51,7 @@ public class UserMigrateLogic {
     User user = new User();
     user.setUsername(username);
     user.setEmail("admin@example.com");
-    user.setPassword("adminpassword");
+    user.setPassword(encoder.encode("adminpassword"));
     user.setIcon(UserConst.ICON_SAVE_DIR + "user-icon-sample" + FileConst.IMAGE_SAVE_FORMAT);
     user.setRoles(roles);
 
@@ -81,7 +85,7 @@ public class UserMigrateLogic {
       User user = new User();
       user.setUsername("user" + counter);
       user.setEmail("user" + counter + "@example.com");
-      user.setPassword("password" + counter);
+      user.setPassword(encoder.encode("password" + counter));
       user.setIcon(UserConst.ICON_SAVE_DIR + "user-icon-sample" + FileConst.IMAGE_SAVE_FORMAT);
       user.setRoles(roles);
 

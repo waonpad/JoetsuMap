@@ -72,6 +72,7 @@ public class TravelBookletService {
     travelBooklet.setTitle(createRequest.getTitle());
     travelBooklet.setText(createRequest.getText());
     travelBooklet.setPhoto(photoFileName);
+    travelBooklet.setAuthor(userDetails.getUser());
 
     travelBookletRepository.saveAndFlush(travelBooklet);
     
@@ -95,6 +96,9 @@ public class TravelBookletService {
 
     // 画像が更新されている場合のみbase64エンコードされた文字列を受け取り、画像を更新する
     if (updateRequest.getPhoto() != null) {
+
+      // TODO: base64形式ではない場合のエラー処理をする
+
       String photoFileName = base64FileService.uploadImageFromBase64(updateRequest.getPhoto(), TravelBookletConst.PHOTO_SAVE_DIR);
       travelBooklet.setPhoto(photoFileName);
     }

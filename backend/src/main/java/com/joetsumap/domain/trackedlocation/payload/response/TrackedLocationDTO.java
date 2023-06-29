@@ -19,16 +19,16 @@ public class TrackedLocationDTO {
 
   private LatLng coords;
 
-  private UserDTO user;
+  private UserDTO author;
 
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
 
-  public TrackedLocationDTO(TrackedLocation trackedLocation, UserDTO user) {
+  public TrackedLocationDTO(TrackedLocation trackedLocation, UserDTO author) {
     this.id = trackedLocation.getId();
     this.coords = new LatLng(trackedLocation.getLatitude(), trackedLocation.getLongitude());
-    this.user = user;
+    this.author = author;
     this.createdAt = trackedLocation.getCreatedAt();
     this.updatedAt = trackedLocation.getUpdatedAt();
   }

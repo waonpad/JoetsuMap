@@ -3,7 +3,7 @@ import type { BaseEntity, LatLng } from '@/types';
 
 export type TrackedLocation = {
   coords: LatLng;
-  user?: User;
+  author?: User;
 } & BaseEntity;
 
 export type TrackedLocationResponse = {

@@ -10,13 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "model_course_travel_spot")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude= {"modelCourse", "travelSpot"})
+@EqualsAndHashCode(callSuper=false)
+@ToString(exclude = {"modelCourse", "travelSpot"})
 public class ModelCourseTravelSpot {
 
   @Id
@@ -24,12 +26,12 @@ public class ModelCourseTravelSpot {
   private Long id;
 
   @NotNull
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "model_course_id")
   private ModelCourse modelCourse;
 
   @NotNull
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "travel_spot_id")
   private TravelSpot travelSpot;
 

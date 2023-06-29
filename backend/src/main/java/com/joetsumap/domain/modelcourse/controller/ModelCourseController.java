@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
@@ -46,7 +47,7 @@ public class ModelCourseController {
     return modelCourseService.findById(id);
   }
 
-  @PostMapping("/")
+  @PostMapping("")
   public ModelCourseResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateModelCourseRequest createRequest) {
 
     return modelCourseService.create(userDetails, createRequest);
@@ -76,5 +77,11 @@ public class ModelCourseController {
   public ToggleBookmarkResponse toggleBookmark(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
 
     return modelCourseService.toggleBookmark(userDetails, id);
+  }
+
+  @GetMapping("/search")
+  public ModelCourseListResponse searchAll(@RequestParam(value = "freeKeyword") String freeKeyword) {
+
+    return modelCourseService.searchAll(freeKeyword);
   }
 }

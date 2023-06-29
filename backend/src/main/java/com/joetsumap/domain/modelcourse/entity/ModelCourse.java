@@ -22,7 +22,7 @@ import com.joetsumap.domain.user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@ToString(exclude = {"author", "modelCourseTravelSpots"})
+@ToString(exclude = {"author", "modelCourseTravelSpots", "bookmarkedUsers"})
 public class ModelCourse extends BaseEntity {
 
   @Id
@@ -33,7 +33,7 @@ public class ModelCourse extends BaseEntity {
   @NotBlank
   private String title;
 
-  @OneToMany(mappedBy = "modelCourse", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "modelCourse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @OrderBy("spotOrder ASC") // 追加
   private List<ModelCourseTravelSpot> modelCourseTravelSpots = new ArrayList<>();
 

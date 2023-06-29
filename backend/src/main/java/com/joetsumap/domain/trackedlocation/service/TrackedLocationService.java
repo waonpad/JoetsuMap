@@ -11,6 +11,8 @@ import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationDTO;
 import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationListResponse;
 import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationResponse;
 import com.joetsumap.domain.trackedlocation.repository.TrackedLocationRepository;
+import com.joetsumap.domain.user.entity.User;
+import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.security.services.UserDetailsImpl;
 
 import jakarta.transaction.Transactional;
@@ -22,14 +24,23 @@ public class TrackedLocationService {
   @Autowired
   TrackedLocationRepository trackedLocationRepository;
 
+  @Autowired
+  UserRepository userRepository;
+  
   /**
    * ログインユーザーに関連する位置情報を取得する
    */
   public TrackedLocationListResponse findMy(UserDetailsImpl userDetails) {
 
-    List<TrackedLocation> trackedLocations = userDetails.getUser().getTrackedLocations();
+    User user = userRepository.findById(userDetails.getUser().getId()).get();
 
-    List<TrackedLocationDTO> trackedLocationDTOList = trackedLocations.stream().map(trackedLocation -> new TrackedLocationDTO(trackedLocation)).toList();
+    List<TrackedLocation> trackedLocations = user.getTrackedLocations();
+
+    List<TrackedLocationDTO> trackedLocationDTOList = trackedLocations.stream().map(trackedLocation -> {
+      TrackedLocationDTO trackedLocationDTO = new TrackedLocationDTO(trackedLocation);
+
+      return trackedLocationDTO;
+    }).toList();
 
     return new TrackedLocationListResponse(trackedLocationDTOList);
   }
@@ -39,7 +50,10 @@ public class TrackedLocationService {
    */
   public TrackedLocationResponse create(UserDetailsImpl userDetails, CreateTrackedLocationRequest createRequest) {
 
-    TrackedLocation trackedLocation = new TrackedLocation(null, createRequest.getCoords().getLat(), createRequest.getCoords().getLng(), userDetails.getUser());
+    TrackedLocation trackedLocation = new TrackedLocation();
+    trackedLocation.setLatitude(createRequest.getCoords().getLat());
+    trackedLocation.setLongitude(createRequest.getCoords().getLng());
+    trackedLocation.setAuthor(userDetails.getUser());
 
     trackedLocationRepository.saveAndFlush(trackedLocation);
 

@@ -59,11 +59,16 @@ public class UserService {
    */
   public UserResponse updateProfile(UserDetailsImpl userDetails, UpdateProfileRequest updateRequest, Long id) {
 
+    if (true) {
+      throw new RuntimeException("実装できていない");
+    }
+
     User user = userRepository.findById(id).get();
 
     ErrorUtil.checkAuthorWithException(userDetails, user.getId());
 
     // ユーザーのプロフィールを更新する
+    // TODO: データベースは更新できてもコンテキストが更新されない。パスワード入力無しでコンテキストを更新する方法が分からないので後でやる
     user.setUsername(updateRequest.getUsername() != null ? updateRequest.getUsername() : user.getUsername());
 
     UserDTO userDTO = new UserDTO(user);
