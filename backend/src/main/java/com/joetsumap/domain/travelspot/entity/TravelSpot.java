@@ -30,7 +30,7 @@ import com.joetsumap.domain.user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@ToString(exclude = {"modelCourseTravelSpots", "author"})
+@ToString(exclude = {"modelCourseTravelSpots", "author", "bookmarkedUsers", "types"})
 public class TravelSpot extends BaseEntity {
 
   @Id
@@ -74,13 +74,14 @@ public class TravelSpot extends BaseEntity {
   @JoinColumn(name = "author_id")
   private User author;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(	name = "bookmarked_travel_spots",
               joinColumns = @JoinColumn(name = "travel_spot_id"),
               inverseJoinColumns = @JoinColumn(name = "user_id"))
   private List<User> bookmarkedUsers = new ArrayList<>();
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  // TODO: 同じタイプと複数回リレーションを結ばせないようにする
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(	name = "granted_travel_spot_types",
               joinColumns = @JoinColumn(name = "travel_spot_id"),
               inverseJoinColumns = @JoinColumn(name = "travel_spot_type_id"))

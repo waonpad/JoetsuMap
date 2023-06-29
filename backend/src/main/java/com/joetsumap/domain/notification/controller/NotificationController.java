@@ -40,7 +40,7 @@ public class NotificationController {
     return notificationService.findMy(userDetails);
   }
 
-  @PatchMapping("/raad/{id}")
+  @PatchMapping("/read/{id}")
   public ResponseEntity<Void> read(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
 
     notificationService.read(userDetails, id);

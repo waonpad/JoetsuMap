@@ -41,7 +41,9 @@ public class NotificationService {
    */
   public NotificationListResponse findMy(UserDetailsImpl userDetails) {
 
-    List<Notification> notifications = userDetails.getUser().getNotifications();
+    User user = userRepository.findById(userDetails.getUser().getId()).get();
+
+    List<Notification> notifications = user.getNotifications();
 
     List<NotificationDTO> notificationDTOList = notifications.stream().map(notification -> {
       NotificationDTO notificationDTO = new NotificationDTO(notification);

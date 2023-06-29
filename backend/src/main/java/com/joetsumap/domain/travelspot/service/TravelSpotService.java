@@ -13,6 +13,7 @@ import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
 import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
 import com.joetsumap.domain.travelspot.repository.TravelSpotTypeRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
+import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.security.services.UserDetailsImpl;
 import com.joetsumap.domain.travelspot.entity.ETravelSpotType;
 
@@ -27,6 +28,9 @@ public class TravelSpotService {
 
   @Autowired
   TravelSpotTypeRepository travelSpotTypeRepository;
+
+  @Autowired
+  UserRepository userRepository;
 
   /**
    * 観光地を全件取得する
@@ -58,7 +62,7 @@ public class TravelSpotService {
    */
   public TravelSpotListResponse findAllBookmarks(UserDetailsImpl userDetails) {
 
-    List<TravelSpot> travelSpots = userDetails.getUser().getBookmarkedTravelSpots();
+    List<TravelSpot> travelSpots = userRepository.findById(userDetails.getUser().getId()).get().getBookmarkedTravelSpots();
 
     List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
       TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
@@ -78,15 +82,19 @@ public class TravelSpotService {
 
     TravelSpot travelSpot = travelSpotRepository.findById(id).get();
 
-    boolean isBookmarked = false;
+    boolean isBookmarked = travelSpot.getBookmarkedUsers().stream().map(user -> {
+      return user.getId();
+    }).toList().contains(userDetails.getUser().getId());
 
-    if (travelSpot.getBookmarkedUsers().contains(userDetails.getUser())) {
-      travelSpot.getBookmarkedUsers().remove(userDetails.getUser());
+    if (isBookmarked) {
+      travelSpot.getBookmarkedUsers().removeIf(user -> {
+        return user.getId() == userDetails.getUser().getId();
+      });
 
       isBookmarked = false;
     } else {
       travelSpot.getBookmarkedUsers().add(userDetails.getUser());
-
+    
       isBookmarked = true;
     }
 
@@ -106,6 +114,24 @@ public class TravelSpotService {
     ETravelSpotType travelSpotType = ETravelSpotType.valueOf(type);
 
     List<TravelSpot> travelSpots = travelSpotTypeRepository.findByName(travelSpotType).get().getTravelSpots();
+
+    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+      TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
+      travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
+      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type_ -> type_.getName()).toList());
+
+      return travelSpotDTO;
+    }).toList();
+
+    return new TravelSpotListResponse(travelSpotDTOList);
+  }
+  
+  /**
+   * 観光地を検索する
+   */
+  public TravelSpotListResponse searchAll(String freeKeyword) {
+
+    List<TravelSpot> travelSpots = travelSpotRepository.findByNameContaining(freeKeyword);
 
     List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
       TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);

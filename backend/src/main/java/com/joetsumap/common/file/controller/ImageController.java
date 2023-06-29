@@ -22,8 +22,9 @@ public class ImageController {
   @Autowired
   Base64FileService base64FileService;
   
+  // TODO: 指定されたパスの画像が無かった場合の処理を追加する(代用画像を返す？)
   @GetMapping("/byte")
-  public ResponseEntity<byte[]> getImageToByteArray(@RequestParam String imagePath) throws Exception {
+  public ResponseEntity<byte[]> getImageToByteArray(@RequestParam(value = "image_path") String imagePath) throws Exception {
     byte[] bytes = base64FileService.getImageToByteArray(imagePath);
     return ResponseEntity.ok(bytes);
   }

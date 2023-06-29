@@ -28,12 +28,12 @@ public class Passing extends BaseEntity {
   private Long id;
 
   @NotNull
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user1_id")
   private User user1;
 
   @NotNull
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user2_id")
   private User user2;
 }

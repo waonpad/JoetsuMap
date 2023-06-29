@@ -19,6 +19,7 @@ import com.joetsumap.domain.travelspot.entity.TravelSpot;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotDTO;
 import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
+import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.error.util.ErrorUtil;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -36,6 +37,9 @@ public class ModelCourseService {
 
   @Autowired
   ModelCourseTravelSpotRepository modelCourseTravelSpotRepository;
+
+  @Autowired
+  UserRepository userRepository;
 
   /**
    * モデルコースを全件取得する
@@ -95,12 +99,14 @@ public class ModelCourseService {
     // モデルコースを作成
     ModelCourse modelCourse = new ModelCourse();
     modelCourse.setTitle(createRequest.getTitle());
+    modelCourse.setAuthor(userDetails.getUser());
     
     // モデルコースとスポットの関連を作成
     List<ModelCourseTravelSpot> modelCourseTravelSpots = travelSpots.stream().map(travelSpot -> {
       ModelCourseTravelSpot modelCourseTravelSpot = new ModelCourseTravelSpot();
       modelCourseTravelSpot.setTravelSpot(travelSpot);
       modelCourseTravelSpot.setModelCourse(modelCourse);
+      modelCourseTravelSpot.setSpotOrder(travelSpots.indexOf(travelSpot));
       return modelCourseTravelSpot;
     }).toList();
 
@@ -110,9 +116,13 @@ public class ModelCourseService {
     ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
     modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
 
-    List<TravelSpotDTO> travelSpotDTOList = modelCourse.getModelCourseTravelSpots().stream()
+    List<TravelSpotDTO> travelSpotDTOList = modelCourseTravelSpots.stream()
         .map(modelCourseTravelSpot -> {
-          return new TravelSpotDTO(modelCourseTravelSpot.getTravelSpot());
+          TravelSpot travelSpot = modelCourseTravelSpot.getTravelSpot();
+
+          TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
+
+          return travelSpotDTO;
         }).toList();
 
     modelCourseDTO.setTravelSpots(travelSpotDTOList);
@@ -137,13 +147,15 @@ public class ModelCourseService {
     modelCourse.setTitle(updateRequest.getTitle());
 
     // ModelCourseTravelSpotの削除
-    modelCourseTravelSpotRepository.deleteAll(modelCourse.getModelCourseTravelSpots());
+    List<ModelCourseTravelSpot> deleteTargetModelCourseTravelSpots = modelCourseTravelSpotRepository.findByModelCourseId(modelCourse.getId());
+    modelCourseTravelSpotRepository.deleteAll(deleteTargetModelCourseTravelSpots);
     
     // モデルコースとスポットの関連を作成
     List<ModelCourseTravelSpot> modelCourseTravelSpots = travelSpots.stream().map(travelSpot -> {
       ModelCourseTravelSpot modelCourseTravelSpot = new ModelCourseTravelSpot();
       modelCourseTravelSpot.setTravelSpot(travelSpot);
       modelCourseTravelSpot.setModelCourse(modelCourse);
+      modelCourseTravelSpot.setSpotOrder(travelSpots.indexOf(travelSpot));
       return modelCourseTravelSpot;
     }).toList();
 
@@ -153,9 +165,13 @@ public class ModelCourseService {
     ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
     modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
 
-    List<TravelSpotDTO> travelSpotDTOList = modelCourse.getModelCourseTravelSpots().stream()
+    List<TravelSpotDTO> travelSpotDTOList = modelCourseTravelSpots.stream()
         .map(modelCourseTravelSpot -> {
-          return new TravelSpotDTO(modelCourseTravelSpot.getTravelSpot());
+          TravelSpot travelSpot = modelCourseTravelSpot.getTravelSpot();
+
+          TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
+
+          return travelSpotDTO;
         }).toList();
 
     modelCourseDTO.setTravelSpots(travelSpotDTOList);
@@ -180,7 +196,7 @@ public class ModelCourseService {
    */
   public ModelCourseListResponse findAllBookmarks(UserDetailsImpl userDetails) {
 
-    List<ModelCourse> modelCourses = userDetails.getUser().getBookmarkedModelCourses();
+    List<ModelCourse> modelCourses = userRepository.findById(userDetails.getUser().getId()).get().getBookmarkedModelCourses();
 
     List<ModelCourseDTO> modelCourseDTOList = modelCourses.stream().map(modelCourse -> {
       ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
@@ -206,20 +222,48 @@ public class ModelCourseService {
 
     ModelCourse modelCourse = modelCourseRepository.findById(id).get();
 
-    boolean isBookmarked = false;
+    boolean isBookmarked = modelCourse.getBookmarkedUsers().stream().map(user -> {
+      return user.getId();
+    }).toList().contains(userDetails.getUser().getId());
 
-    if (modelCourse.getBookmarkedUsers().contains(userDetails.getUser())) {
-      modelCourse.getBookmarkedUsers().remove(userDetails.getUser());
+    if (isBookmarked) {
+      modelCourse.getBookmarkedUsers().removeIf(user -> {
+        return user.getId() == userDetails.getUser().getId();
+      });
 
       isBookmarked = false;
     } else {
       modelCourse.getBookmarkedUsers().add(userDetails.getUser());
-
+    
       isBookmarked = true;
     }
 
-    modelCourseRepository.save(modelCourse);
+    modelCourseRepository.saveAndFlush(modelCourse);
 
     return new ToggleBookmarkResponse(isBookmarked);
+  }
+
+  /**
+   * モデルコースを検索する
+   */
+  public ModelCourseListResponse searchAll(String freeKeyword) {
+
+    List<ModelCourse> modelCourses = modelCourseRepository.findByTitleContaining(freeKeyword);
+
+    List<ModelCourseDTO> modelCourseDTOList = modelCourses.stream().map(modelCourse -> {
+      ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
+      modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
+
+      List<TravelSpotDTO> travelSpotDTOList = modelCourse.getModelCourseTravelSpots().stream()
+          .map(modelCourseTravelSpot -> {
+            return new TravelSpotDTO(modelCourseTravelSpot.getTravelSpot());
+          }).toList();
+
+      modelCourseDTO.setTravelSpots(travelSpotDTOList);
+
+      return modelCourseDTO;
+    }).toList();
+
+    return new ModelCourseListResponse(modelCourseDTOList);
   }
 }
