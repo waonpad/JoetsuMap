@@ -8,11 +8,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.domain.notification.entity.Notification;
 import com.joetsumap.domain.notification.payload.response.NotificationDTO;
-import com.joetsumap.domain.notification.payload.response.NotificationListResponse;
+import com.joetsumap.domain.notification.payload.response.NotificationPageResponse;
 import com.joetsumap.domain.notification.repository.NotificationRepository;
 import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.domain.user.entity.User;
@@ -39,20 +41,18 @@ public class NotificationService {
   /**
    * ログインユーザーに対する通知情報を取得する
    */
-  public NotificationListResponse findMy(UserDetailsImpl userDetails) {
+  public NotificationPageResponse findMy(UserDetailsImpl userDetails, Pageable pageable) {
 
-    User user = userRepository.findById(userDetails.getUser().getId()).get();
+    Page<Notification> notifications = notificationRepository.findByRecipientId(userDetails.getUser().getId(), pageable);
 
-    List<Notification> notifications = user.getNotifications();
-
-    List<NotificationDTO> notificationDTOList = notifications.stream().map(notification -> {
+    Page<NotificationDTO> notificationDTOPage = notifications.map(notification -> {
       NotificationDTO notificationDTO = new NotificationDTO(notification);
       notificationDTO.setSender(new UserDTO(notification.getSender()));
 
       return notificationDTO;
-    }).toList();
+    });
 
-    return new NotificationListResponse(notificationDTOList);
+    return new NotificationPageResponse(notificationDTOPage);
   }
 
   /**

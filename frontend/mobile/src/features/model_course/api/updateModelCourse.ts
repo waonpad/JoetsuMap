@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import type { TravelSpot } from '@/features/travel_spot';
 import { axios } from '@/lib/axios';

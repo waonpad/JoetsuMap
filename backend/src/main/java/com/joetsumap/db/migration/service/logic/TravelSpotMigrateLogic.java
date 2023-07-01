@@ -13,8 +13,6 @@ import com.joetsumap.domain.travelspot.repository.TravelSpotTypeRepository;
 import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.common.file.constant.FileConst;
-import com.joetsumap.domain.role.entity.ERole;
-import com.joetsumap.domain.role.repository.RoleRepository;
 import com.joetsumap.domain.travelspot.constant.TravelSpotConst;
 
 @Service
@@ -28,9 +26,6 @@ public class TravelSpotMigrateLogic {
 
   @Autowired
   private UserRepository userRepository;
-
-  @Autowired
-  private RoleRepository roleRepository;
 
   public void migrate(User admin) {
     // NOTICE: 本来はこのメソッド内でadminを取得したかったが、トランザクションの関係？で引数で受け取ることにした。

@@ -3,7 +3,6 @@ package com.joetsumap.domain.trackedlocation.controller;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +30,8 @@ public class TrackedLocationController {
 
   @GetMapping("/my")
   public TrackedLocationListResponse findMy(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+    // NOTE: ページングが必要なら実装する
 
     return trackedLocationService.findMy(userDetails);
   }

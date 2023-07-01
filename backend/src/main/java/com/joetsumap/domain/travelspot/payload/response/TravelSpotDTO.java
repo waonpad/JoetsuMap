@@ -1,11 +1,11 @@
 package com.joetsumap.domain.travelspot.payload.response;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.List;
 
 import com.joetsumap.common.type.LatLng;
-import com.joetsumap.domain.modelcourse.payload.response.ModelCourseDTO;
+// import com.joetsumap.domain.modelcourse.payload.response.ModelCourseDTO;
 import com.joetsumap.domain.travelspot.entity.ETravelSpotType;
 import com.joetsumap.domain.travelspot.entity.TravelSpot;
 import com.joetsumap.domain.user.payload.response.UserDTO;

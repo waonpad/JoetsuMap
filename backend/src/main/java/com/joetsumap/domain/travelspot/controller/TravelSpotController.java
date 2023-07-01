@@ -1,6 +1,8 @@
 package com.joetsumap.domain.travelspot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
-import com.joetsumap.domain.modelcourse.payload.response.ModelCourseListResponse;
-import com.joetsumap.domain.travelspot.payload.response.TravelSpotListResponse;
+import com.joetsumap.domain.travelspot.payload.response.TravelSpotPageResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
 import com.joetsumap.domain.travelspot.service.TravelSpotService;
 import com.joetsumap.security.services.UserDetailsImpl;
@@ -30,9 +31,9 @@ public class TravelSpotController {
   TravelSpotService travelSpotService;
 
   @GetMapping("")
-  public TravelSpotListResponse findAll() {
+  public TravelSpotPageResponse findAll8(@PageableDefault Pageable pageable) {
 
-    return travelSpotService.findAll();
+    return travelSpotService.findAll(pageable);
   }
 
   @GetMapping("/{id}")
@@ -42,9 +43,9 @@ public class TravelSpotController {
   }
 
   @GetMapping("/bookmarks")
-  public TravelSpotListResponse findAllBookmarks(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+  public TravelSpotPageResponse findAllBookmarks(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
 
-    return travelSpotService.findAllBookmarks(userDetails);
+    return travelSpotService.findAllBookmarks(userDetails, pageable);
   }
 
   @PostMapping("bookmarks/{id}")
@@ -54,15 +55,15 @@ public class TravelSpotController {
   }
 
   @GetMapping("/types/{travelSpotTypeName}")
-  public TravelSpotListResponse findAllByType(@PathVariable("travelSpotTypeName") String travelSpotType) {
+  public TravelSpotPageResponse findAllByType(@PathVariable("travelSpotTypeName") String travelSpotType, @PageableDefault Pageable pageable) {
 
-    return travelSpotService.findAllByType(travelSpotType);
+    return travelSpotService.findAllByType(travelSpotType, pageable);
   }
   
   @GetMapping("/search")
-  public TravelSpotListResponse searchAll(@RequestParam(value = "freeKeyword") String freeKeyword) {
+  public TravelSpotPageResponse searchAll(@RequestParam(value = "freeKeyword") String freeKeyword, @PageableDefault Pageable pageable) {
 
-    return travelSpotService.searchAll(freeKeyword);
+    return travelSpotService.searchAll(freeKeyword, pageable);
   }
 
   // 観光地を操作するメソッドは工数削減のため一旦作成しない

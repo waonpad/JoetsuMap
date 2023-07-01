@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import type { TravelSpot } from '@/features/travel_spot';
 import { axios } from '@/lib/axios';
@@ -28,24 +28,24 @@ type UseCreateModelCourseOptions = {
 export const useCreateModelCourse = ({ config }: UseCreateModelCourseOptions = {}) => {
   return useMutation({
     onMutate: async (newModelCourse) => {
-      await queryClient.cancelQueries(QUERY_KEY_PLURAL);
+      await queryClient.cancelQueries([QUERY_KEY_PLURAL]);
 
-      const previousModelCourses = queryClient.getQueryData<ModelCourse[]>(QUERY_KEY_PLURAL);
+      const previousModelCourses = queryClient.getQueryData<ModelCourse[]>([QUERY_KEY_PLURAL]);
 
-      queryClient.setQueryData(QUERY_KEY_PLURAL, [
-        ...(previousModelCourses || []),
-        newModelCourse.data,
-      ]);
+      queryClient.setQueryData(
+        [QUERY_KEY_PLURAL],
+        [...(previousModelCourses || []), newModelCourse.data],
+      );
 
       return { previousModelCourses };
     },
     onError: (_, __, context: any) => {
       if (context?.previousModelCourses) {
-        queryClient.setQueryData(QUERY_KEY_PLURAL, context.previousModelCourses);
+        queryClient.setQueryData([QUERY_KEY_PLURAL], context.previousModelCourses);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY_PLURAL);
+      queryClient.invalidateQueries([QUERY_KEY_PLURAL]);
     },
     ...config,
     mutationFn: createModelCourse,

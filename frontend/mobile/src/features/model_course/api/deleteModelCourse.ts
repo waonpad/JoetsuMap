@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import type { MutationConfig } from '@/lib/react-query';
@@ -19,12 +19,12 @@ type UseDeleteModelCourseOptions = {
 export const useDeleteModelCourse = ({ config }: UseDeleteModelCourseOptions = {}) => {
   return useMutation({
     onMutate: async (deletedModelCourse) => {
-      await queryClient.cancelQueries(QUERY_KEY_PLURAL);
+      await queryClient.cancelQueries([QUERY_KEY_PLURAL]);
 
-      const previousModelCourses = queryClient.getQueryData<ModelCourse[]>(QUERY_KEY_PLURAL);
+      const previousModelCourses = queryClient.getQueryData<ModelCourse[]>([QUERY_KEY_PLURAL]);
 
       queryClient.setQueryData(
-        QUERY_KEY_PLURAL,
+        [QUERY_KEY_PLURAL],
         previousModelCourses?.filter(
           (modelCourse) => modelCourse.id !== deletedModelCourse.modelCourseId,
         ),
@@ -34,11 +34,11 @@ export const useDeleteModelCourse = ({ config }: UseDeleteModelCourseOptions = {
     },
     onError: (_, __, context: any) => {
       if (context?.previousModelCourses) {
-        queryClient.setQueryData(QUERY_KEY_PLURAL, context.previousModelCourses);
+        queryClient.setQueryData([QUERY_KEY_PLURAL], context.previousModelCourses);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY_PLURAL);
+      queryClient.invalidateQueries([QUERY_KEY_PLURAL]);
     },
     ...config,
     mutationFn: deleteModelCourse,

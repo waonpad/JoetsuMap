@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import type { MutationConfig } from '@/lib/react-query';
@@ -24,12 +24,12 @@ type UseBookmarkTravelSpotOptions = {
 export const useBookmarkTravelSpot = ({ config }: UseBookmarkTravelSpotOptions = {}) => {
   return useMutation({
     onMutate: async (bookmarkdTravelSpot) => {
-      await queryClient.cancelQueries(QUERY_KEY_PLURAL);
+      await queryClient.cancelQueries([QUERY_KEY_PLURAL]);
 
-      const previousTravelSpots = queryClient.getQueryData<TravelSpot[]>(QUERY_KEY_PLURAL);
+      const previousTravelSpots = queryClient.getQueryData<TravelSpot[]>([QUERY_KEY_PLURAL]);
 
       queryClient.setQueryData(
-        QUERY_KEY_PLURAL,
+        [QUERY_KEY_PLURAL],
         previousTravelSpots?.filter(
           (travelSpot) => travelSpot.id !== bookmarkdTravelSpot.travelSpotId,
         ),
@@ -39,11 +39,11 @@ export const useBookmarkTravelSpot = ({ config }: UseBookmarkTravelSpotOptions =
     },
     onError: (_, __, context: any) => {
       if (context?.previousTravelSpots) {
-        queryClient.setQueryData(QUERY_KEY_PLURAL, context.previousTravelSpots);
+        queryClient.setQueryData([QUERY_KEY_PLURAL], context.previousTravelSpots);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY_PLURAL);
+      queryClient.invalidateQueries([QUERY_KEY_PLURAL]);
     },
     ...config,
     mutationFn: bookmarkTravelSpot,

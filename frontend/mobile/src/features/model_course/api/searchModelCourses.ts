@@ -1,8 +1,7 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import type { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
-import { buildQueryString } from '@/utils/compute';
 
 import { API_ENDPOINT, QUERY_KEY_PLURAL } from '../constants';
 
@@ -13,7 +12,9 @@ export const searchModelCourses = ({
 }: {
   params: { freeKeyword: string };
 }): Promise<ModelCourseListResponse> => {
-  return axios.get(`${API_ENDPOINT}/search?${buildQueryString(params)}`);
+  return axios.get(`${API_ENDPOINT}/search`, {
+    params,
+  });
 };
 
 type QueryFnType = typeof searchModelCourses;

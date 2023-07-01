@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import type { MutationConfig } from '@/lib/react-query';
@@ -23,12 +23,12 @@ type UseDeleteTravelBookletOptions = {
 export const useDeleteTravelBooklet = ({ config }: UseDeleteTravelBookletOptions = {}) => {
   return useMutation({
     onMutate: async (deletedTravelBooklet) => {
-      await queryClient.cancelQueries(QUERY_KEY_PLURAL);
+      await queryClient.cancelQueries([QUERY_KEY_PLURAL]);
 
-      const previousTravelBooklets = queryClient.getQueryData<TravelBooklet[]>(QUERY_KEY_PLURAL);
+      const previousTravelBooklets = queryClient.getQueryData<TravelBooklet[]>([QUERY_KEY_PLURAL]);
 
       queryClient.setQueryData(
-        QUERY_KEY_PLURAL,
+        [QUERY_KEY_PLURAL],
         previousTravelBooklets?.filter(
           (travelBooklet) => travelBooklet.id !== deletedTravelBooklet.travelBookletId,
         ),
@@ -38,11 +38,11 @@ export const useDeleteTravelBooklet = ({ config }: UseDeleteTravelBookletOptions
     },
     onError: (_, __, context: any) => {
       if (context?.previousTravelBooklets) {
-        queryClient.setQueryData(QUERY_KEY_PLURAL, context.previousTravelBooklets);
+        queryClient.setQueryData([QUERY_KEY_PLURAL], context.previousTravelBooklets);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEY_PLURAL);
+      queryClient.invalidateQueries([QUERY_KEY_PLURAL]);
     },
     ...config,
     mutationFn: deleteTravelBooklet,

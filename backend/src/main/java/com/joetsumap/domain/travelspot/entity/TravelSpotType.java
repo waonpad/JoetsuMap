@@ -29,7 +29,7 @@ public class TravelSpotType extends BaseEntity {
   @Column(length = 20, nullable = false)
   private ETravelSpotType name;
 
-  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "types")
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "types")
   private List<TravelSpot> travelSpots = new ArrayList<>();
 
 }

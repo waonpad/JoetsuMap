@@ -1,14 +1,15 @@
 package com.joetsumap.domain.travelspot.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.domain.travelspot.entity.TravelSpot;
+import com.joetsumap.domain.travelspot.entity.TravelSpotType;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotDTO;
-import com.joetsumap.domain.travelspot.payload.response.TravelSpotListResponse;
+import com.joetsumap.domain.travelspot.payload.response.TravelSpotPageResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
 import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
 import com.joetsumap.domain.travelspot.repository.TravelSpotTypeRepository;
@@ -35,19 +36,19 @@ public class TravelSpotService {
   /**
    * 観光地を全件取得する
    */
-  public TravelSpotListResponse findAll() {
+  public TravelSpotPageResponse findAll(Pageable pageable) {
 
-    List<TravelSpot> travelSpots = travelSpotRepository.findAll();
+    Page<TravelSpot> travelSpotPage = travelSpotRepository.findAll(pageable);
 
-    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+    Page<TravelSpotDTO> travelSpotDTOPage = travelSpotPage.map(travelSpot -> {
       TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
       travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
       travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type -> type.getName()).toList());
 
       return travelSpotDTO;
-    }).toList();
+    });
 
-    return new TravelSpotListResponse(travelSpotDTOList);
+    return new TravelSpotPageResponse(travelSpotDTOPage);
   }
 
   public TravelSpotResponse findById(Long id) {
@@ -60,19 +61,19 @@ public class TravelSpotService {
   /**
    * ブックマークしている観光地を全件取得する
    */
-  public TravelSpotListResponse findAllBookmarks(UserDetailsImpl userDetails) {
+  public TravelSpotPageResponse findAllBookmarks(UserDetailsImpl userDetails, Pageable pageable) {
 
-    List<TravelSpot> travelSpots = userRepository.findById(userDetails.getUser().getId()).get().getBookmarkedTravelSpots();
+    Page<TravelSpot> travelSpotPage = travelSpotRepository.findAllByBookmarkedUsers(userDetails.getUser(), pageable);
 
-    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+    Page<TravelSpotDTO> travelSpotDTOPage = travelSpotPage.map(travelSpot -> {
       TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
       travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
       travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type -> type.getName()).toList());
 
       return travelSpotDTO;
-    }).toList();
+    });
 
-    return new TravelSpotListResponse(travelSpotDTOList);
+    return new TravelSpotPageResponse(travelSpotDTOPage);
   }
 
   /**
@@ -106,69 +107,53 @@ public class TravelSpotService {
   /**
    * 観光地のタイプで絞り込みを行う
    */
-  public TravelSpotListResponse findAllByType(String type) {
+  public TravelSpotPageResponse findAllByType(String type, Pageable pageable) {
 
     // TODO: 例外処理を追加する
     // ETravelSpotTypeに無いものを指定されるとエラーになる
     // https://www.sejuku.net/blog/14628
-    ETravelSpotType travelSpotType = ETravelSpotType.valueOf(type);
+    ETravelSpotType travelSpotTypeValue = ETravelSpotType.valueOf(type);
 
-    List<TravelSpot> travelSpots = travelSpotTypeRepository.findByName(travelSpotType).get().getTravelSpots();
+    TravelSpotType travelSpotType = travelSpotTypeRepository.findByName(travelSpotTypeValue).get();
 
-    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+    Page<TravelSpot> travelSpotPage = travelSpotRepository.findAllByTypes(travelSpotType, pageable);
+
+    Page<TravelSpotDTO> travelSpotDTOPage = travelSpotPage.map(travelSpot -> {
       TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
       travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
-      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type_ -> type_.getName()).toList());
+      // typeが既に引数で使われているので、typeNameに変更
+      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(typeName -> typeName.getName()).toList());
 
       return travelSpotDTO;
-    }).toList();
+    });
 
-    return new TravelSpotListResponse(travelSpotDTOList);
+    return new TravelSpotPageResponse(travelSpotDTOPage);
   }
   
   /**
    * 観光地を検索する
    */
-  public TravelSpotListResponse searchAll(String freeKeyword) {
+  public TravelSpotPageResponse searchAll(String freeKeyword, Pageable pageable) {
 
-    List<TravelSpot> travelSpots = travelSpotRepository.findByNameContaining(freeKeyword);
+    Page<TravelSpot> travelSpotPage = travelSpotRepository.findByNameContaining(freeKeyword, pageable);
 
-    List<TravelSpotDTO> travelSpotDTOList = travelSpots.stream().map(travelSpot -> {
+    Page<TravelSpotDTO> travelSpotDTOPage = travelSpotPage.map(travelSpot -> {
       TravelSpotDTO travelSpotDTO = new TravelSpotDTO(travelSpot);
       travelSpotDTO.setAuthor(new UserDTO(travelSpot.getAuthor()));
-      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type_ -> type_.getName()).toList());
+      travelSpotDTO.setTypes(travelSpot.getTypes().stream().map(type -> type.getName()).toList());
 
       return travelSpotDTO;
-    }).toList();
+    });
 
-    return new TravelSpotListResponse(travelSpotDTOList);
+    return new TravelSpotPageResponse(travelSpotDTOPage);
   }
 
   // 観光地を操作するメソッドは工数削減のため一旦作成しない
   // 管理者用サイトを作成する際に作成する
 
-  // public TravelSpotResponse create(UserDetailsImpl userDetails, CreateTravelSpotRequest createRequest) {
+  // create
 
-  //   TravelSpot travelSpot = new TravelSpot();
+  // update
 
-  //   travelSpotRepository.save(travelSpot);
-
-  //   return new TravelSpotResponse(new TravelSpotDTO(travelSpot));
-  // }
-
-  // public TravelSpotResponse update(UserDetailsImpl userDetails, UpdateTravelSpotRequest updateRequest, Long id) {
-
-  //   TravelSpot travelSpot = travelSpotRepository.findById(id).get();
-
-  //   // Update Entity Logic Here ...
-
-  //   return new TravelSpotResponse(new TravelSpotDTO(travelSpot));
-  // }
-
-  // public void delete(UserDetailsImpl userDetails, Long id) {
-
-  //   TravelSpot travelSpot = travelSpotRepository.findById(id).get();
-
-  //   travelSpotRepository.delete(travelSpot);
-  // }
+  // delete
 }

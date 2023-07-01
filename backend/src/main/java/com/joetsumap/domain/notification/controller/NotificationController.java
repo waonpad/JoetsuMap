@@ -1,6 +1,8 @@
 package com.joetsumap.domain.notification.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.domain.notification.payload.request.SaveTokenRequest;
 import com.joetsumap.domain.notification.payload.request.SendNotificationRequest;
-import com.joetsumap.domain.notification.payload.response.NotificationListResponse;
+import com.joetsumap.domain.notification.payload.response.NotificationPageResponse;
 import com.joetsumap.domain.notification.service.NotificationService;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -35,9 +37,9 @@ public class NotificationController {
   NotificationService notificationService;
 
   @GetMapping("/my")
-  public NotificationListResponse findMy(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+  public NotificationPageResponse findMy(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
 
-    return notificationService.findMy(userDetails);
+    return notificationService.findMy(userDetails, pageable);
   }
 
   @PatchMapping("/read/{id}")

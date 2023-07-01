@@ -11,5 +11,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class ModelCourseListResponse {
   
-  private List<ModelCourseDTO> modelcourses;
+  private List<ModelCourseDTO> modelCourses;
 }

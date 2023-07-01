@@ -17,6 +17,7 @@ import { useAppNavigation } from '@/navigation/AppNavigator';
 import { API_URL } from '@/utils/compute';
 
 import { styles } from './styles';
+import { TravelBookletList } from '@/features/travel_booklet/components/TravelBookletList';
 
 /**
  * テスト用にいろいろ配置している。実際にはホーム画面
@@ -47,7 +48,7 @@ export const HomeScreen = () => {
     name: 'test',
     address: 'test',
     tel: 'test',
-    type: 'FUN',
+    types: ['FUN'],
     photo: 'test',
     coords: {
       lat: 37.14804525484053,
@@ -59,6 +60,8 @@ export const HomeScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
+      {/* ScrollViewの中でFlatListは使えないらしい */}
+      {/* <TravelBookletList /> */}
       <Text>{JSON.stringify(auth.user)}</Text>
       {/* https://docs.expo.dev/versions/latest/sdk/image/ */}
       {/* <Image

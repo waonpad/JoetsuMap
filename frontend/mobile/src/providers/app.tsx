@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 // import { ThemeProvider } from '@rneui/themed';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { NativeBaseProvider } from 'native-base';
 import ErrorBoundary from 'react-native-error-boundary';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { QueryClientProvider } from 'react-query';
 
 import { AuthProvider } from '@/lib/auth';
 import { LocationTrackingProvider } from '@/lib/locationTracking';

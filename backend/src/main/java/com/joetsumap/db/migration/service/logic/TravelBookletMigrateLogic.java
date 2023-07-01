@@ -35,14 +35,8 @@ public class TravelBookletMigrateLogic {
     for (int i = existTravelBookletCount + 1; i <= travelBookletCount; i++) {
       String counter = String.format("%03d", i);
 
-      String travelBookletTitle = "旅のしおり" + counter;
-
-      if (travelBookletRepository.findAllByTitle(travelBookletTitle).isEmpty() == false) {
-        continue;
-      }
-
       TravelBooklet travelBooklet = new TravelBooklet();
-      travelBooklet.setTitle(travelBookletTitle);
+      travelBooklet.setTitle("旅のしおり" + counter);
       travelBooklet.setText("本文" + counter);
       travelBooklet.setPhoto(TravelBookletConst.PHOTO_SAVE_DIR + "travel-booklet-photo-sample" + FileConst.IMAGE_SAVE_FORMAT);
       

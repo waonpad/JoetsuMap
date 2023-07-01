@@ -1,9 +1,9 @@
 package com.joetsumap.domain.travelbooklet.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.joetsumap.common.file.service.Base64FileService;
 import com.joetsumap.domain.travelbooklet.constant.TravelBookletConst;
@@ -11,7 +11,7 @@ import com.joetsumap.domain.travelbooklet.entity.TravelBooklet;
 import com.joetsumap.domain.travelbooklet.payload.request.CreateTravelBookletRequest;
 import com.joetsumap.domain.travelbooklet.payload.request.UpdateTravelBookletRequest;
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletDTO;
-import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletListResponse;
+import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletPageResponse;
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletResponse;
 import com.joetsumap.domain.travelbooklet.repository.TravelBookletRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
@@ -33,18 +33,19 @@ public class TravelBookletService {
   /**
    * 旅のしおりを全件取得する
    */
-  public TravelBookletListResponse findAll() {
+  public TravelBookletPageResponse findAll(Pageable pageable) {
 
-    List<TravelBooklet> travelBooklets = travelBookletRepository.findAll();
+    Page<TravelBooklet> travelBookletsPage = travelBookletRepository.findAll(pageable);
 
-    List<TravelBookletDTO> travelBookletDTOList = travelBooklets.stream().map(travelBooklet -> {
-      TravelBookletDTO travelbookletDTO = new TravelBookletDTO(travelBooklet);
-      travelbookletDTO.setAuthor(new UserDTO(travelBooklet.getAuthor()));
+    // 内容をDTOに変える
+    Page<TravelBookletDTO> travelBookletDTOPage = travelBookletsPage.map(travelBooklet -> {
+      TravelBookletDTO travelBookletDTO = new TravelBookletDTO(travelBooklet);
+      travelBookletDTO.setAuthor(new UserDTO(travelBooklet.getAuthor()));
 
-      return travelbookletDTO;
-  }).toList();
+      return travelBookletDTO;
+    });
 
-    return new TravelBookletListResponse(travelBookletDTOList);
+    return new TravelBookletPageResponse(travelBookletDTOPage);
   }
 
   /**

@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class TrackedLocationResponse {
   
-  private TrackedLocationDTO trackedlocation;
+  private TrackedLocationDTO trackedLocation;
 }

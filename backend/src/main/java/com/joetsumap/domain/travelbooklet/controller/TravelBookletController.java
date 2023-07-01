@@ -3,6 +3,8 @@ package com.joetsumap.domain.travelbooklet.controller;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.domain.travelbooklet.payload.request.CreateTravelBookletRequest;
 import com.joetsumap.domain.travelbooklet.payload.request.UpdateTravelBookletRequest;
-import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletListResponse;
+import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletPageResponse;
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletResponse;
 import com.joetsumap.domain.travelbooklet.service.TravelBookletService;
 import com.joetsumap.security.services.UserDetailsImpl;
@@ -34,9 +36,9 @@ public class TravelBookletController {
   TravelBookletService travelBookletService;
 
   @GetMapping("")
-  public TravelBookletListResponse findAll() {
+  public TravelBookletPageResponse findAll(@PageableDefault Pageable pageable) {
 
-    return travelBookletService.findAll();
+    return travelBookletService.findAll(pageable);
   }
 
   @GetMapping("/{id}")

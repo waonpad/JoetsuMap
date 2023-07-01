@@ -1,12 +1,9 @@
 package com.joetsumap.domain.user.entity;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.joetsumap.common.entity.BaseEntity;
 import com.joetsumap.domain.modelcourse.entity.ModelCourse;
 import com.joetsumap.domain.notification.entity.Notification;
@@ -36,7 +33,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@ToString(exclude = {"roles", "notifications", "travelBooklets", "trackedLocations", "travelSpots", "modelCourses", "passings1", "passings2", "bookmarkedTravelSpots", "bookmarkedModelCourses"})
+@ToString(exclude = {
+  "roles", "notifications", "travelBooklets", "trackedLocations", "travelSpots",
+  "modelCourses", "passings1", "passings2", "bookmarkedTravelSpots", "bookmarkedModelCourses"
+})
 public class User extends BaseEntity {
 
   @Id

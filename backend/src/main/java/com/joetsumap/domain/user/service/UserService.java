@@ -24,22 +24,22 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
-  /**
-   * ユーザーを全件取得する
-   */
-  public UserListResponse findAll() {
+  // /**
+  //  * ユーザーを全件取得する
+  //  */
+  // public UserListResponse findAll() {
 
-    List<User> users = userRepository.findAll();
+  //   List<User> users = userRepository.findAll();
 
-    List<UserDTO> userDTOList = users.stream().map(user -> {
-      UserDTO userDTO = new UserDTO(user);
-      userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());
+  //   List<UserDTO> userDTOList = users.stream().map(user -> {
+  //     UserDTO userDTO = new UserDTO(user);
+  //     userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());
 
-      return userDTO;
-  }).toList();
+  //     return userDTO;
+  // }).toList();
 
-    return new UserListResponse(userDTOList);
-  }
+  //   return new UserListResponse(userDTOList);
+  // }
 
   /**
    * ユーザーをIDで取得する
