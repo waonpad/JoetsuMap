@@ -1,5 +1,7 @@
 import { View } from 'react-native';
 
+import { Suspense } from '@/components/Suspense';
+
 import { UpdateProfileForm } from '../../components/UpdateProfileForm';
 import { useUserRoute } from '../../navigation/UserNavigator/useUserRoute';
 
@@ -10,7 +12,9 @@ export const UpdateProfileScreen = () => {
 
   return (
     <View style={styles.container}>
-      <UpdateProfileForm userId={route.params.userId} />
+      <Suspense>
+        <UpdateProfileForm userId={route.params.userId} />
+      </Suspense>
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import type { User } from '@/features/user';
-import type { BaseEntity, LatLng } from '@/types';
+import type { BaseEntity, LatLng, Page } from '@/types';
 
 export type TrackedLocation = {
   coords: LatLng;
@@ -12,4 +12,8 @@ export type TrackedLocationResponse = {
 
 export type TrackedLocationListResponse = {
   trackedLocations: TrackedLocation[];
+};
+
+export type TrackedLocationPageResponse = {
+  trackedLocations: Page<TrackedLocation>;
 };

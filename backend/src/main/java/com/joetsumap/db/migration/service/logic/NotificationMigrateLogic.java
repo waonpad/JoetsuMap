@@ -22,7 +22,7 @@ public class NotificationMigrateLogic {
 
   public void migrate() {
     
-    Integer notificationCount = 300;
+    Integer notificationCount = 3000;
 
     List<User> users = userRepository.findAll();
 

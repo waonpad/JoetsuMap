@@ -3,6 +3,7 @@ package com.joetsumap.domain.passing.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.domain.passing.entity.Passing;
@@ -23,10 +24,11 @@ public class PassingService {
   /**
    * ログインユーザーに関連するすれ違い情報を取得する
    */
-  public PassingListResponse findMy(UserDetailsImpl userDetails) {
+  public PassingListResponse findMy(UserDetailsImpl userDetails, Pageable pageable) {
 
     // ログインユーザーに関連するすれ違い情報を取得し、最新のすれ違い情報から順に表示する
     // TODO: 動作検証
+    // TODO: ページング実装後回し JPQL使う？
 
     List<Passing> passings1 = passingRepository.findByUser1Id(userDetails.getUser().getId());
     List<Passing> passings2 = passingRepository.findByUser2Id(userDetails.getUser().getId());

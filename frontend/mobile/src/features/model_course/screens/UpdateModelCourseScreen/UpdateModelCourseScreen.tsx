@@ -1,5 +1,7 @@
 import { View } from 'react-native';
 
+import { Suspense } from '@/components/Suspense';
+
 import { UpdateModelCourseForm } from '../../components/UpdateModelCourseForm';
 import { useModelCourseRoute } from '../../navigation/ModelCourseNavigator/useModelCourseRoute';
 
@@ -10,7 +12,9 @@ export const UpdateModelCourseScreen = () => {
 
   return (
     <View style={styles.container}>
-      <UpdateModelCourseForm modelCourseId={route.params.modelCourseId} />
+      <Suspense>
+        <UpdateModelCourseForm modelCourseId={route.params.modelCourseId} />
+      </Suspense>
     </View>
   );
 };

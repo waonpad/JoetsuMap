@@ -1,5 +1,8 @@
+import { Image } from 'expo-image';
 import { Controller } from 'react-hook-form';
 import { Button, Text, TextInput, View } from 'react-native';
+
+import { imageSourceUri, resizeByHeight, getSizeFromFileName } from '@/utils/compute';
 
 import { TITLE_LABRL, TEXT_LABEL, SUBMIT_LABEL } from './constants';
 import { styles } from './styles';
@@ -9,7 +12,10 @@ import { validationSchema } from './validationSchema';
 import type { UpdateTravelBookletFormProps } from './types';
 
 export const UpdateTravelBookletForm = ({ travelBookletId }: UpdateTravelBookletFormProps) => {
-  const { control, handleSubmit, onSubmit, errors } = useLogics({ travelBookletId });
+  const { travelBookletQuery, photo, handleChoosePhoto, control, handleSubmit, onSubmit, errors } =
+    useLogics({
+      travelBookletId,
+    });
 
   return (
     <View style={styles.container}>
@@ -37,7 +43,26 @@ export const UpdateTravelBookletForm = ({ travelBookletId }: UpdateTravelBooklet
           </>
         )}
       />
-      {/* 写真の更新用コンポーネントも用意する */}
+      {/* 写真を選択したら置き換える */}
+      {photo ? (
+        <Image source={{ uri: photo?.uri }} style={{ width: photo.width, height: photo.height }} />
+      ) : travelBookletQuery.data?.travelBooklet.photo ? (
+        // 選択されるまでは既存の写真を表示
+        <Image
+          source={{
+            uri: imageSourceUri(travelBookletQuery.data?.travelBooklet.photo),
+          }}
+          style={{
+            ...resizeByHeight(
+              100,
+              getSizeFromFileName(travelBookletQuery.data?.travelBooklet.photo),
+            ),
+          }}
+        />
+      ) : (
+        <></>
+      )}
+      <Button title="写真を選択" onPress={handleChoosePhoto} />
       <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
     </View>
   );

@@ -1,26 +1,36 @@
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
-import type { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
+import type { ExtractFnReturnType, InfiniteQueryConfig } from '@/lib/react-query';
+import { pageableParams } from '@/utils/compute';
 
 import { API_ENDPOINT, QUERY_KEY_PLURAL } from '../constants';
 
-import type { TravelSpotListResponse } from '../types';
+import type { TravelSpotPageResponse } from '../types';
 
-export const getTravelSpots = (): Promise<TravelSpotListResponse> => {
-  return axios.get(API_ENDPOINT);
+export const getTravelSpots = ({
+  pageParam = 0,
+}: {
+  pageParam?: number;
+}): Promise<TravelSpotPageResponse> => {
+  return axios.get(`${API_ENDPOINT}`, {
+    params: { ...pageableParams({ page: pageParam }) },
+  });
 };
 
 type QueryFnType = typeof getTravelSpots;
 
 type UseTravelSpotsOptions = {
-  config?: QueryConfig<QueryFnType>;
+  config?: InfiniteQueryConfig<QueryFnType>;
 };
 
 export const useTravelSpots = ({ config }: UseTravelSpotsOptions = {}) => {
-  return useQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
     queryKey: [QUERY_KEY_PLURAL],
-    queryFn: () => getTravelSpots(),
+    queryFn: ({ pageParam }) => getTravelSpots({ pageParam }),
+    getNextPageParam: (page) => {
+      return page.travelSpots.last ? undefined : page.travelSpots.number + 1;
+    },
   });
 };

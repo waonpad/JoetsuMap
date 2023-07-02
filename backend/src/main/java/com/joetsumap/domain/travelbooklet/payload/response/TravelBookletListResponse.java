@@ -11,5 +11,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class TravelBookletListResponse {
   
-  private List<TravelBookletDTO> travelbooklets;
+  private List<TravelBookletDTO> travelBooklets;
 }

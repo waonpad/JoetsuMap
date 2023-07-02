@@ -9,5 +9,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class ModelCourseResponse {
   
-  private ModelCourseDTO modelcourse;
+  private ModelCourseDTO modelCourse;
 }

@@ -1,3 +1,8 @@
+import type { ModelCourseDetailScreenParams } from '@/features/model_course/screens/ModelCourseDetailScreen/types';
+import type { TravelBookletDetailScreenParams } from '@/features/travel_booklet/screens/TravelBookletDetailScreen/types';
+import type { UpdateTravelBookletScreenParams } from '@/features/travel_booklet/screens/UpdateTravelBookletScreen/types';
+import type { TravelSpotDetailScreenParams } from '@/features/travel_spot/screens/TravelSpotDetailScreen/types';
+import type { ProfileDetailScreenParams } from '@/features/user/screens/ProfileDetailScreen/types';
 import type { ROLES as RoleTypes } from '@/lib/authorization';
 import type { UnAuthorizedScreenParams } from '@/screens/UnAuthorizedScreen/types';
 
@@ -30,6 +35,11 @@ export type ReactHookFormValidationRules<T extends FieldValues> = Record<
 export type BaseNavigationParamList = {
   PermissionDenied: undefined;
   Unauthorized: UnAuthorizedScreenParams;
+  ModelCourseDetail: ModelCourseDetailScreenParams;
+  TravelBookletDetail: TravelBookletDetailScreenParams;
+  UpdateTravelBooklet: UpdateTravelBookletScreenParams;
+  TravelSpotDetail: TravelSpotDetailScreenParams;
+  ProfileDetail: ProfileDetailScreenParams;
 };
 
 export type PickedImage = ImagePicker.ImagePickerSuccessResult['assets'][number];
@@ -37,3 +47,5 @@ export type PickedImage = ImagePicker.ImagePickerSuccessResult['assets'][number]
 export type ToggleBookmarkResponse = {
   isBookmarked: boolean;
 };
+
+export * from './pageable';

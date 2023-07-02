@@ -24,7 +24,7 @@ public class TravelBookletMigrateLogic {
 
   public void migrate() {
 
-    Integer travelBookletCount = 300;
+    Integer travelBookletCount = 3000;
 
     Integer existTravelBookletCount = travelBookletRepository.findAll().size();
 
@@ -35,16 +35,10 @@ public class TravelBookletMigrateLogic {
     for (int i = existTravelBookletCount + 1; i <= travelBookletCount; i++) {
       String counter = String.format("%03d", i);
 
-      String travelBookletTitle = "旅のしおり" + counter;
-
-      if (travelBookletRepository.findAllByTitle(travelBookletTitle).isEmpty() == false) {
-        continue;
-      }
-
       TravelBooklet travelBooklet = new TravelBooklet();
-      travelBooklet.setTitle(travelBookletTitle);
+      travelBooklet.setTitle("旅のしおり" + counter);
       travelBooklet.setText("本文" + counter);
-      travelBooklet.setPhoto(TravelBookletConst.PHOTO_SAVE_DIR + "travel-booklet-photo-sample" + FileConst.IMAGE_SAVE_FORMAT);
+      travelBooklet.setPhoto(TravelBookletConst.PHOTO_SAVE_DIR + "travel-booklet-photo-width-600-height-899-sample" + FileConst.IMAGE_SAVE_FORMAT);
       
       // ランダムにAuthorを設定
       int randomIndex = (int) (Math.random() * users.size());

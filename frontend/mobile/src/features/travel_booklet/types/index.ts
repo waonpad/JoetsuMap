@@ -1,5 +1,5 @@
 import type { User } from '@/features/user';
-import type { BaseEntity, Photo } from '@/types';
+import type { BaseEntity, Page, Photo } from '@/types';
 
 export type TravelBooklet = {
   title: string;
@@ -14,4 +14,8 @@ export type TravelBookletResponse = {
 
 export type TravelBookletListResponse = {
   travelBooklets: TravelBooklet[];
+};
+
+export type TravelBookletPageResponse = {
+  travelBooklets: Page<TravelBooklet>;
 };

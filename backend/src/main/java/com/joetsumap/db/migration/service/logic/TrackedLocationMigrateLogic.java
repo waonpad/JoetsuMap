@@ -22,7 +22,7 @@ public class TrackedLocationMigrateLogic {
 
   public void migrate() {
 
-    Integer trackedLocationCount = 500;
+    Integer trackedLocationCount = 5000;
 
     List<User> users = userRepository.findAll();
 

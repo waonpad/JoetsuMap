@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joetsumap.domain.user.payload.request.UpdateProfileRequest;
-import com.joetsumap.domain.user.payload.response.UserListResponse;
 import com.joetsumap.domain.user.payload.response.UserResponse;
 import com.joetsumap.domain.user.service.UserService;
 import com.joetsumap.security.services.UserDetailsImpl;
@@ -29,12 +28,12 @@ public class UserController {
   @Autowired
   UserService userService;
 
-  // おそらく不要、テスト用
-  @GetMapping("")
-  public UserListResponse findAll() {
+  // // おそらく不要、テスト用
+  // @GetMapping("")
+  // public UserListResponse findAll() {
 
-    return userService.findAll();
-  }
+  //   return userService.findAll();
+  // }
 
   @GetMapping("/{id}")
   public UserResponse findById(@PathVariable Long id) {

@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { Controller } from 'react-hook-form';
 import { Button, TextInput, View, Text } from 'react-native';
 
@@ -9,7 +10,9 @@ import { validationSchema } from './validationSchema';
 import type { CreateTravelBookletFormProps } from './types';
 
 export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFormProps) => {
-  const { control, handleSubmit, onSubmit, errors } = useLogics({ defaultValues });
+  const { photo, handleChoosePhoto, control, handleSubmit, onSubmit, errors } = useLogics({
+    defaultValues,
+  });
 
   return (
     <View style={styles.container}>
@@ -37,7 +40,10 @@ export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFo
           </>
         )}
       />
-      {/* 写真の投稿用コンポーネントも用意する */}
+      {photo && (
+        <Image source={{ uri: photo?.uri }} style={{ width: photo.width, height: photo.height }} />
+      )}
+      <Button title="写真を選択" onPress={handleChoosePhoto} />
       <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
     </View>
   );

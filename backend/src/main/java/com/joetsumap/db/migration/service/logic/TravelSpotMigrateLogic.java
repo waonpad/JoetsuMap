@@ -13,8 +13,6 @@ import com.joetsumap.domain.travelspot.repository.TravelSpotTypeRepository;
 import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.common.file.constant.FileConst;
-import com.joetsumap.domain.role.entity.ERole;
-import com.joetsumap.domain.role.repository.RoleRepository;
 import com.joetsumap.domain.travelspot.constant.TravelSpotConst;
 
 @Service
@@ -28,9 +26,6 @@ public class TravelSpotMigrateLogic {
 
   @Autowired
   private UserRepository userRepository;
-
-  @Autowired
-  private RoleRepository roleRepository;
 
   public void migrate(User admin) {
     // NOTICE: 本来はこのメソッド内でadminを取得したかったが、トランザクションの関係？で引数で受け取ることにした。
@@ -55,7 +50,7 @@ public class TravelSpotMigrateLogic {
       travelSpot.setAddress("住所" + counter);
       travelSpot.setTel("012-3456-789" + counter);
 
-      travelSpot.setPhoto(TravelSpotConst.PHOTO_SAVE_DIR + "travel-spot-photo-sample" + FileConst.IMAGE_SAVE_FORMAT);
+      travelSpot.setPhoto(TravelSpotConst.PHOTO_SAVE_DIR + "travel-spot-photo-width-600-height-371-sample" + FileConst.IMAGE_SAVE_FORMAT);
 
       // 緯度経度に誤差をランダムで加える
       double latitude = latitudeBase + (Math.random() * 0.0001 * (Math.random() > 0.5 ? 1 : -1));

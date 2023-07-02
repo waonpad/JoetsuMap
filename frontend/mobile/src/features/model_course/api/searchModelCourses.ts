@@ -1,19 +1,26 @@
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
-import type { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
-import { buildQueryString } from '@/utils/compute';
+import type { ExtractFnReturnType, InfiniteQueryConfig } from '@/lib/react-query';
+import { pageableParams } from '@/utils/compute';
 
 import { API_ENDPOINT, QUERY_KEY_PLURAL } from '../constants';
 
-import type { ModelCourseListResponse } from '../types';
+import type { ModelCoursePageResponse } from '../types';
 
 export const searchModelCourses = ({
-  params,
+  freeKeyword,
+  pageParam = 0,
 }: {
-  params: { freeKeyword: string };
-}): Promise<ModelCourseListResponse> => {
-  return axios.get(`${API_ENDPOINT}/search?${buildQueryString(params)}`);
+  freeKeyword: string;
+  pageParam?: number;
+}): Promise<ModelCoursePageResponse> => {
+  return axios.get(`${API_ENDPOINT}/search`, {
+    params: {
+      freeKeyword,
+      ...pageableParams({ page: pageParam }),
+    },
+  });
 };
 
 type QueryFnType = typeof searchModelCourses;
@@ -22,15 +29,18 @@ type UseSearchModelCoursesOptions = {
   params: {
     freeKeyword: string;
   };
-  config?: QueryConfig<QueryFnType>;
+  config?: InfiniteQueryConfig<QueryFnType>;
 };
 
 export const useSearchModelCourses = (
   { params, config }: UseSearchModelCoursesOptions = { params: { freeKeyword: '' } },
 ) => {
-  return useQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: [QUERY_KEY_PLURAL, JSON.stringify(params)],
-    queryFn: () => searchModelCourses({ params }),
+    queryKey: [QUERY_KEY_PLURAL, params.freeKeyword],
+    queryFn: ({ pageParam }) => searchModelCourses({ ...params, pageParam }),
+    getNextPageParam: (page) => {
+      return page.modelCourses.last ? undefined : page.modelCourses.number + 1;
+    },
   });
 };

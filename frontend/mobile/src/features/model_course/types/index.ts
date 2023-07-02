@@ -1,6 +1,6 @@
 import type { TravelSpot } from '@/features/travel_spot';
 import type { User } from '@/features/user';
-import type { BaseEntity } from '@/types';
+import type { BaseEntity, Page } from '@/types';
 
 export type ModelCourse = {
   title: string;
@@ -15,4 +15,8 @@ export type ModelCourseResponse = {
 
 export type ModelCourseListResponse = {
   modelCourses: ModelCourse[];
+};
+
+export type ModelCoursePageResponse = {
+  modelCourses: Page<ModelCourse>;
 };

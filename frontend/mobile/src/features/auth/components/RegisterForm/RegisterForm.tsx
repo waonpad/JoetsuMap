@@ -1,5 +1,6 @@
+import { Image } from 'expo-image';
 import { Controller } from 'react-hook-form';
-import { Button, TextInput, View, Text, Image } from 'react-native';
+import { Button, TextInput, View, Text } from 'react-native';
 
 import {
   USERNAME_LABRL,
@@ -22,11 +23,7 @@ export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
   return (
     <View style={styles.container}>
       {/* 簡易実装 */}
-      {icon && (
-        <>
-          <Image source={{ uri: icon?.uri }} style={{ width: 300, height: 300 }} />
-        </>
-      )}
+      {icon && <Image source={{ uri: icon?.uri }} style={{ width: 300, height: 300 }} />}
       <Button title="Choose Photo" onPress={handleChoosePhoto} />
       <Controller
         name={'username'}

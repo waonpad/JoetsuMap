@@ -1,4 +1,6 @@
-import { View } from 'react-native';
+import { Dimensions, FlatList, View } from 'react-native';
+
+import { DEFAULT_ON_END_REACHED_THRESHOLD } from '@/constants';
 
 import { PassingHistoryListItem } from '../PassingHistoryListItem';
 
@@ -13,9 +15,14 @@ export const PassingHistoryList = ({}: PassingHistoryListProps) => {
 
   return (
     <View style={styles.container}>
-      {myPassingsQuery.data?.passings.map((passing) => {
-        return <PassingHistoryListItem key={passing.id} passing={passing} />;
-      })}
+      <FlatList
+        style={{ width: Dimensions.get('window').width }}
+        data={myPassingsQuery.data?.pages.flatMap((page) => page.passings.content)}
+        renderItem={({ item }) => <PassingHistoryListItem passing={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={() => myPassingsQuery.fetchNextPage()}
+        onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD}
+      />
     </View>
   );
 };

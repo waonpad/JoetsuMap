@@ -3,6 +3,8 @@ package com.joetsumap.domain.modelcourse.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
@@ -12,7 +14,7 @@ import com.joetsumap.domain.modelcourse.entity.ModelCourse;
 import com.joetsumap.domain.modelcourse.payload.request.CreateModelCourseRequest;
 import com.joetsumap.domain.modelcourse.payload.request.UpdateModelCourseRequest;
 import com.joetsumap.domain.modelcourse.payload.response.ModelCourseDTO;
-import com.joetsumap.domain.modelcourse.payload.response.ModelCourseListResponse;
+import com.joetsumap.domain.modelcourse.payload.response.ModelCoursePageResponse;
 import com.joetsumap.domain.modelcourse.payload.response.ModelCourseResponse;
 import com.joetsumap.domain.modelcourse.repository.ModelCourseRepository;
 import com.joetsumap.domain.travelspot.entity.TravelSpot;
@@ -44,11 +46,11 @@ public class ModelCourseService {
   /**
    * モデルコースを全件取得する
    */
-  public ModelCourseListResponse findAll() {
+  public ModelCoursePageResponse findAll(Pageable pageable) {
 
-    List<ModelCourse> modelCourses = modelCourseRepository.findAll();
+    Page<ModelCourse> modelCourses = modelCourseRepository.findAll(pageable);
 
-    List<ModelCourseDTO> modelCourseDTOList = modelCourses.stream().map(modelCourse -> {
+    Page<ModelCourseDTO> modelCourseDTOPage = modelCourses.map(modelCourse -> {
       ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
       modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
 
@@ -60,9 +62,9 @@ public class ModelCourseService {
       modelCourseDTO.setTravelSpots(travelSpotDTOList);
 
       return modelCourseDTO;
-    }).toList();
+    });
 
-    return new ModelCourseListResponse(modelCourseDTOList);
+    return new ModelCoursePageResponse(modelCourseDTOPage);
   }
 
   /**
@@ -75,7 +77,7 @@ public class ModelCourseService {
     ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
     modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
 
-    // TODO: 同じ処理を複数回書いていて冗長！後からリファクタリングする！
+  // TODO: 同じ処理を複数回書いていて冗長！後からリファクタリングする！
     List<TravelSpotDTO> travelSpotDTOList = modelCourse.getModelCourseTravelSpots().stream()
         .map(modelCourseTravelSpot -> {
           return new TravelSpotDTO(modelCourseTravelSpot.getTravelSpot());
@@ -194,11 +196,11 @@ public class ModelCourseService {
   /**
    * ブックマークしているモデルコースを全件取得する
    */
-  public ModelCourseListResponse findAllBookmarks(UserDetailsImpl userDetails) {
+  public ModelCoursePageResponse findAllBookmarks(UserDetailsImpl userDetails, Pageable pageable) {
 
-    List<ModelCourse> modelCourses = userRepository.findById(userDetails.getUser().getId()).get().getBookmarkedModelCourses();
+    Page<ModelCourse> modelCourses = modelCourseRepository.findByBookmarkedUsers(userDetails.getUser(), pageable);
 
-    List<ModelCourseDTO> modelCourseDTOList = modelCourses.stream().map(modelCourse -> {
+    Page<ModelCourseDTO> modelCourseDTOPage = modelCourses.map(modelCourse -> {
       ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
       modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
 
@@ -210,9 +212,9 @@ public class ModelCourseService {
       modelCourseDTO.setTravelSpots(travelSpotDTOList);
 
       return modelCourseDTO;
-    }).toList();
+    });
 
-    return new ModelCourseListResponse(modelCourseDTOList);
+    return new ModelCoursePageResponse(modelCourseDTOPage);
   }
 
   /**
@@ -246,11 +248,11 @@ public class ModelCourseService {
   /**
    * モデルコースを検索する
    */
-  public ModelCourseListResponse searchAll(String freeKeyword) {
+  public ModelCoursePageResponse searchAll(String freeKeyword, Pageable pageable) {
 
-    List<ModelCourse> modelCourses = modelCourseRepository.findByTitleContaining(freeKeyword);
+    Page<ModelCourse> modelCourses = modelCourseRepository.findByTitleContaining(freeKeyword, pageable);
 
-    List<ModelCourseDTO> modelCourseDTOList = modelCourses.stream().map(modelCourse -> {
+    Page<ModelCourseDTO> modelCourseDTOPage = modelCourses.map(modelCourse -> {
       ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
       modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
 
@@ -262,8 +264,32 @@ public class ModelCourseService {
       modelCourseDTO.setTravelSpots(travelSpotDTOList);
 
       return modelCourseDTO;
-    }).toList();
+    });
 
-    return new ModelCourseListResponse(modelCourseDTOList);
+    return new ModelCoursePageResponse(modelCourseDTOPage);
+  }
+
+  /**
+   * ユーザーの作成したモデルコースを取得する
+   */
+  public ModelCoursePageResponse findAllByAuthorId(Long authorId, Pageable pageable) {
+
+    Page<ModelCourse> modelCourses = modelCourseRepository.findByAuthorId(authorId, pageable);
+
+    Page<ModelCourseDTO> modelCourseDTOPage = modelCourses.map(modelCourse -> {
+      ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
+      modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
+
+      List<TravelSpotDTO> travelSpotDTOList = modelCourse.getModelCourseTravelSpots().stream()
+          .map(modelCourseTravelSpot -> {
+            return new TravelSpotDTO(modelCourseTravelSpot.getTravelSpot());
+          }).toList();
+
+      modelCourseDTO.setTravelSpots(travelSpotDTOList);
+
+      return modelCourseDTO;
+    });
+
+    return new ModelCoursePageResponse(modelCourseDTOPage);
   }
 }

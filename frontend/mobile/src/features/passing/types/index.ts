@@ -1,5 +1,5 @@
 import type { User } from '@/features/user';
-import type { BaseEntity } from '@/types';
+import type { BaseEntity, Page } from '@/types';
 
 export type Passing = {
   passedUser: User;
@@ -11,4 +11,8 @@ export type PassingResponse = {
 
 export type PassingListResponse = {
   passings: Passing[];
+};
+
+export type PassingPageResponse = {
+  passings: Page<Passing>;
 };

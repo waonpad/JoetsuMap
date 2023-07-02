@@ -39,3 +39,12 @@ start-tunnel:
 mobile-build-previewAndroid:
 	${IN_MOBILE_DIR} start eas secret:push --scope project --env-file .env --force
 	${IN_MOBILE_DIR} start eas build --platform android --profile previewAndroid
+
+start-frontend:
+	${IN_MOBILE_DIR} start npx expo start
+
+start-frontend-tunnel:
+	${IN_MOBILE_DIR} start npx expo start --tunnel
+
+tunnel:
+	break && start lt --port 8080 --subdomain ${LOCAL_TUNNEL_SUBDOMAIN}

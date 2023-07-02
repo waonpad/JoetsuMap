@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { CreateTravelBookletForm } from '../../components/CreateTravelBookletForm';
 import { useTravelBookletRoute } from '../../navigation/TravelBookletNavigator/useTravelBookletRoute';
@@ -9,8 +9,8 @@ export const CreateTravelBookletScreen = () => {
   const route = useTravelBookletRoute<'CreateTravelBooklet'>();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <CreateTravelBookletForm defaultValues={route.params.createTravelBookletFormDefaultValues} />
-    </View>
+    </ScrollView>
   );
 };

@@ -11,5 +11,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class TrackedLocationListResponse {
   
-  private List<TrackedLocationDTO> trackedlocations;
+  private List<TrackedLocationDTO> trackedLocations;
 }

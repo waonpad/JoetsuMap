@@ -1,4 +1,6 @@
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
+
+import { DEFAULT_ON_END_REACHED_THRESHOLD } from '@/constants';
 
 import { TravelBookletListItem } from '../TravelBookletListItem';
 
@@ -13,9 +15,15 @@ export const TravelBookletList = ({}: TravelBookletListProps) => {
 
   return (
     <View style={styles.container}>
-      {travelBookletsQuery.data?.travelBooklets.map((travelBooklet) => {
-        return <TravelBookletListItem key={travelBooklet.id} travelBooklet={travelBooklet} />;
-      })}
+      <FlatList
+        style={{ width: '100%' }}
+        data={travelBookletsQuery.data?.pages.flatMap((page) => page.travelBooklets.content)}
+        renderItem={({ item }) => <TravelBookletListItem travelBooklet={item} />}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // 余白
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={() => travelBookletsQuery.fetchNextPage()} // 下に到達したら次のページを読み込む
+        onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD} // 画面の下からどれくらいの位置で読み込むか
+      />
     </View>
   );
 };

@@ -1,5 +1,7 @@
 import { View } from 'react-native';
 
+import { Suspense } from '@/components/Suspense';
+
 import { PassingHistoryList } from '../../components/PassingHistoryList';
 import { usePassingRoute } from '../../navigation/PassingNavigator/usePassingRoute';
 
@@ -10,7 +12,9 @@ export const PassingHistoryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <PassingHistoryList />
+      <Suspense>
+        <PassingHistoryList />
+      </Suspense>
     </View>
   );
 };

@@ -52,7 +52,7 @@ public class UserMigrateLogic {
     user.setUsername(username);
     user.setEmail("admin@example.com");
     user.setPassword(encoder.encode("adminpassword"));
-    user.setIcon(UserConst.ICON_SAVE_DIR + "user-icon-sample" + FileConst.IMAGE_SAVE_FORMAT);
+    user.setIcon(UserConst.ICON_SAVE_DIR + "user-icon-width-500-height-500-sample" + FileConst.IMAGE_SAVE_FORMAT);
     user.setRoles(roles);
 
     userRepository.save(user);
@@ -86,7 +86,7 @@ public class UserMigrateLogic {
       user.setUsername("user" + counter);
       user.setEmail("user" + counter + "@example.com");
       user.setPassword(encoder.encode("password" + counter));
-      user.setIcon(UserConst.ICON_SAVE_DIR + "user-icon-sample" + FileConst.IMAGE_SAVE_FORMAT);
+      user.setIcon(UserConst.ICON_SAVE_DIR + "user-icon-width-500-height-500-sample" + FileConst.IMAGE_SAVE_FORMAT);
       user.setRoles(roles);
 
       users.add(user);

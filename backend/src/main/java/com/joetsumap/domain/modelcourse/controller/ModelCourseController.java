@@ -3,6 +3,8 @@ package com.joetsumap.domain.modelcourse.controller;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.domain.modelcourse.payload.request.CreateModelCourseRequest;
 import com.joetsumap.domain.modelcourse.payload.request.UpdateModelCourseRequest;
-import com.joetsumap.domain.modelcourse.payload.response.ModelCourseListResponse;
+import com.joetsumap.domain.modelcourse.payload.response.ModelCoursePageResponse;
 import com.joetsumap.domain.modelcourse.payload.response.ModelCourseResponse;
 import com.joetsumap.domain.modelcourse.service.ModelCourseService;
 import com.joetsumap.security.services.UserDetailsImpl;
@@ -36,9 +38,9 @@ public class ModelCourseController {
   ModelCourseService modelCourseService;
 
   @GetMapping("")
-  public ModelCourseListResponse findAll() {
+  public ModelCoursePageResponse findAll(@PageableDefault Pageable pageable) {
 
-    return modelCourseService.findAll();
+    return modelCourseService.findAll(pageable);
   }
 
   @GetMapping("/{id}")
@@ -68,9 +70,9 @@ public class ModelCourseController {
   }
   
   @GetMapping("/bookmarks")
-  public ModelCourseListResponse findAllBookmarks(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+  public ModelCoursePageResponse findAllBookmarks(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
 
-    return modelCourseService.findAllBookmarks(userDetails);
+    return modelCourseService.findAllBookmarks(userDetails, pageable);
   }
 
   @PostMapping("bookmarks/{id}")
@@ -80,8 +82,14 @@ public class ModelCourseController {
   }
 
   @GetMapping("/search")
-  public ModelCourseListResponse searchAll(@RequestParam(value = "freeKeyword") String freeKeyword) {
+  public ModelCoursePageResponse searchAll(@RequestParam(value = "freeKeyword") String freeKeyword, @PageableDefault Pageable pageable) {
 
-    return modelCourseService.searchAll(freeKeyword);
+    return modelCourseService.searchAll(freeKeyword, pageable);
+  }
+
+  @GetMapping("/users/{userId}")
+  public ModelCoursePageResponse findAllByAuthorId(@PathVariable Long userId, @PageableDefault Pageable pageable) {
+
+    return modelCourseService.findAllByAuthorId(userId, pageable);
   }
 }
