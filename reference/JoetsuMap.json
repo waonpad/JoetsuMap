@@ -1273,6 +1273,84 @@
         },
         "operationId": "get-travel_spots-search"
       }
+    },
+    "/model_courses/users/{userId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "ユーザーの投稿したモデルコース一覧を取得",
+        "tags": [
+          "ModelCourse"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "modelCourses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ModelCourseDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-model_courses-users-userId"
+      }
+    },
+    "/travel_booklets/users/{userId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "ユーザーの投稿した旅のしおり一覧を取得",
+        "tags": [
+          "TravelBooklet"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "travelBooklets": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TravelBookletDTO"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-travel_booklets-users-userId"
+      }
     }
   },
   "components": {
