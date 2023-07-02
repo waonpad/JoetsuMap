@@ -1,4 +1,6 @@
-import { View } from 'react-native';
+import { Dimensions, FlatList, View } from 'react-native';
+
+import { DEFAULT_ON_END_REACHED_THRESHOLD } from '@/constants';
 
 import { ModelCourseListItem } from '../ModelCourseListItem';
 
@@ -12,9 +14,14 @@ export const SearchedModelCourseList = ({ searchParams }: SearchedModelCourseLis
 
   return (
     <View style={styles.container}>
-      {searchModelCoursesQuery.data?.modelCourses.map((modelCourse) => {
-        return <ModelCourseListItem key={modelCourse.id} modelCourse={modelCourse} />;
-      })}
+      <FlatList
+        style={{ width: Dimensions.get('window').width }}
+        data={searchModelCoursesQuery.data?.pages.flatMap((page) => page.modelCourses.content)}
+        renderItem={({ item }) => <ModelCourseListItem modelCourse={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={() => searchModelCoursesQuery.fetchNextPage()}
+        onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD}
+      />
     </View>
   );
 };

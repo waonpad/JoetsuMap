@@ -123,4 +123,21 @@ public class TravelBookletService {
 
     travelBookletRepository.delete(travelBooklet);
   }
+
+  /**
+   * ユーザーの作成した旅のしおりを全件取得する
+   */
+  public TravelBookletPageResponse findByAuthorId(Long authorId, Pageable pageable) {
+
+    Page<TravelBooklet> travelBookletsPage = travelBookletRepository.findByAuthorId(authorId, pageable);
+
+    Page<TravelBookletDTO> travelBookletDTOPage = travelBookletsPage.map(travelBooklet -> {
+      TravelBookletDTO travelBookletDTO = new TravelBookletDTO(travelBooklet);
+      travelBookletDTO.setAuthor(new UserDTO(travelBooklet.getAuthor()));
+
+      return travelBookletDTO;
+    });
+
+    return new TravelBookletPageResponse(travelBookletDTOPage);
+  }
 }

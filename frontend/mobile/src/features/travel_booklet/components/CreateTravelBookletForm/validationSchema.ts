@@ -10,4 +10,7 @@ export const validationSchema: ReactHookFormValidationRules<CreateTravelBookletF
   text: {
     required: validations.required,
   },
+  photo: {
+    required: validations.required,
+  },
 };

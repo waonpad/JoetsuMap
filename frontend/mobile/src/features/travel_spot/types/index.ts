@@ -1,5 +1,5 @@
 import type { User } from '@/features/user';
-import type { BaseEntity, Photo, LatLng } from '@/types';
+import type { BaseEntity, Photo, LatLng, Page } from '@/types';
 
 type SPOTTYPE = 'FUN' | 'FOOD' | 'LEARN';
 
@@ -20,4 +20,8 @@ export type TravelSpotResponse = {
 
 export type TravelSpotListResponse = {
   travelSpots: TravelSpot[];
+};
+
+export type TravelSpotPageResponse = {
+  travelSpots: Page<TravelSpot>;
 };

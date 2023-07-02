@@ -17,6 +17,6 @@ public interface ModelCourseRepository extends JpaRepository<ModelCourse, Long> 
   List<ModelCourse> findByAuthorId(Long id);
   Page<ModelCourse> findByAuthorId(Long id, Pageable pageable);
 
-  List<ModelCourse> findAllByBookmarkedUsers(User user);
-  Page<ModelCourse> findAllByBookmarkedUsers(User user, Pageable pageable);
+  List<ModelCourse> findByBookmarkedUsers(User user);
+  Page<ModelCourse> findByBookmarkedUsers(User user, Pageable pageable);
 }

@@ -1,4 +1,6 @@
-import { View } from 'react-native';
+import { Dimensions, FlatList, View } from 'react-native';
+
+import { DEFAULT_ON_END_REACHED_THRESHOLD } from '@/constants';
 
 import { TravelSpotListItem } from '../TravelSpotListItem';
 
@@ -13,9 +15,14 @@ export const TravelSpotList = ({}: TravelSpotListProps) => {
 
   return (
     <View style={styles.container}>
-      {travelSpotsQuery.data?.travelSpots.map((travelSpot) => {
-        return <TravelSpotListItem key={travelSpot.id} travelSpot={travelSpot} />;
-      })}
+      <FlatList
+        style={{ width: Dimensions.get('window').width }}
+        data={travelSpotsQuery.data?.pages.flatMap((page) => page.travelSpots.content)}
+        renderItem={({ item }) => <TravelSpotListItem travelSpot={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={() => travelSpotsQuery.fetchNextPage()}
+        onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD}
+      />
     </View>
   );
 };

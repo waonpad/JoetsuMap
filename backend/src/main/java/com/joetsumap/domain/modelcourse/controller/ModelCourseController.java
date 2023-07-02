@@ -86,4 +86,10 @@ public class ModelCourseController {
 
     return modelCourseService.searchAll(freeKeyword, pageable);
   }
+
+  @GetMapping("/users/{userId}")
+  public ModelCoursePageResponse findAllByAuthorId(@PathVariable Long userId, @PageableDefault Pageable pageable) {
+
+    return modelCourseService.findAllByAuthorId(userId, pageable);
+  }
 }

@@ -19,7 +19,7 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterF
   const handleChoosePhoto = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       selectionLimit: 1,
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 1,
       base64: true,

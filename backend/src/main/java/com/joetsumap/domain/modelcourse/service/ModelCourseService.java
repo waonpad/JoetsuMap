@@ -198,7 +198,7 @@ public class ModelCourseService {
    */
   public ModelCoursePageResponse findAllBookmarks(UserDetailsImpl userDetails, Pageable pageable) {
 
-    Page<ModelCourse> modelCourses = modelCourseRepository.findAllByBookmarkedUsers(userDetails.getUser(), pageable);
+    Page<ModelCourse> modelCourses = modelCourseRepository.findByBookmarkedUsers(userDetails.getUser(), pageable);
 
     Page<ModelCourseDTO> modelCourseDTOPage = modelCourses.map(modelCourse -> {
       ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
@@ -251,6 +251,30 @@ public class ModelCourseService {
   public ModelCoursePageResponse searchAll(String freeKeyword, Pageable pageable) {
 
     Page<ModelCourse> modelCourses = modelCourseRepository.findByTitleContaining(freeKeyword, pageable);
+
+    Page<ModelCourseDTO> modelCourseDTOPage = modelCourses.map(modelCourse -> {
+      ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
+      modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
+
+      List<TravelSpotDTO> travelSpotDTOList = modelCourse.getModelCourseTravelSpots().stream()
+          .map(modelCourseTravelSpot -> {
+            return new TravelSpotDTO(modelCourseTravelSpot.getTravelSpot());
+          }).toList();
+
+      modelCourseDTO.setTravelSpots(travelSpotDTOList);
+
+      return modelCourseDTO;
+    });
+
+    return new ModelCoursePageResponse(modelCourseDTOPage);
+  }
+
+  /**
+   * ユーザーの作成したモデルコースを取得する
+   */
+  public ModelCoursePageResponse findAllByAuthorId(Long authorId, Pageable pageable) {
+
+    Page<ModelCourse> modelCourses = modelCourseRepository.findByAuthorId(authorId, pageable);
 
     Page<ModelCourseDTO> modelCourseDTOPage = modelCourses.map(modelCourse -> {
       ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);

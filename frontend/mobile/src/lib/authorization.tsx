@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import type { User } from '@/features/user';
+
 import { useAuth } from './auth';
 
 export enum ROLES {
@@ -10,16 +12,28 @@ export enum ROLES {
 
 type RoleTypes = keyof typeof ROLES;
 
+const commonPolicy = (
+  user: User | null,
+  entity: {
+    author: User;
+    [key: string]: any;
+  },
+) => {
+  if (!user) {
+    return false;
+  }
+  if (user.roles.some((role) => role === 'ROLE_ADMIN' || role === 'ROLE_MODERATOR')) {
+    return true;
+  }
+  if (user.roles.includes('ROLE_USER') && entity.author.id === user.id) {
+    return true;
+  }
+  return false;
+};
+
 export const POLICIES = {
-  // 'comment:delete': (user: User, comment: Comment) => {
-  //   if (user.role === 'ADMIN') {
-  //     return true;
-  //   }
-  //   if (user.role === 'USER' && comment.authorId === user.id) {
-  //     return true;
-  //   }
-  //   return false;
-  // },
+  'common:delete': commonPolicy,
+  'common:update': commonPolicy,
 };
 
 export const useAuthorization = () => {
@@ -33,7 +47,7 @@ export const useAuthorization = () => {
     ({ allowedRoles }: { allowedRoles: RoleTypes[] }) => {
       if (allowedRoles && allowedRoles.length > 0) {
         // return allowedRoles.some((role) => user.roles.includes(role));
-        return allowedRoles.some((role) => user.roles.some((userRole) => userRole.name === role));
+        return allowedRoles.some((role) => user.roles.some((userRole) => userRole.includes(role)));
       }
 
       return true;

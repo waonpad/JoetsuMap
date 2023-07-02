@@ -1,4 +1,6 @@
-import { Dimensions, FlatList, Text, View } from 'react-native';
+import { FlatList, View } from 'react-native';
+
+import { DEFAULT_ON_END_REACHED_THRESHOLD } from '@/constants';
 
 import { TravelBookletListItem } from '../TravelBookletListItem';
 
@@ -6,7 +8,6 @@ import { styles } from './styles';
 import { useLogics } from './useLogics';
 
 import type { TravelBookletListProps } from './types';
-import { useEffect } from 'react';
 
 // eslint-disable-next-line no-empty-pattern
 export const TravelBookletList = ({}: TravelBookletListProps) => {
@@ -14,16 +15,14 @@ export const TravelBookletList = ({}: TravelBookletListProps) => {
 
   return (
     <View style={styles.container}>
-      <Text>旅行しおり一覧</Text>
       <FlatList
-        style={{
-          width: Dimensions.get('window').width,
-        }}
+        style={{ width: '100%' }}
         data={travelBookletsQuery.data?.pages.flatMap((page) => page.travelBooklets.content)}
         renderItem={({ item }) => <TravelBookletListItem travelBooklet={item} />}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // 余白
         keyExtractor={(item) => item.id.toString()}
-        onEndReached={() => travelBookletsQuery.fetchNextPage()}
-        onEndReachedThreshold={0}
+        onEndReached={() => travelBookletsQuery.fetchNextPage()} // 下に到達したら次のページを読み込む
+        onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD} // 画面の下からどれくらいの位置で読み込むか
       />
     </View>
   );

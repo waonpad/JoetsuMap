@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { View } from 'react-native';
 
+import { Suspense } from '@/components/Suspense';
+
 import { SearchModelCourseForm } from '../../components/SearchModelCourseForm';
 import { SearchedModelCourseList } from '../../components/SearchedModelCourseList';
 import { useModelCourseRoute } from '../../navigation/ModelCourseNavigator';
@@ -28,7 +30,9 @@ export const ModelCourseHomeScreen = () => {
         onSubmitAction={handleSubmitSearch}
       />
       {/* <ModelCourseList /> */}
-      <SearchedModelCourseList searchParams={searchParams} />
+      <Suspense>
+        <SearchedModelCourseList searchParams={searchParams} />
+      </Suspense>
     </View>
   );
 };

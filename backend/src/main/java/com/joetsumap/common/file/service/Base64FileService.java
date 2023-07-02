@@ -24,12 +24,18 @@ import org.springframework.stereotype.Service;
 public class Base64FileService {
 
   public String uploadImageFromBase64(String base64Image, String saveDir) {
-    String fileName = UUID.randomUUID().toString() + FileConst.IMAGE_SAVE_FORMAT;
-
-    String realSaveDir = FileConst.IMAGE_SAVE_DIR + saveDir;
-
     try {
       byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+
+      // 画像の縦横を取得
+      int[] imageWidthAndHeight = FileUtil.getImageWidthAndHeight(imageBytes);
+
+      // 簡易的に、ファイル名に縦横を付与
+      String fileName = UUID.randomUUID().toString() + "-width-" + imageWidthAndHeight[0] + "-height-"
+          + imageWidthAndHeight[1] + "-" + FileConst.IMAGE_SAVE_FORMAT;
+
+      // 保存先のディレクトリを指定
+      String realSaveDir = FileConst.IMAGE_SAVE_DIR + saveDir;
 
       Path destinationFile = Path.of(realSaveDir + fileName);
       Files.copy(
@@ -37,14 +43,14 @@ public class Base64FileService {
         destinationFile,
         StandardCopyOption.REPLACE_EXISTING
       );
+
+      return saveDir + fileName;
     } catch (IOException e) {
       e.printStackTrace();
       throw new RuntimeException("File upload error.");
 
       // NOTE: ディレクトリが無いとエラーになるので、新しく必要な場合は作成して.gitkeepを配置する
     }
-
-    return saveDir + fileName;
   }
 
   public byte[] getImageToByteArray(String imagePath) throws Exception {

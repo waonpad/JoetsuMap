@@ -30,7 +30,7 @@ export const useTravelBooklets = ({ config }: UseTravelBookletsOptions = {}) => 
     queryKey: [QUERY_KEY_PLURAL],
     queryFn: ({ pageParam }) => getTravelBooklets({ pageParam }),
     getNextPageParam: (page) => {
-      return page.travelBooklets.last ? undefined : page.travelBooklets.number + 2;
+      return page.travelBooklets.last ? undefined : page.travelBooklets.number + 1;
     },
   });
 };

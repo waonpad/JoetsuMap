@@ -66,4 +66,10 @@ public class TravelBookletController {
 
     return ResponseEntity.ok().build();
   }
+
+  @GetMapping("/users/{id}")
+  public TravelBookletPageResponse findByAuthorId(@PathVariable Long id, @PageableDefault Pageable pageable) {
+
+    return travelBookletService.findByAuthorId(id, pageable);
+  }
 }

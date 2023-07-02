@@ -1,26 +1,36 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
-import type { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
+import type { ExtractFnReturnType, InfiniteQueryConfig } from '@/lib/react-query';
+import { pageableParams } from '@/utils/compute';
 
 import { API_ENDPOINT, QUERY_KEY_PLURAL } from '../constants';
 
-import type { TrackedLocationListResponse } from '../types';
+import type { TrackedLocationPageResponse } from '../types';
 
-export const getMyTrackedLocations = (): Promise<TrackedLocationListResponse> => {
-  return axios.get(`${API_ENDPOINT}/my`);
+export const getMyTrackedLocations = ({
+  pageParam = 0,
+}: {
+  pageParam?: number;
+}): Promise<TrackedLocationPageResponse> => {
+  return axios.get(`${API_ENDPOINT}/my`, {
+    params: { ...pageableParams({ page: pageParam }) },
+  });
 };
 
 type QueryFnType = typeof getMyTrackedLocations;
 
-type UseTrackedLocationsOptions = {
-  config?: QueryConfig<QueryFnType>;
+type UseMyTrackedLocationsOptions = {
+  config?: InfiniteQueryConfig<QueryFnType>;
 };
 
-export const useMyTrackedLocations = ({ config }: UseTrackedLocationsOptions = {}) => {
-  return useQuery<ExtractFnReturnType<QueryFnType>>({
+export const useMyTrackedLocations = ({ config }: UseMyTrackedLocationsOptions = {}) => {
+  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
     queryKey: [QUERY_KEY_PLURAL],
-    queryFn: () => getMyTrackedLocations(),
+    queryFn: ({ pageParam }) => getMyTrackedLocations({ pageParam }),
+    getNextPageParam: (page) => {
+      return page.trackedLocations.last ? undefined : page.trackedLocations.number + 1;
+    },
   });
 };

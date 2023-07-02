@@ -1,5 +1,7 @@
 import { View } from 'react-native';
 
+import { Suspense } from '@/components/Suspense';
+
 import { TravelSpotDetail } from '../../components/TravelSpotDetail';
 import { useTravelSpotRoute } from '../../navigation/TravelSpotNavigator/useTravelSpotRoute';
 
@@ -10,7 +12,9 @@ export const TravelSpotDetailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TravelSpotDetail travelSpotId={route.params.travelSpotId} />
+      <Suspense>
+        <TravelSpotDetail travelSpotId={route.params.travelSpotId} />
+      </Suspense>
     </View>
   );
 };

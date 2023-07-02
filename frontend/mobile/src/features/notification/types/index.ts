@@ -1,5 +1,5 @@
 import type { User } from '@/features/user';
-import type { BaseEntity } from '@/types';
+import type { BaseEntity, Page } from '@/types';
 
 export type Notification = {
   recipientToken: string;
@@ -17,4 +17,8 @@ export type NotificationResponse = {
 
 export type NotificationListResponse = {
   notifications: Notification[];
+};
+
+export type NotificationPageResponse = {
+  notifications: Page<Notification>;
 };

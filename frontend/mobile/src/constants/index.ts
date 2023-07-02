@@ -38,3 +38,7 @@ export const BACK_LOCATION_TRACKING_SUBSCRIPTION_KEY =
 export const IMAGE_SOURCE_ENDPOINT = '/images' as const;
 export const IMAGE_SOURCE_BINARY = `${IMAGE_SOURCE_ENDPOINT}/byte` as const;
 export const IMAGE_SOURCE_BASE64 = `${IMAGE_SOURCE_ENDPOINT}/base64` as const;
+
+export const DEFAULT_PAGE_SIZE = 10 as const;
+
+export const DEFAULT_ON_END_REACHED_THRESHOLD = 0 as const;

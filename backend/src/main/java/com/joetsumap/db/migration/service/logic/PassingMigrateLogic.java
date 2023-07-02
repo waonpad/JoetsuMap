@@ -22,7 +22,7 @@ public class PassingMigrateLogic {
 
   public void migrate() {
     
-    Integer passingCount = 300;
+    Integer passingCount = 3000;
 
     List<User> users = userRepository.findAll();
 

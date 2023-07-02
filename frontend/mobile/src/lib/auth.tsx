@@ -87,6 +87,7 @@ const useAuthCtx = () => {
     loadUser();
 
     // if only frontend dev mode
+    // storage.clearToken();
     // setLoad(false);
   }, []);
 

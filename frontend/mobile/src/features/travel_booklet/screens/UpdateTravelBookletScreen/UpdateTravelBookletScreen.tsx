@@ -1,5 +1,7 @@
 import { View } from 'react-native';
 
+import { Suspense } from '@/components/Suspense';
+
 import { UpdateTravelBookletForm } from '../../components/UpdateTravelBookletForm';
 import { useTravelBookletRoute } from '../../navigation/TravelBookletNavigator/useTravelBookletRoute';
 
@@ -10,7 +12,9 @@ export const UpdateTravelBookletScreen = () => {
 
   return (
     <View style={styles.container}>
-      <UpdateTravelBookletForm travelBookletId={route.params.travelBookletId} />
+      <Suspense>
+        <UpdateTravelBookletForm travelBookletId={route.params.travelBookletId} />
+      </Suspense>
     </View>
   );
 };

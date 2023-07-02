@@ -10,11 +10,13 @@ import { TravelBookletNavigator } from '@/features/travel_booklet';
 import { TravelSpotNavigator } from '@/features/travel_spot';
 import { UserNavigator } from '@/features/user';
 import { HomeScreen } from '@/screens/HomeScreen';
+import { TestScreen } from '@/screens/TestScreen';
 import type { BaseNavigationParamList } from '@/types';
 
 import { useAppNavigation } from './useAppNavigation';
 
 export type AppNavigationParamList = {
+  Test: undefined; // テスト用画面
   Home: undefined;
   TravelBooklet: undefined;
   Passing: undefined;
@@ -31,6 +33,7 @@ export const AppNavigator = () => {
 
   return (
     <AppTab.Navigator>
+      <AppTab.Screen name="Test" component={TestScreen} />
       <AppTab.Screen name="Home" component={HomeScreen} />
       <AppTab.Screen name="TravelBooklet" component={TravelBookletNavigator} />
       <AppTab.Screen

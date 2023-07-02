@@ -3,6 +3,7 @@ package com.joetsumap.common.file.util;
 import org.springframework.util.StringUtils;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -49,5 +50,10 @@ public final class FileUtil {
         bytes = byteArrayOutputStream.toByteArray();
     }
     return bytes;
+  }
+
+  public static int[] getImageWidthAndHeight(byte[] bytes) throws IOException {
+    final BufferedImage origin = ImageIO.read(new ByteArrayInputStream(bytes));
+    return new int[] { origin.getWidth(), origin.getHeight() };
   }
 }

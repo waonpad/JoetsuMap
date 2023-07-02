@@ -32,7 +32,7 @@ public class ModelCourseMigrateLogic {
 
   public void migrate() {
       
-      Integer modelCourseCount = 300;
+      Integer modelCourseCount = 3000;
 
       List<TravelSpot> travelSpots = travelSpotRepository.findAll();
       List<User> users = userRepository.findAll();

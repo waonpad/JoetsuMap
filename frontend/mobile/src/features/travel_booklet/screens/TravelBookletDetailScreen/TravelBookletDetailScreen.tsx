@@ -1,5 +1,7 @@
 import { View } from 'react-native';
 
+import { Suspense } from '@/components/Suspense';
+
 import { TravelBookletDetail } from '../../components/TravelBookletDetail';
 import { useTravelBookletRoute } from '../../navigation/TravelBookletNavigator/useTravelBookletRoute';
 
@@ -10,7 +12,9 @@ export const TravelBookletDetailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TravelBookletDetail travelBookletId={route.params.travelBookletId} />
+      <Suspense>
+        <TravelBookletDetail travelBookletId={route.params.travelBookletId} />
+      </Suspense>
     </View>
   );
 };
