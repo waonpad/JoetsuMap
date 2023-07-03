@@ -2,26 +2,32 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type { BaseNavigationParamList } from '@/types';
+import { commonScreens } from '@/navigation/CommonScreens';
+import type { Screens } from '@/types';
 
-import { ProfileDetailScreen } from '../../screens/ProfileDetailScreen';
 import { UpdateProfileScreen } from '../../screens/UpdateProfileScreen';
 
-import type { ProfileDetailScreenParams } from '../../screens/ProfileDetailScreen/types';
-import type { UpdateProfileScreenParams } from '../../screens/UpdateProfileScreen/types';
-
-export type UserNavigationParamList = {
-  ProfileDetail: ProfileDetailScreenParams;
-  UpdateProfile: UpdateProfileScreenParams;
-} & BaseNavigationParamList;
+import type { UserNavigationParamList } from './types';
 
 const UserStack = createNativeStackNavigator<UserNavigationParamList>();
 
+const userScreens: Screens<UserNavigationParamList> = {
+  UpdateProfile: UpdateProfileScreen,
+};
+
 export const UserNavigator = () => {
   return (
-    <UserStack.Navigator>
-      <UserStack.Screen name="UpdateProfile" component={UpdateProfileScreen} />
-      <UserStack.Screen name="ProfileDetail" component={ProfileDetailScreen} />
+    <UserStack.Navigator screenOptions={{ headerShown: false }}>
+      {Object.entries({
+        ...userScreens,
+        ...commonScreens,
+      }).map(([name, component]) => (
+        <UserStack.Screen
+          key={name}
+          name={name as keyof UserNavigationParamList}
+          component={component}
+        />
+      ))}
     </UserStack.Navigator>
   );
 };

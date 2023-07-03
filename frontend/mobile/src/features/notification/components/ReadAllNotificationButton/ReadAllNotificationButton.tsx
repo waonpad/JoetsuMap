@@ -1,16 +1,20 @@
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { ReadAllNotificationButtonProps } from './types';
 
+// eslint-disable-next-line no-empty-pattern
 export const ReadAllNotificationButton = ({}: ReadAllNotificationButtonProps) => {
-  const {} = useLogics();
+  const { readAllNotificationMutation, handlePressReadAll } = useLogics();
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Button
+        title={readAllNotificationMutation.isLoading ? '処理中...' : '全て既読にする'}
+        onPress={handlePressReadAll}
+      />
+    </View>
+  );
 };

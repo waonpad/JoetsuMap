@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { DEFAULT_ON_END_REACHED_THRESHOLD } from '@/constants';
 
@@ -16,7 +16,7 @@ export const TravelSpotList = ({}: TravelSpotListProps) => {
   return (
     <View style={styles.container}>
       <FlatList
-        style={{ width: Dimensions.get('window').width }}
+        style={{ width: '100%' }}
         data={travelSpotsQuery.data?.pages.flatMap((page) => page.travelSpots.content)}
         renderItem={({ item }) => <TravelSpotListItem travelSpot={item} />}
         keyExtractor={(item) => item.id.toString()}

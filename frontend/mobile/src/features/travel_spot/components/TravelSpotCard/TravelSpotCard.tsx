@@ -23,7 +23,7 @@ export const TravelSpotCard = ({ travelSpot, handleClose }: TravelSpotCardProps)
         }}
       /> */}
       <Text>{travelSpot.name}</Text>
-      <Text>{travelSpot.type}</Text>
+      <Text>{travelSpot.types}</Text>
       <BookmarkTravelSpotButton travelSpotId={travelSpot.id} />
       <Button title="閉じる" onPress={handleClose} />
     </View>

@@ -1,16 +1,19 @@
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { ReadNotificationButtonProps } from './types';
 
-export const ReadNotificationButton = ({}: ReadNotificationButtonProps) => {
-  const {} = useLogics();
+export const ReadNotificationButton = ({ notificationId }: ReadNotificationButtonProps) => {
+  const { readNotificationMutation, handlePressRead } = useLogics({ notificationId });
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Button
+        title={readNotificationMutation.isLoading ? '処理中...' : '既読にする'}
+        onPress={handlePressRead}
+      />
+    </View>
+  );
 };

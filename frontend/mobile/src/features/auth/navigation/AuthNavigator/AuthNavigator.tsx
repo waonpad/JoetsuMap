@@ -2,30 +2,36 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type { BaseNavigationParamList } from '@/types';
+import { commonScreens } from '@/navigation/CommonScreens';
+import type { Screens } from '@/types';
 
 import { LoginScreen } from '../../screens/LoginScreen';
 import { RegisterScreen } from '../../screens/RegisterScreen';
 import { ResetPasswordScreen } from '../../screens/ResetPasswordScreen';
 
-import type { LoginScreenParams } from '../../screens/LoginScreen/types';
-import type { RegisterScreenParams } from '../../screens/RegisterScreen/types';
-import type { ResetPasswordScreenParams } from '../../screens/ResetPasswordScreen/types';
-
-export type AuthNavigationParamList = {
-  Login: LoginScreenParams;
-  Register: RegisterScreenParams;
-  ResetPassword: ResetPasswordScreenParams;
-} & BaseNavigationParamList;
+import type { AuthNavigationParamList } from './types';
 
 const AuthStack = createNativeStackNavigator<AuthNavigationParamList>();
 
 export const AuthNavigator = () => {
+  const authScreens: Screens<AuthNavigationParamList> = {
+    Register: RegisterScreen,
+    Login: LoginScreen,
+    ResetPassword: ResetPasswordScreen,
+  };
+
   return (
-    <AuthStack.Navigator>
-      <AuthStack.Screen name="Register" component={RegisterScreen} />
-      <AuthStack.Screen name="Login" component={LoginScreen} />
-      <AuthStack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+      {Object.entries({
+        ...authScreens,
+        ...commonScreens,
+      }).map(([name, component]) => (
+        <AuthStack.Screen
+          key={name}
+          name={name as keyof AuthNavigationParamList}
+          component={component}
+        />
+      ))}
     </AuthStack.Navigator>
   );
 };
