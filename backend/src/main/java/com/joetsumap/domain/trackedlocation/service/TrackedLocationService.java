@@ -51,8 +51,8 @@ public class TrackedLocationService {
   public TrackedLocationResponse create(UserDetailsImpl userDetails, CreateTrackedLocationRequest createRequest) {
 
     TrackedLocation trackedLocation = new TrackedLocation();
-    trackedLocation.setLatitude(createRequest.getCoords().getLat());
-    trackedLocation.setLongitude(createRequest.getCoords().getLng());
+    trackedLocation.setLatitude(createRequest.getCoords().getLat().doubleValue());
+    trackedLocation.setLongitude(createRequest.getCoords().getLng().doubleValue());
     trackedLocation.setAuthor(userDetails.getUser());
 
     trackedLocationRepository.saveAndFlush(trackedLocation);
