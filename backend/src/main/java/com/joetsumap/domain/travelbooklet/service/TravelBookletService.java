@@ -15,8 +15,8 @@ import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletPageResp
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletResponse;
 import com.joetsumap.domain.travelbooklet.repository.TravelBookletRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
+import com.joetsumap.exception.util.ExceptionUtil;
 import com.joetsumap.security.services.UserDetailsImpl;
-import com.joetsumap.error.util.ErrorUtil;
 
 import jakarta.transaction.Transactional;
 
@@ -90,7 +90,7 @@ public class TravelBookletService {
 
     TravelBooklet travelBooklet = travelBookletRepository.findById(id).get();
 
-    ErrorUtil.checkAuthorWithException(userDetails, travelBooklet.getAuthor().getId());
+    ExceptionUtil.checkAuthorWithException(userDetails, travelBooklet.getAuthor().getId());
 
     travelBooklet.setTitle(updateRequest.getTitle());
     travelBooklet.setText(updateRequest.getText());
@@ -119,7 +119,7 @@ public class TravelBookletService {
 
     TravelBooklet travelBooklet = travelBookletRepository.findById(id).get();
 
-    ErrorUtil.checkAuthorWithException(userDetails, travelBooklet.getAuthor().getId());
+    ExceptionUtil.checkAuthorWithException(userDetails, travelBooklet.getAuthor().getId());
 
     travelBookletRepository.delete(travelBooklet);
   }

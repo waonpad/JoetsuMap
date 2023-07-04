@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 public class LatLng {
 
   @NotNull
-  private double lat;
+  private Number lat;
 
   @NotNull
-  private double lng;
+  private Number lng;
 }
 

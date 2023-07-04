@@ -1,5 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 
+import type { MutationErrorResponse } from '@/types';
+
 import type {
   UseQueryOptions,
   UseMutationOptions,
@@ -34,6 +36,6 @@ export type InfiniteQueryConfig<QueryFnType extends (...args: any) => any> = Omi
 
 export type MutationConfig<MutationFnType extends (...args: any) => any> = UseMutationOptions<
   ExtractFnReturnType<MutationFnType>,
-  AxiosError,
+  AxiosError<MutationErrorResponse<Parameters<MutationFnType>[0]['data']>>,
   Parameters<MutationFnType>[0]
 >;

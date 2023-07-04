@@ -22,8 +22,8 @@ import com.joetsumap.security.services.UserDetailsImpl;
 
 import jakarta.validation.Valid;
 
-import static com.joetsumap.common.constant.ApiConst.*;
-import static com.joetsumap.common.constant.ApiPathConst.*;
+import static com.joetsumap.constant.ApiConst.*;
+import static com.joetsumap.constant.ApiPathConst.*;
 
 import java.util.HashMap;
 import java.util.Map;

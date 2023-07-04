@@ -2,15 +2,18 @@
 
 import { useForm } from 'react-hook-form';
 
+import { setValidationErrors } from '@/utils/compute';
+
 import { useCreateModelCourse } from '../../api/createModelCourse';
 
-import type { UpdateModelCourseFormInput } from '../UpdateModelCourseForm/types';
+import type { CreateModelCourseFormInput } from '../CreateModelCourseForm/types';
 import type { SubmitHandler } from 'react-hook-form';
+import type { GestureResponderEvent } from 'react-native';
 
 export const useLogics = ({
   defaultValues,
 }: {
-  defaultValues?: Partial<UpdateModelCourseFormInput>;
+  defaultValues?: Partial<CreateModelCourseFormInput>;
 }) => {
   const createModelCourseMutation = useCreateModelCourse();
 
@@ -18,21 +21,33 @@ export const useLogics = ({
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<UpdateModelCourseFormInput>({
+    clearErrors,
+    setError,
+  } = useForm<CreateModelCourseFormInput>({
     mode: 'onBlur',
     defaultValues: { ...defaultValues },
   });
 
-  const onSubmit: SubmitHandler<UpdateModelCourseFormInput> = (
-    data: UpdateModelCourseFormInput,
+  const onSubmit: SubmitHandler<CreateModelCourseFormInput> = (
+    data: CreateModelCourseFormInput,
   ) => {
-    createModelCourseMutation.mutate({ data });
+    createModelCourseMutation.mutate(
+      { data },
+      {
+        onError: (error) =>
+          setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
+      },
+    );
+  };
+
+  const handlePressSubmitButton = (e: GestureResponderEvent) => {
+    clearErrors();
+    handleSubmit(onSubmit)(e);
   };
 
   return {
     control,
-    handleSubmit,
-    onSubmit,
+    handlePressSubmitButton,
     errors,
   };
 };

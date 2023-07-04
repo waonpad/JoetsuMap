@@ -1,13 +1,12 @@
-import type { ModelCourseDetailScreenParams } from '@/features/model_course/screens/ModelCourseDetailScreen/types';
-import type { TravelBookletDetailScreenParams } from '@/features/travel_booklet/screens/TravelBookletDetailScreen/types';
-import type { UpdateTravelBookletScreenParams } from '@/features/travel_booklet/screens/UpdateTravelBookletScreen/types';
-import type { TravelSpotDetailScreenParams } from '@/features/travel_spot/screens/TravelSpotDetailScreen/types';
-import type { ProfileDetailScreenParams } from '@/features/user/screens/ProfileDetailScreen/types';
+import type { ComponentType } from 'react';
+
 import type { ROLES as RoleTypes } from '@/lib/authorization';
-import type { UnAuthorizedScreenParams } from '@/screens/UnAuthorizedScreen/types';
+import type { CommonScreenParamList } from '@/navigation/CommonScreens';
 
 import type * as ImagePicker from 'expo-image-picker';
 import type { FieldValues, Path, RegisterOptions } from 'react-hook-form';
+
+export * from './pageable';
 
 export type BaseEntity = {
   id: number;
@@ -32,20 +31,30 @@ export type ReactHookFormValidationRules<T extends FieldValues> = Record<
   Omit<RegisterOptions<T, Path<T>>, 'value'> | undefined
 >;
 
-export type BaseNavigationParamList = {
-  PermissionDenied: undefined;
-  Unauthorized: UnAuthorizedScreenParams;
-  ModelCourseDetail: ModelCourseDetailScreenParams;
-  TravelBookletDetail: TravelBookletDetailScreenParams;
-  UpdateTravelBooklet: UpdateTravelBookletScreenParams;
-  TravelSpotDetail: TravelSpotDetailScreenParams;
-  ProfileDetail: ProfileDetailScreenParams;
-};
-
 export type PickedImage = ImagePicker.ImagePickerSuccessResult['assets'][number];
 
 export type ToggleBookmarkResponse = {
   isBookmarked: boolean;
 };
 
-export * from './pageable';
+export type Screens<T extends Record<string, any>> = {
+  [key in keyof Omit<T, keyof CommonScreenParamList>]: ComponentType<any>;
+};
+
+export type ErrorResponse = {
+  error: {
+    code: number;
+    message: string;
+  };
+};
+
+export type ValidationError<T> = {
+  validation: {
+    [key in keyof T]?: string;
+  };
+};
+
+// param.subParamのように、ネストしている場合はピリオドでつなげて返ってくる
+export type MutationErrorResponse<T> = {
+  error: ErrorResponse['error'] & ValidationError<T>;
+};

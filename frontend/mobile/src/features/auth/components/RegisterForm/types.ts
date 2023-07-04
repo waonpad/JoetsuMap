@@ -4,4 +4,4 @@ export type RegisterFormProps = {
   defaultValues?: RegisterFormInput;
 };
 
-export type RegisterFormInput = RegisterCredentialsDTO;
+export type RegisterFormInput = RegisterCredentialsDTO['data'];

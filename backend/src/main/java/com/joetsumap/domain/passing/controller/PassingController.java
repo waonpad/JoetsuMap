@@ -1,5 +1,8 @@
 package com.joetsumap.domain.passing.controller;
 
+import static com.joetsumap.constant.ApiConst.*;
+import static com.joetsumap.constant.ApiPathConst.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,9 +16,6 @@ import com.joetsumap.domain.passing.payload.response.PassingListResponse;
 // import com.joetsumap.domain.passing.payload.response.PassingPageResponse;
 import com.joetsumap.domain.passing.service.PassingService;
 import com.joetsumap.security.services.UserDetailsImpl;
-
-import static com.joetsumap.common.constant.ApiConst.*;
-import static com.joetsumap.common.constant.ApiPathConst.*;
 
 @CrossOrigin(origins = CROSS_ORIGIN, maxAge = MAX_AGE)
 @RestController

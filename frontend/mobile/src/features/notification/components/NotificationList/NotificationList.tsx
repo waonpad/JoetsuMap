@@ -1,16 +1,28 @@
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
-import { CONSTANT_EXAMPLE } from './constants';
+import { DEFAULT_ON_END_REACHED_THRESHOLD } from '@/constants';
+
+import { NotificationListItem } from '../NotificationListItem';
+
 import { styles } from './styles';
 import { useLogics } from './useLogics';
-import { useUtils } from './useUtils';
 
 import type { NotificationListProps } from './types';
 
+// eslint-disable-next-line no-empty-pattern
 export const NotificationList = ({}: NotificationListProps) => {
-  const {} = useLogics();
+  const { notificationsQuery } = useLogics();
 
-  const {} = useUtils();
-
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <FlatList
+        style={{ width: '100%' }}
+        data={notificationsQuery.data?.pages.flatMap((page) => page.notifications.content)}
+        renderItem={({ item }) => <NotificationListItem notification={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={() => notificationsQuery.fetchNextPage()}
+        onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD}
+      />
+    </View>
+  );
 };

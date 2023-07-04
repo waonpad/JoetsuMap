@@ -1,5 +1,8 @@
 package com.joetsumap.common.file.controller;
 
+import static com.joetsumap.constant.ApiConst.*;
+import static com.joetsumap.constant.ApiPathConst.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,9 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 // import com.joetsumap.common.file.dto.Base64ResponseDTO;
 import com.joetsumap.common.file.service.Base64FileService;
-
-import static com.joetsumap.common.constant.ApiConst.*;
-import static com.joetsumap.common.constant.ApiPathConst.*;
 
 @CrossOrigin(origins = CROSS_ORIGIN, maxAge = MAX_AGE)
 @RestController

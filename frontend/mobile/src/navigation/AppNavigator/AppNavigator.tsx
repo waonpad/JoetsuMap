@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { CustomTabBarButton } from '@/components/Elements/CustomTabBarButton';
+// import { CustomTabBarButton } from '@/components/Elements/CustomTabBarButton';
 import { AuthNavigator } from '@/features/auth';
 import { NotificationNavigator } from '@/features/notification';
 import { PassingNavigator } from '@/features/passing';
@@ -11,25 +11,15 @@ import { TravelSpotNavigator } from '@/features/travel_spot';
 import { UserNavigator } from '@/features/user';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { TestScreen } from '@/screens/TestScreen';
-import type { BaseNavigationParamList } from '@/types';
 
-import { useAppNavigation } from './useAppNavigation';
+import type { AppNavigationParamList } from './types';
 
-export type AppNavigationParamList = {
-  Test: undefined; // テスト用画面
-  Home: undefined;
-  TravelBooklet: undefined;
-  Passing: undefined;
-  Notification: undefined;
-  User: undefined;
-  TravelSopt: undefined;
-  Auth: undefined; // テスト用にアクセスしやすいよう配置
-} & BaseNavigationParamList;
+// import { useAppNavigation } from './useAppNavigation';
 
 const AppTab = createBottomTabNavigator<AppNavigationParamList>();
 
 export const AppNavigator = () => {
-  const appNavigation = useAppNavigation();
+  // const appNavigation = useAppNavigation();
 
   return (
     <AppTab.Navigator>

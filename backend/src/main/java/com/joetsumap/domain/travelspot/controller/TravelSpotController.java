@@ -1,5 +1,8 @@
 package com.joetsumap.domain.travelspot.controller;
 
+import static com.joetsumap.constant.ApiConst.*;
+import static com.joetsumap.constant.ApiPathConst.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,10 +20,6 @@ import com.joetsumap.domain.travelspot.payload.response.TravelSpotPageResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
 import com.joetsumap.domain.travelspot.service.TravelSpotService;
 import com.joetsumap.security.services.UserDetailsImpl;
-
-import static com.joetsumap.common.constant.ApiConst.*;
-import static com.joetsumap.common.constant.ApiPathConst.*;
-// import static com.joetsumap.common.constant.AuthorizeConst.*;
 
 @CrossOrigin(origins = CROSS_ORIGIN, maxAge = MAX_AGE)
 @RestController

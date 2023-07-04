@@ -25,10 +25,12 @@ export const searchTravelSpots = ({
 
 type QueryFnType = typeof searchTravelSpots;
 
+export type SearchTravelSpotsDTO = {
+  freeKeyword: string;
+};
+
 type UseSearchTravelSpotsOptions = {
-  params: {
-    freeKeyword: string;
-  };
+  params: SearchTravelSpotsDTO;
   config?: InfiniteQueryConfig<QueryFnType>;
 };
 

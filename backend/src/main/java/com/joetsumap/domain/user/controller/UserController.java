@@ -2,6 +2,9 @@ package com.joetsumap.domain.user.controller;
 
 import jakarta.validation.Valid;
 
+import static com.joetsumap.constant.ApiConst.*;
+import static com.joetsumap.constant.ApiPathConst.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,9 +19,6 @@ import com.joetsumap.domain.user.payload.request.UpdateProfileRequest;
 import com.joetsumap.domain.user.payload.response.UserResponse;
 import com.joetsumap.domain.user.service.UserService;
 import com.joetsumap.security.services.UserDetailsImpl;
-
-import static com.joetsumap.common.constant.ApiConst.*;
-import static com.joetsumap.common.constant.ApiPathConst.*;
 
 @CrossOrigin(origins = CROSS_ORIGIN, maxAge = MAX_AGE)
 @RestController

@@ -1,0 +1,9 @@
+import type { CommonScreenParamList } from '@/navigation/CommonScreens';
+
+import type { TravelSpotDetailScreenParams } from '../../screens/TravelSpotDetailScreen/types';
+import type { TravelSpotHomeScreenParams } from '../../screens/TravelSpotHomeScreen/types';
+
+export type TravelSpotNavigationParamList = {
+  TravelSpotDetail: TravelSpotDetailScreenParams;
+  TravelSpotHome: TravelSpotHomeScreenParams;
+} & CommonScreenParamList;

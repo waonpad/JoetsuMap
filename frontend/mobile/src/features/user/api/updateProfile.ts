@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
-import type { MutationConfig } from '@/lib/react-query';
+import { queryClient, type MutationConfig } from '@/lib/react-query';
 
-import { API_ENDPOINT } from '../constants';
+import { API_ENDPOINT, QUERY_KEY } from '../constants';
 
 import type { User, UserResponse } from '../types';
 
@@ -24,6 +24,9 @@ type UseUpdateUserOptions = {
 
 export const useUpdateProfile = ({ config }: UseUpdateUserOptions = {}) => {
   return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEY]);
+    },
     ...config,
     mutationFn: updateUser,
   });

@@ -2,9 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 
 import type { TravelSpot } from '@/features/travel_spot';
 import { axios } from '@/lib/axios';
-import type { MutationConfig } from '@/lib/react-query';
+import { queryClient, type MutationConfig } from '@/lib/react-query';
 
-import { API_ENDPOINT } from '../constants';
+import { API_ENDPOINT, QUERY_KEY } from '../constants';
 
 import type { ModelCourse, ModelCourseResponse } from '../types';
 
@@ -30,6 +30,9 @@ type UseUpdateModelCourseOptions = {
 
 export const useUpdateModelCourse = ({ config }: UseUpdateModelCourseOptions = {}) => {
   return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEY]);
+    },
     ...config,
     mutationFn: updateModelCourse,
   });

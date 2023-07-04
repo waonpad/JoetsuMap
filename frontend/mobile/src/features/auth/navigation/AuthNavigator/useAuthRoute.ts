@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 
-import type { AuthNavigationParamList } from '.';
+import type { AuthNavigationParamList } from './types';
 import type { RouteProp } from '@react-navigation/native';
 
 export const useAuthRoute = <T extends keyof AuthNavigationParamList>() => {

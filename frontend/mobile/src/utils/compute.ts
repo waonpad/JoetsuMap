@@ -14,6 +14,8 @@ import {
 import type { JwtResponse } from '@/features/auth';
 import type { PageableParams } from '@/types';
 
+import type { FieldValues, Path, UseFormSetError } from 'react-hook-form';
+
 export const omitToken = (user: JwtResponse) => _.omit(user, ['token']).user;
 
 export const API_URL =
@@ -87,4 +89,19 @@ export const resizeByHeight = (
     width: width * ratio,
     height: resizeHeight,
   };
+};
+
+export const setValidationErrors = <T extends FieldValues>({
+  errors,
+  setError,
+}: {
+  errors: { [K in keyof T]?: string } | undefined;
+  setError: UseFormSetError<T>;
+}) => {
+  Object.entries(errors ?? {}).forEach(([key, value]) =>
+    setError(key as `root.${string}` | 'root' | Path<T>, {
+      type: 'manual',
+      message: value,
+    }),
+  );
 };

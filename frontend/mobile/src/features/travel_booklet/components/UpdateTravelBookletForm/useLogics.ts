@@ -6,12 +6,14 @@ import * as ImagePicker from 'expo-image-picker';
 import { useForm } from 'react-hook-form';
 
 import type { PickedImage } from '@/types';
+import { setValidationErrors } from '@/utils/compute';
 
 import { useTravelBooklet } from '../../api/getTravelBooklet';
 import { useUpdateTravelBooklet } from '../../api/updateTravelBooklet';
 
 import type { UpdateTravelBookletFormInput, UpdateTravelBookletFormProps } from './types';
 import type { SubmitHandler } from 'react-hook-form';
+import type { GestureResponderEvent } from 'react-native';
 
 export const useLogics = ({ travelBookletId }: UpdateTravelBookletFormProps) => {
   const travelBookletQuery = useTravelBooklet({ travelBookletId });
@@ -38,6 +40,8 @@ export const useLogics = ({ travelBookletId }: UpdateTravelBookletFormProps) => 
     control,
     handleSubmit,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm<UpdateTravelBookletFormInput>({
     mode: 'onBlur',
     defaultValues: { ...travelBookletQuery.data?.travelBooklet },
@@ -49,7 +53,18 @@ export const useLogics = ({ travelBookletId }: UpdateTravelBookletFormProps) => 
     // 写真が選択されていなければ、更新処理を行わない
     data.photo = photo?.base64 ?? undefined;
 
-    updateTravelBookletMutation.mutate({ travelBookletId, data });
+    updateTravelBookletMutation.mutate(
+      { travelBookletId, data },
+      {
+        onError: (error) =>
+          setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
+      },
+    );
+  };
+
+  const handlePressSubmitButton = (e: GestureResponderEvent) => {
+    clearErrors();
+    handleSubmit(onSubmit)(e);
   };
 
   return {
@@ -57,8 +72,7 @@ export const useLogics = ({ travelBookletId }: UpdateTravelBookletFormProps) => 
     photo,
     handleChoosePhoto,
     control,
-    handleSubmit,
-    onSubmit,
+    handlePressSubmitButton,
     errors,
   };
 };

@@ -22,7 +22,7 @@ import com.joetsumap.domain.travelspot.payload.response.TravelSpotDTO;
 import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
-import com.joetsumap.error.util.ErrorUtil;
+import com.joetsumap.exception.util.ExceptionUtil;
 import com.joetsumap.security.services.UserDetailsImpl;
 
 import jakarta.transaction.Transactional;
@@ -139,7 +139,7 @@ public class ModelCourseService {
 
     ModelCourse modelCourse = modelCourseRepository.findById(id).get();
 
-    ErrorUtil.checkAuthorWithException(userDetails, modelCourse.getAuthor().getId());
+    ExceptionUtil.checkAuthorWithException(userDetails, modelCourse.getAuthor().getId());
 
     // TODO: 検索の結果、nullが返ってきた場合等、例外処理を追加する
     List<TravelSpot> travelSpots = updateRequest.getTravelSpotIds().stream().map(travelSpotId -> {
@@ -188,7 +188,7 @@ public class ModelCourseService {
 
     ModelCourse modelCourse = modelCourseRepository.findById(id).get();
     
-    ErrorUtil.checkAuthorWithException(userDetails, modelCourse.getAuthor().getId());
+    ExceptionUtil.checkAuthorWithException(userDetails, modelCourse.getAuthor().getId());
 
     modelCourseRepository.delete(modelCourse);
   }

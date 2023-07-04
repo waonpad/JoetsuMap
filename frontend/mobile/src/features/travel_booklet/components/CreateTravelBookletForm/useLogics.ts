@@ -6,11 +6,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { useForm } from 'react-hook-form';
 
 import type { PickedImage } from '@/types';
+import { setValidationErrors } from '@/utils/compute';
 
 import { useCreateTravelBooklet } from '../../api/createTravelBooklet';
 
 import type { CreateTravelBookletFormInput } from '../CreateTravelBookletForm/types';
 import type { SubmitHandler } from 'react-hook-form';
+import type { GestureResponderEvent } from 'react-native';
 
 export const useLogics = ({
   defaultValues,
@@ -39,9 +41,11 @@ export const useLogics = ({
     control,
     handleSubmit,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm<CreateTravelBookletFormInput>({
     mode: 'onBlur',
-    defaultValues: { ...defaultValues },
+    defaultValues: { ...defaultValues, title: 'a', text: 'b' },
   });
 
   const onSubmit: SubmitHandler<CreateTravelBookletFormInput> = (
@@ -54,15 +58,25 @@ export const useLogics = ({
 
     data.photo = photo?.base64;
 
-    createTravelBookletMutation.mutate({ data });
+    createTravelBookletMutation.mutate(
+      { data },
+      {
+        onError: (error) =>
+          setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
+      },
+    );
+  };
+
+  const handlePressSubmitButton = (e: GestureResponderEvent) => {
+    clearErrors();
+    handleSubmit(onSubmit)(e);
   };
 
   return {
     photo,
     handleChoosePhoto,
     control,
-    handleSubmit,
-    onSubmit,
+    handlePressSubmitButton,
     errors,
   };
 };

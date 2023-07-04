@@ -1,21 +1,28 @@
 // APIとの通信を行う、コアなロジック
 
-import { useEffect } from 'react';
-
 import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/lib/auth';
+import { setValidationErrors } from '@/utils/compute';
+
+import { useLogin } from '../../api/login';
 
 import type { LoginFormInput } from './types';
 import type { SubmitHandler } from 'react-hook-form';
+import type { GestureResponderEvent } from 'react-native';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const useLogics = ({ defaultValues }: { defaultValues?: Partial<LoginFormInput> }) => {
-  const { login } = useAuth();
+  const { onLoginSuccess } = useAuth();
+
+  const loginMutaion = useLogin();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    clearErrors,
+    setError,
   } = useForm<LoginFormInput>({
     mode: 'onBlur',
     // defaultValues: { ...defaultValues },
@@ -25,18 +32,27 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<LoginForm
     },
   });
 
-  const onSubmit: SubmitHandler<LoginFormInput> = (data: LoginFormInput) => {
-    login(data);
+  const onSubmit: SubmitHandler<LoginFormInput> = async (data: LoginFormInput) => {
+    loginMutaion.mutate(
+      { data },
+      {
+        onError: (error) =>
+          setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
+        onSuccess: (data) => {
+          onLoginSuccess(data);
+        },
+      },
+    );
   };
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+  const handlePressSubmitButton = (e: GestureResponderEvent) => {
+    clearErrors();
+    handleSubmit(onSubmit)(e);
+  };
 
   return {
     control,
-    handleSubmit,
-    onSubmit,
+    handlePressSubmitButton,
     errors,
   };
 };
