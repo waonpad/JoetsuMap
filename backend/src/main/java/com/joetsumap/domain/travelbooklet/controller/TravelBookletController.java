@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.joetsumap.domain.travelbooklet.payload.request.CreateTravelBookletRequest;
 import com.joetsumap.domain.travelbooklet.payload.request.UpdateTravelBookletRequest;
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletPageResponse;
@@ -24,8 +23,8 @@ import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletResponse
 import com.joetsumap.domain.travelbooklet.service.TravelBookletService;
 import com.joetsumap.security.services.UserDetailsImpl;
 
-import static com.joetsumap.common.constant.ApiConst.*;
-import static com.joetsumap.common.constant.ApiPathConst.*;
+import static com.joetsumap.constant.ApiConst.*;
+import static com.joetsumap.constant.ApiPathConst.*;
 
 @CrossOrigin(origins = CROSS_ORIGIN, maxAge = MAX_AGE)
 @RestController

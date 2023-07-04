@@ -1,4 +1,4 @@
-package com.joetsumap.common.constant;
+package com.joetsumap.constant;
 
 public final class AuthorizeConst {
   

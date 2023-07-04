@@ -10,7 +10,7 @@ import { validationSchema } from './validationSchema';
 import type { CreateTravelBookletFormProps } from './types';
 
 export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFormProps) => {
-  const { photo, handleChoosePhoto, control, handleSubmit, onSubmit, errors } = useLogics({
+  const { photo, handleChoosePhoto, control, handlePressSubmitButton, errors } = useLogics({
     defaultValues,
   });
 
@@ -44,7 +44,7 @@ export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFo
         <Image source={{ uri: photo?.uri }} style={{ width: photo.width, height: photo.height }} />
       )}
       <Button title="写真を選択" onPress={handleChoosePhoto} />
-      <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
+      <Button title={SUBMIT_LABEL} onPress={handlePressSubmitButton} />
     </View>
   );
 };

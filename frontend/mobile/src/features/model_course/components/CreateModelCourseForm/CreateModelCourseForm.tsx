@@ -9,7 +9,7 @@ import { validationSchema } from './validationSchema';
 import type { CreateModelCourseFormProps } from './types';
 
 export const CreateModelCourseForm = ({ defaultValues }: CreateModelCourseFormProps) => {
-  const { control, handleSubmit, onSubmit, errors } = useLogics({ defaultValues });
+  const { control, handlePressSubmitButton, errors } = useLogics({ defaultValues });
 
   return (
     <View style={styles.container}>
@@ -26,7 +26,7 @@ export const CreateModelCourseForm = ({ defaultValues }: CreateModelCourseFormPr
         )}
       />
       {/* 観光地のID配列を送るためのコンポーネントを配置する */}
-      <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
+      <Button title={SUBMIT_LABEL} onPress={handlePressSubmitButton} />
     </View>
   );
 };

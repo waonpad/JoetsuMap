@@ -9,7 +9,7 @@ import { validationSchema } from './validationSchema';
 import type { UpdateProfileFormProps } from './types';
 
 export const UpdateProfileForm = ({ userId }: UpdateProfileFormProps) => {
-  const { control, handleSubmit, onSubmit, errors } = useLogics({ userId });
+  const { control, handlePressSubmitButton, errors } = useLogics({ userId });
 
   return (
     <View style={styles.container}>
@@ -25,7 +25,7 @@ export const UpdateProfileForm = ({ userId }: UpdateProfileFormProps) => {
           </>
         )}
       />
-      <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
+      <Button title={SUBMIT_LABEL} onPress={handlePressSubmitButton} />
     </View>
   );
 };

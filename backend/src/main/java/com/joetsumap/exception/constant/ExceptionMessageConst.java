@@ -1,4 +1,4 @@
-package com.joetsumap.error.constant;
+package com.joetsumap.exception.constant;
 
 public final class ExceptionMessageConst {
   

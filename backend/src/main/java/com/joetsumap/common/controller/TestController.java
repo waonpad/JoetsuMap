@@ -1,14 +1,14 @@
 package com.joetsumap.common.controller;
 
+import static com.joetsumap.constant.ApiConst.*;
+import static com.joetsumap.constant.ApiPathConst.*;
+import static com.joetsumap.constant.AuthorizeConst.*;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static com.joetsumap.common.constant.ApiConst.*;
-import static com.joetsumap.common.constant.ApiPathConst.*;
-import static com.joetsumap.common.constant.AuthorizeConst.*;
 
 @CrossOrigin(origins = CROSS_ORIGIN, maxAge = MAX_AGE)
 @RestController

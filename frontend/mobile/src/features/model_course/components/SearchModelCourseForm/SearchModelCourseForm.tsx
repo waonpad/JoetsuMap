@@ -11,7 +11,7 @@ export const SearchModelCourseForm = ({
   defaultValues,
   onSubmitAction,
 }: SearchModelCourseFormProps) => {
-  const { control, handleSubmit, onSubmit, errors } = useLogics({ defaultValues, onSubmitAction });
+  const { control, handlePressSubmitButton, errors } = useLogics({ defaultValues, onSubmitAction });
 
   return (
     <View style={styles.container}>
@@ -27,7 +27,7 @@ export const SearchModelCourseForm = ({
           </>
         )}
       />
-      <Button title="検索" onPress={handleSubmit(onSubmit)} />
+      <Button title="検索" onPress={handlePressSubmitButton} />
     </View>
   );
 };

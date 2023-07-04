@@ -40,3 +40,21 @@ export type ToggleBookmarkResponse = {
 export type Screens<T extends Record<string, any>> = {
   [key in keyof Omit<T, keyof CommonScreenParamList>]: ComponentType<any>;
 };
+
+export type ErrorResponse = {
+  error: {
+    code: number;
+    message: string;
+  };
+};
+
+export type ValidationError<T> = {
+  validation: {
+    [key in keyof T]?: string;
+  };
+};
+
+// param.subParamのように、ネストしている場合はピリオドでつなげて返ってくる
+export type MutationErrorResponse<T> = {
+  error: ErrorResponse['error'] & ValidationError<T>;
+};

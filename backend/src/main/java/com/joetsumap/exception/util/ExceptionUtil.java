@@ -1,9 +1,9 @@
-package com.joetsumap.error.util;
+package com.joetsumap.exception.util;
 
-import com.joetsumap.error.constant.ExceptionMessageConst;
+import com.joetsumap.exception.constant.ExceptionMessageConst;
 import com.joetsumap.security.services.UserDetailsImpl;
 
-public class ErrorUtil {
+public class ExceptionUtil {
   
   public static void checkAuthorWithException(UserDetailsImpl userDetails, Long id) {
     if (userDetails.getUser().getId() != id) {

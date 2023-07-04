@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import { View, ActivityIndicator } from 'react-native';
 
-import type { LoginCredentialsDTO, RegisterCredentialsDTO, AuthUser } from '@/features/auth';
+import type {
+  LoginCredentialsDTO,
+  RegisterCredentialsDTO,
+  AuthUser,
+  JwtResponse,
+} from '@/features/auth';
 import { loginFn, getAuthUser, registerFn } from '@/features/auth';
 import { useRootNavigation } from '@/navigation/RootNavigator/useRootNavigation';
 import { omitToken } from '@/utils/compute';
@@ -39,17 +44,25 @@ const useAuthCtx = () => {
   const register = async (data: RegisterCredentialsDTO) => {
     const response = await registerFn(data);
 
-    setUser(omitToken(response));
-    setToken(response.token);
-    storage.setToken(response.token);
+    onRegisterSuccess(response);
+  };
+
+  const onRegisterSuccess = (jwtResponse: JwtResponse) => {
+    setUser(omitToken(jwtResponse));
+    setToken(jwtResponse.token);
+    storage.setToken(jwtResponse.token);
   };
 
   const login = async (data: LoginCredentialsDTO) => {
     const response = await loginFn(data);
 
-    setUser(omitToken(response));
-    setToken(response.token);
-    storage.setToken(response.token);
+    onLoginSuccess(response);
+  };
+
+  const onLoginSuccess = (jwtResponse: JwtResponse) => {
+    setUser(omitToken(jwtResponse));
+    setToken(jwtResponse.token);
+    storage.setToken(jwtResponse.token);
   };
 
   const logout = () => {
@@ -95,7 +108,9 @@ const useAuthCtx = () => {
     user,
     token,
     register,
+    onRegisterSuccess,
     login,
+    onLoginSuccess,
     logout,
     load,
     loadUser, // テスト用に追加

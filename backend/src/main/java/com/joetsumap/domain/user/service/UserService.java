@@ -11,9 +11,9 @@ import com.joetsumap.domain.user.payload.response.UserListResponse;
 import com.joetsumap.domain.user.payload.response.UserResponse;
 import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
-import com.joetsumap.error.constant.ExceptionMessageConst;
+import com.joetsumap.exception.constant.ExceptionMessageConst;
+import com.joetsumap.exception.util.ExceptionUtil;
 import com.joetsumap.security.services.UserDetailsImpl;
-import com.joetsumap.error.util.ErrorUtil;
 
 import jakarta.transaction.Transactional;
 
@@ -65,7 +65,7 @@ public class UserService {
 
     User user = userRepository.findById(id).get();
 
-    ErrorUtil.checkAuthorWithException(userDetails, user.getId());
+    ExceptionUtil.checkAuthorWithException(userDetails, user.getId());
 
     // ユーザーのプロフィールを更新する
     // TODO: データベースは更新できてもコンテキストが更新されない。パスワード入力無しでコンテキストを更新する方法が分からないので後でやる

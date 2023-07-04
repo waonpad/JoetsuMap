@@ -11,7 +11,7 @@ export const SearchTravelSpotForm = ({
   defaultValues,
   onSubmitAction,
 }: SearchTravelSpotFormProps) => {
-  const { control, handleSubmit, onSubmit, errors } = useLogics({ defaultValues, onSubmitAction });
+  const { control, handlePressSubmitButton, errors } = useLogics({ defaultValues, onSubmitAction });
 
   return (
     <View style={styles.container}>
@@ -27,7 +27,7 @@ export const SearchTravelSpotForm = ({
           </>
         )}
       />
-      <Button title="検索" onPress={handleSubmit(onSubmit)} />
+      <Button title="検索" onPress={handlePressSubmitButton} />
     </View>
   );
 };

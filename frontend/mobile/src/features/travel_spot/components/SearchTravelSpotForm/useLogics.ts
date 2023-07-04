@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form';
 
 import type { SearchTravelSpotFormInput, SearchTravelSpotFormProps } from './types';
 import type { SubmitHandler } from 'react-hook-form';
+import type { GestureResponderEvent } from 'react-native';
 
 export const useLogics = ({ defaultValues, onSubmitAction }: SearchTravelSpotFormProps) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm<SearchTravelSpotFormInput>({
     mode: 'onBlur',
     defaultValues: { ...defaultValues },
@@ -19,10 +21,14 @@ export const useLogics = ({ defaultValues, onSubmitAction }: SearchTravelSpotFor
     onSubmitAction(data);
   };
 
+  const handlePressSubmitButton = (e: GestureResponderEvent) => {
+    clearErrors();
+    handleSubmit(onSubmit)(e);
+  };
+
   return {
     control,
-    handleSubmit,
-    onSubmit,
+    handlePressSubmitButton,
     errors,
   };
 };

@@ -7,12 +7,19 @@ import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/lib/auth';
 import type { PickedImage } from '@/types';
+import { setValidationErrors } from '@/utils/compute';
+
+import { useRegister } from '../../api/register';
 
 import type { RegisterFormInput } from './types';
 import type { SubmitHandler } from 'react-hook-form';
+import type { GestureResponderEvent } from 'react-native';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterFormInput> }) => {
-  const { register } = useAuth();
+  const { onRegisterSuccess } = useAuth();
+
+  const registerMutaion = useRegister();
 
   const [icon, setIcon] = useState<PickedImage>();
 
@@ -34,6 +41,8 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterF
     control,
     handleSubmit,
     formState: { errors },
+    clearErrors,
+    setError,
   } = useForm<RegisterFormInput>({
     mode: 'onBlur',
     // defaultValues: { ...defaultValues, roles: ['ROLE_USER'] },
@@ -55,13 +64,26 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterF
 
     data.icon = icon?.base64;
 
-    register(data);
+    registerMutaion.mutate(
+      { data },
+      {
+        onError: (error) =>
+          setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
+        onSuccess: (data) => {
+          onRegisterSuccess(data);
+        },
+      },
+    );
+  };
+
+  const handlePressSubmitButton = (e: GestureResponderEvent) => {
+    clearErrors();
+    handleSubmit(onSubmit)(e);
   };
 
   return {
     control,
-    handleSubmit,
-    onSubmit,
+    handlePressSubmitButton,
     errors,
     icon,
     handleChoosePhoto,

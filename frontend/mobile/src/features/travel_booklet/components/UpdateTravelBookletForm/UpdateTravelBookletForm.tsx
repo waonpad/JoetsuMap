@@ -12,7 +12,7 @@ import { validationSchema } from './validationSchema';
 import type { UpdateTravelBookletFormProps } from './types';
 
 export const UpdateTravelBookletForm = ({ travelBookletId }: UpdateTravelBookletFormProps) => {
-  const { travelBookletQuery, photo, handleChoosePhoto, control, handleSubmit, onSubmit, errors } =
+  const { travelBookletQuery, photo, handleChoosePhoto, control, handlePressSubmitButton, errors } =
     useLogics({
       travelBookletId,
     });
@@ -63,7 +63,7 @@ export const UpdateTravelBookletForm = ({ travelBookletId }: UpdateTravelBooklet
         <></>
       )}
       <Button title="写真を選択" onPress={handleChoosePhoto} />
-      <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
+      <Button title={SUBMIT_LABEL} onPress={handlePressSubmitButton} />
     </View>
   );
 };
