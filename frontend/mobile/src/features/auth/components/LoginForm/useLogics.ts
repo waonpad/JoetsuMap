@@ -3,7 +3,9 @@
 import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/lib/auth';
-import { setValidationErrors } from '@/utils/compute';
+import { useRootNavigation } from '@/navigation/RootNavigator';
+import { EXPECTED_EXCEPTION } from '@/types';
+import { enableUseErrorBoundary, setValidationErrors } from '@/utils/compute';
 
 import { useLogin } from '../../api/login';
 
@@ -15,7 +17,23 @@ import type { GestureResponderEvent } from 'react-native';
 export const useLogics = ({ defaultValues }: { defaultValues?: Partial<LoginFormInput> }) => {
   const { onLoginSuccess } = useAuth();
 
-  const loginMutaion = useLogin();
+  const loginMutaion = useLogin({
+    config: {
+      useErrorBoundary(error) {
+        const throughErrorTypes: (keyof typeof EXPECTED_EXCEPTION)[] = [
+          EXPECTED_EXCEPTION.BAD_CREDENTIALS,
+          EXPECTED_EXCEPTION.VALIDATION_ERROR,
+        ];
+
+        return enableUseErrorBoundary(error, throughErrorTypes);
+      },
+    },
+  });
+
+  const isBadCredentialsError =
+    loginMutaion.error?.response?.data.error.type === EXPECTED_EXCEPTION.BAD_CREDENTIALS;
+
+  const rootNavigation = useRootNavigation();
 
   const {
     control,
@@ -40,6 +58,8 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<LoginForm
           setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
         onSuccess: (data) => {
           onLoginSuccess(data);
+
+          rootNavigation.navigate('App');
         },
       },
     );
@@ -54,5 +74,6 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<LoginForm
     control,
     handlePressSubmitButton,
     errors,
+    isBadCredentialsError,
   };
 };

@@ -9,7 +9,9 @@ import { validationSchema } from './validationSchema';
 import type { LoginFormProps } from './types';
 
 export const LoginForm = ({ defaultValues }: LoginFormProps) => {
-  const { control, handlePressSubmitButton, errors } = useLogics({ defaultValues });
+  const { control, handlePressSubmitButton, errors, isBadCredentialsError } = useLogics({
+    defaultValues,
+  });
 
   return (
     <View style={styles.container}>
@@ -37,6 +39,7 @@ export const LoginForm = ({ defaultValues }: LoginFormProps) => {
           </>
         )}
       />
+      <Text>{isBadCredentialsError && 'Wrong username or password'}</Text>
       <Button title={SUBMIT_LABEL} onPress={handlePressSubmitButton} />
     </View>
   );
