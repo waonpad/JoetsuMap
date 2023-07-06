@@ -12,9 +12,9 @@ const RootStack = createNativeStackNavigator<RootNavigationParamList>();
 
 export const RootNavigator = () => {
   return (
-    <RootStack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
+    <RootStack.Navigator initialRouteName="App">
       <RootStack.Screen name="Auth" component={AuthNavigator} />
-      <RootStack.Screen name="App" component={AppNavigator} />
+      <RootStack.Screen name="App" component={AppNavigator} options={{ headerShown: false }} />
     </RootStack.Navigator>
   );
 };
