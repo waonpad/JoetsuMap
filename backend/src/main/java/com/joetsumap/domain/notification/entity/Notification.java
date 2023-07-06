@@ -1,6 +1,6 @@
 package com.joetsumap.domain.notification.entity;
 
-import java.util.Map;
+// import java.util.Map;
 
 import com.joetsumap.common.entity.BaseEntity;
 import com.joetsumap.domain.user.entity.User;

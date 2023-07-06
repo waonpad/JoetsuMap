@@ -15,6 +15,7 @@ import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
 import com.joetsumap.domain.travelspot.repository.TravelSpotTypeRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
+import com.joetsumap.exception.exception.NotFoundException;
 import com.joetsumap.security.services.UserDetailsImpl;
 import com.joetsumap.domain.travelspot.entity.ETravelSpotType;
 
@@ -53,7 +54,10 @@ public class TravelSpotService {
 
   public TravelSpotResponse findById(Long id) {
 
-    TravelSpot travelSpot = travelSpotRepository.findById(id).get();
+    TravelSpot travelSpot = travelSpotRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
+      
 
     return new TravelSpotResponse(new TravelSpotDTO(travelSpot));
   }
@@ -81,7 +85,9 @@ public class TravelSpotService {
    */
   public ToggleBookmarkResponse toggleBookmark(UserDetailsImpl userDetails, Long id) {
 
-    TravelSpot travelSpot = travelSpotRepository.findById(id).get();
+    TravelSpot travelSpot = travelSpotRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     boolean isBookmarked = travelSpot.getBookmarkedUsers().stream().map(user -> {
       return user.getId();
@@ -109,12 +115,14 @@ public class TravelSpotService {
    */
   public TravelSpotPageResponse findAllByType(String type, Pageable pageable) {
 
-    // TODO: 例外処理を追加する
+    // TODO: 例外処理を追加する → 普通に使っていればエラーにならないはずなので、行わない
     // ETravelSpotTypeに無いものを指定されるとエラーになる
     // https://www.sejuku.net/blog/14628
     ETravelSpotType travelSpotTypeValue = ETravelSpotType.valueOf(type);
 
-    TravelSpotType travelSpotType = travelSpotTypeRepository.findByName(travelSpotTypeValue).get();
+    TravelSpotType travelSpotType = travelSpotTypeRepository.findByName(travelSpotTypeValue).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     Page<TravelSpot> travelSpotPage = travelSpotRepository.findAllByTypes(travelSpotType, pageable);
 

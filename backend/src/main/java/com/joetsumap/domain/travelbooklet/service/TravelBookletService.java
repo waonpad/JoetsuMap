@@ -15,6 +15,7 @@ import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletPageResp
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletResponse;
 import com.joetsumap.domain.travelbooklet.repository.TravelBookletRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
+import com.joetsumap.exception.exception.NotFoundException;
 import com.joetsumap.exception.util.ExceptionUtil;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -53,7 +54,9 @@ public class TravelBookletService {
    */
   public TravelBookletResponse findById(Long id) {
 
-    TravelBooklet travelBooklet = travelBookletRepository.findById(id).get();
+    TravelBooklet travelBooklet = travelBookletRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     TravelBookletDTO travelBookletDTO = new TravelBookletDTO(travelBooklet);
     travelBookletDTO.setAuthor(new UserDTO(travelBooklet.getAuthor()));
@@ -88,9 +91,11 @@ public class TravelBookletService {
    */
   public TravelBookletResponse update(UserDetailsImpl userDetails, UpdateTravelBookletRequest updateRequest, Long id) {
 
-    TravelBooklet travelBooklet = travelBookletRepository.findById(id).get();
+    TravelBooklet travelBooklet = travelBookletRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
-    ExceptionUtil.checkAuthorWithException(userDetails, travelBooklet.getAuthor().getId());
+    ExceptionUtil.checkEqualsIdWithException(userDetails, travelBooklet.getAuthor().getId());
 
     travelBooklet.setTitle(updateRequest.getTitle());
     travelBooklet.setText(updateRequest.getText());
@@ -98,7 +103,7 @@ public class TravelBookletService {
     // 画像が更新されている場合のみbase64エンコードされた文字列を受け取り、画像を更新する
     if (updateRequest.getPhoto() != null) {
 
-      // TODO: base64形式ではない場合のエラー処理をする
+      // TODO: base64形式ではない場合のエラー処理をする → FileUploadExceptionを作った
 
       String photoFileName = base64FileService.uploadImageFromBase64(updateRequest.getPhoto(), TravelBookletConst.PHOTO_SAVE_DIR);
       travelBooklet.setPhoto(photoFileName);
@@ -117,9 +122,11 @@ public class TravelBookletService {
    */
   public void delete(UserDetailsImpl userDetails, Long id) {
 
-    TravelBooklet travelBooklet = travelBookletRepository.findById(id).get();
+    TravelBooklet travelBooklet = travelBookletRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
-    ExceptionUtil.checkAuthorWithException(userDetails, travelBooklet.getAuthor().getId());
+    ExceptionUtil.checkEqualsIdWithException(userDetails, travelBooklet.getAuthor().getId());
 
     travelBookletRepository.delete(travelBooklet);
   }

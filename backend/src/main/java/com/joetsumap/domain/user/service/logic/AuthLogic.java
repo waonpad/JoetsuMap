@@ -1,7 +1,6 @@
 package com.joetsumap.domain.user.service.logic;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,20 +64,17 @@ public class AuthLogic {
     addRole(user, strRoles);
   }
 
+  // ロールが無かった時の例外ハンドリングは行っていない
   public void addRole(User user, List<String> strRoles) {
 
     List<Role> roles = new ArrayList<>();
-
-    String exceptionMessage = "Error: Role is not found.";
     
     if (strRoles == null || strRoles.isEmpty()) {
-      Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-          .orElseThrow(() -> new RuntimeException(exceptionMessage));
+      Role userRole = roleRepository.findByName(ERole.ROLE_USER).get();
       roles.add(userRole);
     } else {
       strRoles.forEach(role -> {
-        Role userRole = roleRepository.findByName(ERole.valueOf(role))
-            .orElseThrow(() -> new RuntimeException(exceptionMessage));
+        Role userRole = roleRepository.findByName(ERole.valueOf(role)).get();
         roles.add(userRole);
       });
     }

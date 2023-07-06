@@ -1,17 +1,14 @@
 package com.joetsumap.domain.user.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.payload.request.UpdateProfileRequest;
-import com.joetsumap.domain.user.payload.response.UserListResponse;
 import com.joetsumap.domain.user.payload.response.UserResponse;
 import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
-import com.joetsumap.exception.constant.ExceptionMessageConst;
+import com.joetsumap.exception.exception.NotFoundException;
 import com.joetsumap.exception.util.ExceptionUtil;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -46,7 +43,9 @@ public class UserService {
    */
   public UserResponse findById(Long id) {
 
-    User user = userRepository.findById(id).get();
+    User user = userRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     UserDTO userDTO = new UserDTO(user);
     userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());
@@ -63,9 +62,11 @@ public class UserService {
       throw new RuntimeException("実装できていない");
     }
 
-    User user = userRepository.findById(id).get();
+    User user = userRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
-    ExceptionUtil.checkAuthorWithException(userDetails, user.getId());
+    ExceptionUtil.checkEqualsIdWithException(userDetails, user.getId());
 
     // ユーザーのプロフィールを更新する
     // TODO: データベースは更新できてもコンテキストが更新されない。パスワード入力無しでコンテキストを更新する方法が分からないので後でやる

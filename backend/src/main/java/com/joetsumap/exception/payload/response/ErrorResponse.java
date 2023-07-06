@@ -1,23 +1,27 @@
 package com.joetsumap.exception.payload.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.http.HttpStatusCode;
 
-@Getter
-@Setter
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
 public class ErrorResponse {
+
   private CustomError error;
 
-  public ErrorResponse(String code, String message) {
-    this.error = new CustomError(code, message);
+  public ErrorResponse(HttpStatusCode code, String message, EExpectedExceptionType type) {
+    this.error = new CustomError(code.value(), message, type);
   }
 
-  @Getter
-  @Setter
+  @Data
   @AllArgsConstructor
   private class CustomError {
-    private String code;
+
+    private int code;
+
     private String message;
+
+    private EExpectedExceptionType type;
   }
 }

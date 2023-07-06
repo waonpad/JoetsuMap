@@ -2,6 +2,7 @@ package com.joetsumap.exception;
 
 import java.util.HashMap;
 import java.util.Map;
+// import java.util.NoSuchElementException;
 
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
@@ -12,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.lang.Nullable;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.ErrorResponseException;
@@ -32,6 +36,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.joetsumap.exception.exception.ExpectedException;
+import com.joetsumap.exception.payload.response.EExpectedExceptionType;
 // import com.joetsumap.exception.exception.MyException;
 import com.joetsumap.exception.payload.response.ErrorResponse;
 
@@ -61,15 +67,54 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 			errors.put(fieldName, message);
 		});
 
+    // UNPROCESSABLE_ENTITYの方がバリデーションエラーとして受け取りやすいか？
+    // 元は BAD_REQUEST
+    HttpStatusCode customStatus = UNPROCESSABLE_ENTITY;
+
 		Map<String, Object> body = new HashMap<>();
     Map<String, Object> errorBody = new HashMap<>();
     errorBody.put("validation", errors);
     errorBody.put("message", "Validation error");
-    errorBody.put("status", BAD_REQUEST.value());
+    errorBody.put("status", customStatus.value());
+    errorBody.put("type", EExpectedExceptionType.VALIDATION_ERROR);
     body.put("error", errorBody);
 
-		return new ResponseEntity<Object>(body, BAD_REQUEST);
+		return new ResponseEntity<Object>(body, customStatus);
 	}
+
+  // フロントエンドでtypeを受け取ることで独自の処理に繋げる必要のある例外を処理したい場合
+  @ExceptionHandler(ExpectedException.class)
+  protected ResponseEntity<ErrorResponse> handleExpectedException(ExpectedException ex) {
+    ErrorResponse errorResponse = new ErrorResponse(ex.getStatusCode(), ex.getMessage(), ex.getType());
+    return new ResponseEntity<ErrorResponse>(errorResponse, ex.getStatusCode());
+  }
+
+  // // findById(id).get() で対象データがない場合等に発生する例外
+  // @ExceptionHandler(NoSuchElementException.class)
+  // public ErrorResponse handleNoSuchElementException(NoSuchElementException ex, WebRequest request) {
+  //   return new ErrorResponse(NOT_FOUND, "No such element", null);
+  // }
+
+  // 認証失敗時の例外
+  @ExceptionHandler(BadCredentialsException.class)
+  public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
+    ErrorResponse errorResponse = new ErrorResponse(UNAUTHORIZED, "Bad credentials", EExpectedExceptionType.BAD_CREDENTIALS);
+    return new ResponseEntity<ErrorResponse>(errorResponse, UNAUTHORIZED);
+  }
+
+  // ユーザーが無効の場合の例外
+  @ExceptionHandler(DisabledException.class)
+  public ResponseEntity<ErrorResponse> handleDisabledException(DisabledException ex, WebRequest request) {
+    ErrorResponse errorResponse = new ErrorResponse(UNAUTHORIZED, "Disabled", EExpectedExceptionType.USER_DISABLED);
+    return new ResponseEntity<ErrorResponse>(errorResponse, UNAUTHORIZED);
+  }
+
+  // ユーザーがロックされている場合の例外
+  @ExceptionHandler(LockedException.class)
+  public ResponseEntity<ErrorResponse> handleLockedException(LockedException ex, WebRequest request) {
+    ErrorResponse errorResponse = new ErrorResponse(UNAUTHORIZED, "Locked", EExpectedExceptionType.USER_LOCKED);
+    return new ResponseEntity<ErrorResponse>(errorResponse, UNAUTHORIZED);
+  }
 
   @Override
   public ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -151,7 +196,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   protected ResponseEntity<Object> handleExceptionInternal(
           Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-    ErrorResponse re = new ErrorResponse(String.valueOf(status.value()), ex.getMessage());
+    ErrorResponse re = new ErrorResponse(status, ex.getMessage(), null);
     return super.handleExceptionInternal(ex, re, headers, status, request);
   }
 
@@ -159,8 +204,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   // レスポンスフォーマットをカスタマイズしたい場合は、こちらを定義してレスポンスを実装する
   @ExceptionHandler(ResponseStatusException.class)
   protected ResponseEntity<Object> handleResponseStatus(ResponseStatusException ex, WebRequest request) {
-      ErrorResponse re = new ErrorResponse(String.valueOf(ex.getStatusCode().value()), ex.getMessage());
-    return this.handleExceptionInternal(ex, null, new HttpHeaders(), ex.getStatusCode(), request);
+    ErrorResponse re = new ErrorResponse(ex.getStatusCode(), ex.getMessage(), null);
+    return this.handleExceptionInternal(ex, re, new HttpHeaders(), ex.getStatusCode(), request);
   }
 
   // 未処理の例外があった場合を想定して定義
@@ -168,6 +213,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(Exception.class)
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   public ErrorResponse handleGeneralException(Exception exception, WebRequest request) {
-    return new ErrorResponse(String.valueOf(INTERNAL_SERVER_ERROR), "Unexpected Error");
+    
+    return new ErrorResponse(INTERNAL_SERVER_ERROR, "Unexpected Error", null);
   }
 }
