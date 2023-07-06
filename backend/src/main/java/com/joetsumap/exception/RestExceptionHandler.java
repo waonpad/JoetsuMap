@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -114,6 +115,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<ErrorResponse> handleLockedException(LockedException ex, WebRequest request) {
     ErrorResponse errorResponse = new ErrorResponse(UNAUTHORIZED, "Locked", EExpectedExceptionType.USER_LOCKED);
     return new ResponseEntity<ErrorResponse>(errorResponse, UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+    ErrorResponse errorResponse = new ErrorResponse(FORBIDDEN, "Access denied", EExpectedExceptionType.ACCESS_DENIED);
+    return new ResponseEntity<ErrorResponse>(errorResponse, FORBIDDEN);
   }
 
   @Override
