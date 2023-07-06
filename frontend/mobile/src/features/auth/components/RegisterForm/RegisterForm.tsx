@@ -16,7 +16,14 @@ import { validationSchema } from './validationSchema';
 import type { RegisterFormProps } from './types';
 
 export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
-  const { control, handleSubmit, onSubmit, errors, icon, handleChoosePhoto } = useLogics({
+  const {
+    control,
+    handlePressSubmitButton,
+    errors,
+    isAlreadyExistsError,
+    icon,
+    handleChoosePhoto,
+  } = useLogics({
     defaultValues,
   });
 
@@ -73,9 +80,8 @@ export const RegisterForm = ({ defaultValues }: RegisterFormProps) => {
           </>
         )}
       />
-      {/* ロールを設定するコンポーネントは多分不要 */}
-      {/* アイコンを設定するコンポーネントを配置 */}
-      <Button title={SUBMIT_LABEL} onPress={handleSubmit(onSubmit)} />
+      <Text>{isAlreadyExistsError && 'Already exists'}</Text>
+      <Button title={SUBMIT_LABEL} onPress={handlePressSubmitButton} />
     </View>
   );
 };

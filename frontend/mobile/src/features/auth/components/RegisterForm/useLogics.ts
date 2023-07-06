@@ -6,8 +6,9 @@ import * as ImagePicker from 'expo-image-picker';
 import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/lib/auth';
-import type { PickedImage } from '@/types';
-import { setValidationErrors } from '@/utils/compute';
+import { useRootNavigation } from '@/navigation/RootNavigator';
+import { EXPECTED_EXCEPTION, type PickedImage } from '@/types';
+import { enableUseErrorBoundary, setValidationErrors } from '@/utils/compute';
 
 import { useRegister } from '../../api/register';
 
@@ -19,7 +20,23 @@ import type { GestureResponderEvent } from 'react-native';
 export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterFormInput> }) => {
   const { onRegisterSuccess } = useAuth();
 
-  const registerMutaion = useRegister();
+  const registerMutaion = useRegister({
+    config: {
+      useErrorBoundary(error) {
+        const throughErrorTypes: (keyof typeof EXPECTED_EXCEPTION)[] = [
+          EXPECTED_EXCEPTION.ALREADY_EXISTS,
+          EXPECTED_EXCEPTION.VALIDATION_ERROR,
+        ];
+
+        return enableUseErrorBoundary(error, throughErrorTypes);
+      },
+    },
+  });
+
+  const isAlreadyExistsError =
+    registerMutaion.error?.response?.data.error.type === EXPECTED_EXCEPTION.ALREADY_EXISTS;
+
+  const rootNavigation = useRootNavigation();
 
   const [icon, setIcon] = useState<PickedImage>();
 
@@ -71,6 +88,8 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterF
           setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
         onSuccess: (data) => {
           onRegisterSuccess(data);
+
+          rootNavigation.navigate('App');
         },
       },
     );
@@ -85,6 +104,7 @@ export const useLogics = ({ defaultValues }: { defaultValues?: Partial<RegisterF
     control,
     handlePressSubmitButton,
     errors,
+    isAlreadyExistsError,
     icon,
     handleChoosePhoto,
   };
