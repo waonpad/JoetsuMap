@@ -1,7 +1,5 @@
 package com.joetsumap.domain.passing.entity;
 
-import java.util.List;
-
 import com.joetsumap.common.entity.BaseEntity;
 
 import jakarta.persistence.*;

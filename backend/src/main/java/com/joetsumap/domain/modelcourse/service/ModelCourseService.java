@@ -22,6 +22,8 @@ import com.joetsumap.domain.travelspot.payload.response.TravelSpotDTO;
 import com.joetsumap.domain.travelspot.repository.TravelSpotRepository;
 import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.domain.user.repository.UserRepository;
+import com.joetsumap.exception.exception.NotFoundException;
+import com.joetsumap.exception.exception.TravelSpotInModelCourseNotFoundException;
 import com.joetsumap.exception.util.ExceptionUtil;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -72,12 +74,13 @@ public class ModelCourseService {
    */
   public ModelCourseResponse findById(Long id) {
 
-    ModelCourse modelCourse = modelCourseRepository.findById(id).get();
+    ModelCourse modelCourse = modelCourseRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     ModelCourseDTO modelCourseDTO = new ModelCourseDTO(modelCourse);
     modelCourseDTO.setAuthor(new UserDTO(modelCourse.getAuthor()));
 
-  // TODO: 同じ処理を複数回書いていて冗長！後からリファクタリングする！
     List<TravelSpotDTO> travelSpotDTOList = modelCourse.getModelCourseTravelSpots().stream()
         .map(modelCourseTravelSpot -> {
           return new TravelSpotDTO(modelCourseTravelSpot.getTravelSpot());
@@ -93,9 +96,10 @@ public class ModelCourseService {
    */
   public ModelCourseResponse create(UserDetailsImpl userDetails, CreateModelCourseRequest createRequest) {
 
-    // TODO: 検索の結果、nullが返ってきた場合等、例外処理を追加する
     List<TravelSpot> travelSpots = createRequest.getTravelSpotIds().stream().map(travelSpotId -> {
-      return travelSpotRepository.findById(travelSpotId).get();
+      return travelSpotRepository.findById(travelSpotId).orElseThrow(
+        () -> new TravelSpotInModelCourseNotFoundException()
+      );
     }).toList();
 
     // モデルコースを作成
@@ -137,13 +141,17 @@ public class ModelCourseService {
    */
   public ModelCourseResponse update(UserDetailsImpl userDetails, UpdateModelCourseRequest updateRequest, Long id) {
 
-    ModelCourse modelCourse = modelCourseRepository.findById(id).get();
+    ModelCourse modelCourse = modelCourseRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
-    ExceptionUtil.checkAuthorWithException(userDetails, modelCourse.getAuthor().getId());
+    ExceptionUtil.checkEqualsIdWithException(userDetails, modelCourse.getAuthor().getId());
 
-    // TODO: 検索の結果、nullが返ってきた場合等、例外処理を追加する
+    // TODO: エラーにするよりダミーに変えるなり配列から除外したほうがいい？うーん
     List<TravelSpot> travelSpots = updateRequest.getTravelSpotIds().stream().map(travelSpotId -> {
-      return travelSpotRepository.findById(travelSpotId).get();
+      return travelSpotRepository.findById(travelSpotId).orElseThrow(
+        () -> new TravelSpotInModelCourseNotFoundException()
+      );
     }).toList();
 
     modelCourse.setTitle(updateRequest.getTitle());
@@ -186,9 +194,11 @@ public class ModelCourseService {
    */
   public void delete(UserDetailsImpl userDetails, Long id) {
 
-    ModelCourse modelCourse = modelCourseRepository.findById(id).get();
+    ModelCourse modelCourse = modelCourseRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
     
-    ExceptionUtil.checkAuthorWithException(userDetails, modelCourse.getAuthor().getId());
+    ExceptionUtil.checkEqualsIdWithException(userDetails, modelCourse.getAuthor().getId());
 
     modelCourseRepository.delete(modelCourse);
   }
@@ -222,7 +232,9 @@ public class ModelCourseService {
    */
   public ToggleBookmarkResponse toggleBookmark(UserDetailsImpl userDetails, Long id) {
 
-    ModelCourse modelCourse = modelCourseRepository.findById(id).get();
+    ModelCourse modelCourse = modelCourseRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     boolean isBookmarked = modelCourse.getBookmarkedUsers().stream().map(user -> {
       return user.getId();

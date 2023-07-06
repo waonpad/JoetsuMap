@@ -1,7 +1,6 @@
 package com.joetsumap.domain.user.payload.response;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.joetsumap.domain.modelcourse.payload.response.ModelCourseDTO;

@@ -5,10 +5,9 @@ import java.io.ByteArrayInputStream;
 import com.joetsumap.common.file.constant.FileConst;
 import com.joetsumap.common.file.dto.Base64ResponseDTO;
 import com.joetsumap.common.file.util.FileUtil;
-
+import com.joetsumap.exception.exception.FileUploadException;
 import jakarta.transaction.Transactional;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,9 +44,10 @@ public class Base64FileService {
       );
 
       return saveDir + fileName;
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
-      throw new RuntimeException("File upload error.");
+
+      throw new FileUploadException();
 
       // NOTE: ディレクトリが無いとエラーになるので、新しく必要な場合は作成して.gitkeepを配置する
     }

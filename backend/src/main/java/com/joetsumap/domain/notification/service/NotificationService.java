@@ -17,6 +17,8 @@ import com.joetsumap.domain.notification.payload.response.NotificationDTO;
 import com.joetsumap.domain.notification.payload.response.NotificationPageResponse;
 import com.joetsumap.domain.notification.repository.NotificationRepository;
 import com.joetsumap.domain.user.repository.UserRepository;
+import com.joetsumap.exception.exception.NotFoundException;
+import com.joetsumap.exception.util.ExceptionUtil;
 import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.payload.response.UserDTO;
 import com.joetsumap.security.services.UserDetailsImpl;
@@ -60,7 +62,11 @@ public class NotificationService {
    */
   public void read(UserDetailsImpl userDetails, Long id) {
 
-    Notification notification = notificationRepository.findById(id).get();
+    Notification notification = notificationRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
+
+    ExceptionUtil.checkEqualsIdWithException(userDetails, notification.getRecipient().getId());
 
     notification.setIsRead(true);
 
@@ -72,7 +78,9 @@ public class NotificationService {
    */
   public void readAll(UserDetailsImpl userDetails) {
 
-    List<Notification> notifications = notificationRepository.findAll();
+    List<Notification> notifications = notificationRepository.findAllByRecipientId(userDetails.getUser().getId()).stream()
+      .filter(notification -> !notification.getIsRead())
+      .collect(Collectors.toList());
 
     notifications.forEach(n -> n.setIsRead(true));
 
@@ -84,7 +92,9 @@ public class NotificationService {
    */
   public void saveToken(UserDetailsImpl userDetails, String token) {
 
-    User user = userRepository.findById(userDetails.getUser().getId()).get();
+    User user = userRepository.findById(userDetails.getUser().getId()).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     user.setExpoPushToken(token);
 

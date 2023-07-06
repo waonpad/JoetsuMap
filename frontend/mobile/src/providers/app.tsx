@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 // import { ThemeProvider } from '@rneui/themed';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { NativeBaseProvider } from 'native-base';
 import ErrorBoundary from 'react-native-error-boundary';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -24,15 +24,17 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       {/* <ThemeProvider theme={theme}> */}
       <NativeBaseProvider theme={theme}>
         <NavigationContainer>
-          <ErrorBoundary FallbackComponent={ErrorFallbackScreen}>
-            <QueryClientProvider client={queryClient}>
-              <AuthProvider>
-                <NotificationProvider>
-                  <LocationTrackingProvider>{children}</LocationTrackingProvider>
-                </NotificationProvider>
-              </AuthProvider>
-            </QueryClientProvider>
-          </ErrorBoundary>
+          <QueryErrorResetBoundary>
+            <ErrorBoundary FallbackComponent={ErrorFallbackScreen}>
+              <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                  <NotificationProvider>
+                    <LocationTrackingProvider>{children}</LocationTrackingProvider>
+                  </NotificationProvider>
+                </AuthProvider>
+              </QueryClientProvider>
+            </ErrorBoundary>
+          </QueryErrorResetBoundary>
         </NavigationContainer>
       </NativeBaseProvider>
       {/* </ThemeProvider> */}

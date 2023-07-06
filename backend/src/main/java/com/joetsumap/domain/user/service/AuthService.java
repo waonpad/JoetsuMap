@@ -12,6 +12,8 @@ import com.joetsumap.domain.user.payload.response.UserResponse;
 import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.security.services.UserDetailsImpl;
 import com.joetsumap.domain.user.service.logic.AuthLogic;
+import com.joetsumap.exception.exception.AlreadyExistsException;
+import com.joetsumap.exception.exception.NotFoundException;
 
 import jakarta.transaction.Transactional;
 
@@ -43,7 +45,7 @@ public class AuthService {
 
     // 既に存在する場合はエラーをスローする
     if (exists) {
-      throw new RuntimeException("Error: User is already taken!");
+      throw new AlreadyExistsException();
     }
 
     // ユーザーを作成する
@@ -63,7 +65,9 @@ public class AuthService {
       return null;
     }
 
-    User user = userRepository.findById(userDetails.getUser().getId()).get();
+    User user = userRepository.findById(userDetails.getUser().getId()).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     UserDTO userDTO = new UserDTO(user);
     userDTO.setRoles(user.getRoles().stream().map(role -> role.getName()).toList());

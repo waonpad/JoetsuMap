@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +22,8 @@ import com.joetsumap.domain.travelbooklet.payload.request.UpdateTravelBookletReq
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletPageResponse;
 import com.joetsumap.domain.travelbooklet.payload.response.TravelBookletResponse;
 import com.joetsumap.domain.travelbooklet.service.TravelBookletService;
+import com.joetsumap.exception.exception.ExpectedException;
+import com.joetsumap.exception.payload.response.EExpectedExceptionType;
 import com.joetsumap.security.services.UserDetailsImpl;
 
 import static com.joetsumap.constant.ApiConst.*;
@@ -49,7 +52,9 @@ public class TravelBookletController {
   @PostMapping("")
   public TravelBookletResponse create(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody CreateTravelBookletRequest createRequest) {
 
-    return travelBookletService.create(userDetails, createRequest);
+    throw new ExpectedException(HttpStatus.CONFLICT, "てすと", EExpectedExceptionType.TEST);
+
+    // return travelBookletService.create(userDetails, createRequest);
   }
 
   @PatchMapping("/{id}")

@@ -25,7 +25,8 @@ import com.joetsumap.domain.user.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@ToString(exclude = {"modelCourseTravelSpots", "author", "bookmarkedUsers", "types"})
+// @ToString(exclude = {"modelCourseTravelSpots", "author", "bookmarkedUsers", "types"})
+@ToString(exclude = {"author", "bookmarkedUsers", "types"})
 public class TravelSpot extends BaseEntity {
 
   @Id

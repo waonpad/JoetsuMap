@@ -12,8 +12,14 @@ import {
   IMAGE_SOURCE_BINARY,
 } from '@/constants';
 import type { JwtResponse } from '@/features/auth';
-import type { PageableParams } from '@/types';
+import type {
+  EXPECTED_EXCEPTION,
+  ErrorResponse,
+  MutationErrorResponse,
+  PageableParams,
+} from '@/types';
 
+import type { AxiosError } from 'axios';
 import type { FieldValues, Path, UseFormSetError } from 'react-hook-form';
 
 export const omitToken = (user: JwtResponse) => _.omit(user, ['token']).user;
@@ -104,4 +110,21 @@ export const setValidationErrors = <T extends FieldValues>({
       message: value,
     }),
   );
+};
+
+export const enableUseErrorBoundary = (
+  error: AxiosError<ErrorResponse | MutationErrorResponse<any>>,
+  expectedExceptions: (keyof typeof EXPECTED_EXCEPTION)[],
+) => {
+  const type = error?.response?.data?.error?.type;
+
+  if (!type) {
+    return true;
+  }
+
+  if (expectedExceptions.includes(type)) {
+    return false;
+  }
+
+  return true;
 };

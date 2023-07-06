@@ -41,10 +41,25 @@ export type Screens<T extends Record<string, any>> = {
   [key in keyof Omit<T, keyof CommonScreenParamList>]: ComponentType<any>;
 };
 
+export enum EXPECTED_EXCEPTION {
+  TEST = 'TEST',
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
+  TARGET_NOT_FOUND = 'TARGET_NOT_FOUND',
+  ACCESS_DENIED = 'ACCESS_DENIED',
+  FILE_UPLOAD_ERROR = 'FILE_UPLOAD_ERROR',
+  ALREADY_EXISTS = 'ALREADY_EXISTS',
+  UNAUTHORIZED = 'UNAUTHORIZED',
+  BAD_CREDENTIALS = 'BAD_CREDENTIALS',
+  USER_DISABLED = 'USER_DISABLED',
+  USER_LOCKED = 'USER_LOCKED',
+  TRAVELSPOT_IN_MODELCOURSE_NOT_FOUND = 'TRAVELSPOT_IN_MODELCOURSE_NOT_FOUND',
+}
+
 export type ErrorResponse = {
   error: {
     code: number;
     message: string;
+    type?: keyof typeof EXPECTED_EXCEPTION;
   };
 };
 

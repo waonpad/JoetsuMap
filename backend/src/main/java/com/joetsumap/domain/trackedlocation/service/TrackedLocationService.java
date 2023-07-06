@@ -13,6 +13,7 @@ import com.joetsumap.domain.trackedlocation.payload.response.TrackedLocationResp
 import com.joetsumap.domain.trackedlocation.repository.TrackedLocationRepository;
 import com.joetsumap.domain.user.entity.User;
 import com.joetsumap.domain.user.repository.UserRepository;
+import com.joetsumap.exception.exception.NotFoundException;
 import com.joetsumap.security.services.UserDetailsImpl;
 
 import jakarta.transaction.Transactional;
@@ -32,7 +33,9 @@ public class TrackedLocationService {
    */
   public TrackedLocationListResponse findMy(UserDetailsImpl userDetails) {
 
-    User user = userRepository.findById(userDetails.getUser().getId()).get();
+    User user = userRepository.findById(userDetails.getUser().getId()).orElseThrow(
+      () -> new NotFoundException()
+    );
 
     List<TrackedLocation> trackedLocations = user.getTrackedLocations();
 
