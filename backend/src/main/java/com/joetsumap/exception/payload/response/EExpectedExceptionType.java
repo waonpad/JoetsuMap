@@ -1,7 +1,6 @@
 package com.joetsumap.exception.payload.response;
 
 public enum EExpectedExceptionType {
-  TEST,
   VALIDATION_ERROR,
   TARGET_NOT_FOUND,
   ACCESS_DENIED,

@@ -3,7 +3,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // import { CustomTabBarButton } from '@/components/Elements/CustomTabBarButton';
-import { AuthNavigator } from '@/features/auth';
+// import { AuthNavigator } from '@/features/auth';
 import { NotificationNavigator } from '@/features/notification';
 import { PassingNavigator } from '@/features/passing';
 import { TravelBookletNavigator } from '@/features/travel_booklet';
@@ -40,7 +40,7 @@ export const AppNavigator = () => {
       <AppTab.Screen name="User" component={UserNavigator} />
       <AppTab.Screen name="TravelSopt" component={TravelSpotNavigator} />
       {/* テスト用 */}
-      <AppTab.Screen name="Auth" component={AuthNavigator} />
+      {/* <AppTab.Screen name="Auth" component={AuthNavigator} /> */}
     </AppTab.Navigator>
   );
 };

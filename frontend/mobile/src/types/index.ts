@@ -42,7 +42,6 @@ export type Screens<T extends Record<string, any>> = {
 };
 
 export enum EXPECTED_EXCEPTION {
-  TEST = 'TEST',
   VALIDATION_ERROR = 'VALIDATION_ERROR',
   TARGET_NOT_FOUND = 'TARGET_NOT_FOUND',
   ACCESS_DENIED = 'ACCESS_DENIED',
