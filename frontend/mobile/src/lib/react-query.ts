@@ -1,6 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 
-import type { MutationErrorResponse } from '@/types';
+import { EXPECTED_EXCEPTION, type ErrorResponse, type MutationErrorResponse } from '@/types';
+import { enableUseErrorBoundary } from '@/utils/compute';
 
 import type {
   UseQueryOptions,
@@ -10,16 +11,25 @@ import type {
 } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
-const queryConfig: DefaultOptions = {
+const queryConfig: DefaultOptions<AxiosError<ErrorResponse | MutationErrorResponse<any>>> = {
   queries: {
     useErrorBoundary: true,
     refetchOnWindowFocus: false,
     retry: false,
     suspense: true,
   },
+  mutations: {
+    useErrorBoundary: (error: AxiosError<ErrorResponse | MutationErrorResponse<any>>) => {
+      const throughErrorTypes: (keyof typeof EXPECTED_EXCEPTION)[] = [
+        EXPECTED_EXCEPTION.VALIDATION_ERROR,
+      ];
+
+      return enableUseErrorBoundary(error, throughErrorTypes);
+    },
+  },
 };
 
-export const queryClient = new QueryClient({ defaultOptions: queryConfig });
+export const queryClient = new QueryClient({ defaultOptions: queryConfig as DefaultOptions });
 
 export type ExtractFnReturnType<FnType extends (...args: any) => any> =
   ReturnType<FnType> extends Promise<infer T> ? T : ReturnType<FnType>;
