@@ -8,7 +8,7 @@ import com.joetsumap.exception.payload.response.EExpectedExceptionType;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class AlreadyExistsException extends ExpectedException {
 
-  private static final HttpStatus status = HttpStatus.NOT_FOUND;
+  private static final HttpStatus status = HttpStatus.BAD_REQUEST;
 
   private static final String message = "Already exists";
 
