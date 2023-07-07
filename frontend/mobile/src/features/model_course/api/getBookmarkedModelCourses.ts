@@ -27,7 +27,7 @@ type UseBookmarkedModelCoursesOptions = {
 export const useBookmarkedModelCourses = ({ config }: UseBookmarkedModelCoursesOptions = {}) => {
   return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: [QUERY_KEY_PLURAL],
+    queryKey: [QUERY_KEY_PLURAL, 'bookmarked'],
     queryFn: ({ pageParam }) => getBookmarkedModelCourses({ pageParam }),
     getNextPageParam: (page) => {
       return page.modelCourses.last ? undefined : page.modelCourses.number + 1;

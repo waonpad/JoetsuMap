@@ -1,37 +1,34 @@
-import React, { useState } from 'react';
-
+import { Button } from 'native-base';
 import { View } from 'react-native';
 
 import { Suspense } from '@/components/Suspense';
 
-import { SearchModelCourseForm } from '../../components/SearchModelCourseForm';
-import { SearchedModelCourseList } from '../../components/SearchedModelCourseList';
+import { ModelCourseList } from '../../components/ModelCourseList';
 import { useModelCourseRoute } from '../../navigation/ModelCourseNavigator';
 
+import {
+  NAVIGATE_TO_CREATE_MODEL_COURSE_BUTTON_LABEL,
+  NAVIGATE_TO_SEARCH_MODEL_COURSE_BUTTON_LABEL,
+} from './constants';
 import { styles } from './styles';
-
-import type { SearchModelCourseFormInput } from '../../components/SearchModelCourseForm/types';
+import { useUtils } from './useUtils';
 
 export const ModelCourseHomeScreen = () => {
   const route = useModelCourseRoute<'ModelCourseHome'>();
 
-  const [searchParams, setSearchParams] = useState<SearchModelCourseFormInput>({
-    freeKeyword: '',
-  });
-
-  const handleSubmitSearch = (searchParams: SearchModelCourseFormInput) => {
-    setSearchParams(searchParams);
-  };
+  const { handlePressNavigateToCreateModelCourse, handlePressNavigateToSearchModelCourse } =
+    useUtils();
 
   return (
     <View style={styles.container}>
-      <SearchModelCourseForm
-        defaultValues={route.params?.searchModelCourseFormDefaultValues}
-        onSubmitAction={handleSubmitSearch}
-      />
-      {/* <ModelCourseList /> */}
+      <Button onPress={handlePressNavigateToCreateModelCourse}>
+        {NAVIGATE_TO_CREATE_MODEL_COURSE_BUTTON_LABEL}
+      </Button>
+      <Button onPress={handlePressNavigateToSearchModelCourse}>
+        {NAVIGATE_TO_SEARCH_MODEL_COURSE_BUTTON_LABEL}
+      </Button>
       <Suspense>
-        <SearchedModelCourseList searchParams={searchParams} />
+        <ModelCourseList />
       </Suspense>
     </View>
   );

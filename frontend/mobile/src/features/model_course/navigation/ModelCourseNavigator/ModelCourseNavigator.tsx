@@ -7,6 +7,7 @@ import type { Screens } from '@/types';
 
 import { CreateModelCourseScreen } from '../../screens/CreateModelCourseScreen';
 import { ModelCourseHomeScreen } from '../../screens/ModelCourseHomeScreen';
+import { SearchModelCourseScreen } from '../../screens/SearchModelCourseScreen';
 import { UpdateModelCourseScreen } from '../../screens/UpdateModelCourseScreen';
 
 import type { ModelCourseNavigationParamList } from './types';
@@ -18,6 +19,7 @@ export const ModelCourseNavigator = () => {
     ModelCourseHome: ModelCourseHomeScreen,
     CreateModelCourse: CreateModelCourseScreen,
     UpdateModelCourse: UpdateModelCourseScreen,
+    SearchModelCourse: SearchModelCourseScreen,
   };
 
   return (

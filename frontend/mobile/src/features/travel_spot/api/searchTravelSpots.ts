@@ -39,7 +39,7 @@ export const useSearchTravelSpots = (
 ) => {
   return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: [QUERY_KEY_PLURAL, params.freeKeyword],
+    queryKey: [QUERY_KEY_PLURAL, 'searched', params.freeKeyword],
     queryFn: ({ pageParam }) => searchTravelSpots({ ...params, pageParam }),
     getNextPageParam: (page) => {
       return page.travelSpots.last ? undefined : page.travelSpots.number + 1;

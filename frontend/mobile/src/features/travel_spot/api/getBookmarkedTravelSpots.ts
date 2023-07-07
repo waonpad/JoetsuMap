@@ -27,7 +27,7 @@ type UseBookmarkedTravelSpotsOptions = {
 export const useBookmarkedTravelSpots = ({ config }: UseBookmarkedTravelSpotsOptions = {}) => {
   return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: [QUERY_KEY_PLURAL],
+    queryKey: [QUERY_KEY_PLURAL, 'bookmarked'],
     queryFn: ({ pageParam }) => getBookmarkedTravelSpots({ pageParam }),
     getNextPageParam: (page) => {
       return page.travelSpots.last ? undefined : page.travelSpots.number + 1;

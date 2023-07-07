@@ -29,8 +29,8 @@ type UseUpdateTravelBookletOptions = {
 
 export const useUpdateTravelBooklet = ({ config }: UseUpdateTravelBookletOptions = {}) => {
   return useMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY]);
+    onSuccess: (_, { travelBookletId }) => {
+      queryClient.invalidateQueries([QUERY_KEY, travelBookletId]);
     },
     ...config,
     mutationFn: updateTravelBooklet,
