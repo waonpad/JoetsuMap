@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.joetsumap.domain.notification.entity.Notification;
 import com.joetsumap.domain.notification.payload.response.NotificationDTO;
 import com.joetsumap.domain.notification.payload.response.NotificationPageResponse;
+import com.joetsumap.domain.notification.payload.response.NotificationResponse;
 import com.joetsumap.domain.notification.repository.NotificationRepository;
 import com.joetsumap.domain.user.repository.UserRepository;
 import com.joetsumap.exception.exception.NotFoundException;
@@ -55,6 +56,23 @@ public class NotificationService {
     });
 
     return new NotificationPageResponse(notificationDTOPage);
+  }
+
+  /*
+   * IDで通知を取得する
+   */
+  public NotificationResponse findById(UserDetailsImpl userDetails, Long id) {
+
+    Notification notification = notificationRepository.findById(id).orElseThrow(
+      () -> new NotFoundException()
+    );
+
+    ExceptionUtil.checkEqualsIdWithException(userDetails, notification.getRecipient().getId());
+
+    NotificationDTO notificationDTO = new NotificationDTO(notification);
+    notificationDTO.setSender(new UserDTO(notification.getSender()));
+
+    return new NotificationResponse(notificationDTO);
   }
 
   /**

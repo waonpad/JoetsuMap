@@ -22,7 +22,7 @@ export const AppNavigator = () => {
   // const appNavigation = useAppNavigation();
 
   return (
-    <AppTab.Navigator>
+    <AppTab.Navigator screenOptions={{ headerShown: false }}>
       <AppTab.Screen name="Test" component={TestScreen} />
       <AppTab.Screen name="Home" component={HomeScreen} />
       <AppTab.Screen name="TravelBooklet" component={TravelBookletNavigator} />

@@ -7,7 +7,7 @@ export type Notification = {
   body: string;
   data: any;
   isRead: boolean;
-  sender?: User;
+  sender: User;
   recipient?: User;
 } & BaseEntity;
 

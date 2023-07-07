@@ -17,7 +17,7 @@ const travelSpotScreens: Screens<TravelSpotNavigationParamList> = {
 
 export const TravelSpotNavigator = () => {
   return (
-    <TravelSpotStack.Navigator screenOptions={{ headerShown: false }}>
+    <TravelSpotStack.Navigator>
       {Object.entries({
         ...travelSpotScreens,
         ...commonScreens,

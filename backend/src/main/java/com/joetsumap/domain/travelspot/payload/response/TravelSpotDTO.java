@@ -29,6 +29,8 @@ public class TravelSpotDTO {
 
   private List<ETravelSpotType> types;
 
+  private String icon;
+
   private String photo;
 
   private LatLng coords;
@@ -49,6 +51,7 @@ public class TravelSpotDTO {
     this.address = travelSpot.getAddress();
     this.tel = travelSpot.getTel();
     this.types = travelSpot.getTypes().stream().map(type -> type.getName()).toList();
+    this.icon = travelSpot.getIcon();
     this.photo = travelSpot.getPhoto();
     this.coords = new LatLng(travelSpot.getLatitude(), travelSpot.getLongitude());
     // this.modelCourses = modelCourses;

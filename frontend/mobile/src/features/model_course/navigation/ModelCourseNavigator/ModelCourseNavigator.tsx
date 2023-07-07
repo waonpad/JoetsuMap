@@ -21,7 +21,7 @@ export const ModelCourseNavigator = () => {
   };
 
   return (
-    <ModelCourseStack.Navigator screenOptions={{ headerShown: false }}>
+    <ModelCourseStack.Navigator>
       {Object.entries({
         ...modelCourseScreens,
         ...commonScreens,

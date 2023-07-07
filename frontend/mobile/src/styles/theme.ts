@@ -13,12 +13,27 @@
 //   mode: 'light',
 // });
 
-import { extendTheme } from 'native-base';
+import { extendTheme, theme as nativaBasedefaultTheme } from 'native-base';
 
 import type { ITheme } from 'native-base';
 
 export const theme: ITheme = extendTheme({
   colors: {
     primary: {},
+    text: nativaBasedefaultTheme.colors.coolGray,
+    bg: nativaBasedefaultTheme.colors.coolGray,
+  },
+  components: {
+    Avatar: {
+      defaultProps: {
+        size: 'md',
+      },
+    },
+    HStack: {
+      defaultProps: {
+        justifyContent: 'space-between',
+        width: '100%',
+      },
+    },
   },
 });

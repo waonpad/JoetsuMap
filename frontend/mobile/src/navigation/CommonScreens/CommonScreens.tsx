@@ -4,6 +4,7 @@ import { TravelSpotDetailScreen } from '@/features/travel_spot/screens/TravelSpo
 import { ProfileDetailScreen } from '@/features/user/screens/ProfileDetailScreen';
 
 import type { CommonScreenParamList } from './types';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
 export const commonScreens: {
   [key in keyof CommonScreenParamList]: React.ComponentType<any>;
@@ -12,4 +13,21 @@ export const commonScreens: {
   TravelBookletDetail: TravelBookletDetailScreen,
   TravelSpotDetail: TravelSpotDetailScreen,
   ProfileDetail: ProfileDetailScreen,
+};
+
+export const commonScreenStackOptions: {
+  [key in keyof CommonScreenParamList]?: NativeStackNavigationOptions;
+} = {
+  ModelCourseDetail: {
+    title: 'モデルコース詳細',
+  },
+  TravelBookletDetail: {
+    title: '旅のしおり詳細',
+  },
+  TravelSpotDetail: {
+    title: '観光スポット詳細',
+  },
+  ProfileDetail: {
+    title: 'プロフィール詳細',
+  },
 };

@@ -8,6 +8,7 @@ export type TravelSpot = {
   tel: string;
   name: string;
   types: SPOTTYPE[];
+  icon: Photo;
   photo: Photo;
   coords: LatLng;
   author?: User;

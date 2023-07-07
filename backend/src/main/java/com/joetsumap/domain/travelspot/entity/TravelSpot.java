@@ -53,6 +53,10 @@ public class TravelSpot extends BaseEntity {
 
   @Column(nullable = false)
   @NotBlank
+  private String icon;
+
+  @Column(nullable = false)
+  @NotBlank
   private String photo;
 
   @Column(nullable = false)

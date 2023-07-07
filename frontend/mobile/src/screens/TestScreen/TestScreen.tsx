@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { Image } from 'expo-image';
 import { View } from 'native-base';
+import { Button as NBButton } from 'native-base';
 import { ScrollView, Button, Text } from 'react-native';
 
 import { Map } from '@/components/Map';
@@ -17,7 +18,6 @@ import { useAppNavigation } from '@/navigation/AppNavigator';
 import { API_URL } from '@/utils/compute';
 
 import { styles } from './styles';
-import { TravelBookletList } from '@/features/travel_booklet/components/TravelBookletList';
 
 /**
  * テスト用にいろいろ配置している。実際にはホーム画面
@@ -60,8 +60,6 @@ export const TestScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* ScrollViewの中でFlatListは使えないらしい */}
-      {/* <TravelBookletList /> */}
       <Text>{JSON.stringify(auth.user)}</Text>
       {/* https://docs.expo.dev/versions/latest/sdk/image/ */}
       <Image
@@ -73,12 +71,14 @@ export const TestScreen = () => {
       />
       <Text>{APP_NAME}</Text>
       <Text>{JSON.stringify(location)}</Text>
-      <Button
-        title="ロードユーザー"
+      <NBButton
         onPress={() => {
           auth.loadUser();
         }}
-      />
+        bg={'primary.500'}
+        _text={{ color: 'black' }}>
+        ロードユーザー
+      </NBButton>
       <Button
         title="登録画面へ(テスト用)"
         onPress={() => {
