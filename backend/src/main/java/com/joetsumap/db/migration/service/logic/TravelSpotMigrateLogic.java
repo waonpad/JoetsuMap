@@ -50,6 +50,8 @@ public class TravelSpotMigrateLogic {
       travelSpot.setAddress("住所" + counter);
       travelSpot.setTel("012-3456-789" + counter);
 
+      travelSpot.setIcon(TravelSpotConst.ICON_SAVE_DIR + "travel-spot-icon-width-600-height-600-sample" + FileConst.IMAGE_SAVE_FORMAT);
+
       travelSpot.setPhoto(TravelSpotConst.PHOTO_SAVE_DIR + "travel-spot-photo-width-600-height-371-sample" + FileConst.IMAGE_SAVE_FORMAT);
 
       // 緯度経度に誤差をランダムで加える

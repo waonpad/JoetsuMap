@@ -23,7 +23,7 @@ export const PassingNavigator = () => {
   };
 
   return (
-    <PassingStack.Navigator screenOptions={{ headerShown: false }}>
+    <PassingStack.Navigator>
       {Object.entries({
         ...passingScreens,
         ...commonScreens,

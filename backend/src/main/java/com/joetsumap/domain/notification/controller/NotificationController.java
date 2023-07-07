@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.joetsumap.domain.notification.payload.request.SaveTokenRequest;
 import com.joetsumap.domain.notification.payload.request.SendNotificationRequest;
 import com.joetsumap.domain.notification.payload.response.NotificationPageResponse;
+import com.joetsumap.domain.notification.payload.response.NotificationResponse;
 import com.joetsumap.domain.notification.service.NotificationService;
 import com.joetsumap.security.services.UserDetailsImpl;
 
@@ -40,6 +41,12 @@ public class NotificationController {
   public NotificationPageResponse findMy(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
 
     return notificationService.findMy(userDetails, pageable);
+  }
+
+  @GetMapping("/{id}")
+  public NotificationResponse findById(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+
+    return notificationService.findById(userDetails, id);
   }
 
   @PatchMapping("/read/{id}")

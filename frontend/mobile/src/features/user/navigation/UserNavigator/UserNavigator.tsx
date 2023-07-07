@@ -17,7 +17,7 @@ const userScreens: Screens<UserNavigationParamList> = {
 
 export const UserNavigator = () => {
   return (
-    <UserStack.Navigator screenOptions={{ headerShown: false }}>
+    <UserStack.Navigator>
       {Object.entries({
         ...userScreens,
         ...commonScreens,

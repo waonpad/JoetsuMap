@@ -21,7 +21,7 @@ export const AuthNavigator = () => {
   };
 
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+    <AuthStack.Navigator>
       {Object.entries({
         ...authScreens,
         ...commonScreens,
