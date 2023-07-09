@@ -1,6 +1,7 @@
-import { Input, Text } from 'native-base';
+import { Box, Input, Text } from 'native-base';
 import { Controller } from 'react-hook-form';
 import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { SEARCH_TRAVEL_SPOT_INPUT_PLACEHOLDER } from './constants';
 import { styles } from './styles';
@@ -13,7 +14,7 @@ export const SearchTravelSpotForm = ({
   defaultValues,
   onSubmitAction,
 }: SearchTravelSpotFormProps) => {
-  const { control, handlePressKeyForHandleSubmit, errors } = useLogics({
+  const { control, handlePressSubmitKey, errors } = useLogics({
     defaultValues,
     onSubmitAction,
   });
@@ -27,11 +28,17 @@ export const SearchTravelSpotForm = ({
         render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Input
+              InputLeftElement={
+                <Box marginLeft={2}>
+                  <Icon name="search" size={16} color={'gray'} />
+                </Box>
+              }
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              onKeyPress={handlePressKeyForHandleSubmit}
               placeholder={SEARCH_TRAVEL_SPOT_INPUT_PLACEHOLDER}
+              returnKeyType="search"
+              onSubmitEditing={handlePressSubmitKey}
             />
             {errors.freeKeyword && <Text>{errors.freeKeyword.message}</Text>}
           </>

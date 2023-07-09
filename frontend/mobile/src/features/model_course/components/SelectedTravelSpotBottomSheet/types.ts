@@ -4,4 +4,5 @@ export type SelectedTravelSpotBottomSheetProps = {
   travelSpot: TravelSpot;
   isContainedForTravelSpots: boolean;
   onPressPushPopTravelSpotButton: (travelSpot: TravelSpot) => void;
+  handleClose: () => void;
 };

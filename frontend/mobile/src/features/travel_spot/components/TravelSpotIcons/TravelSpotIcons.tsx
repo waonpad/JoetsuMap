@@ -7,10 +7,10 @@ import { imageSourceUri } from '@/utils/compute';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
 
-import type { BookmarkedTravelSpotIconsProps } from './types';
+import type { TravelSpotIconsProps } from './types';
 
-export const BookmarkedTravelSpotIcons = ({ onPress }: BookmarkedTravelSpotIconsProps) => {
-  const { bookmarkedTravelSpotsQuery } = useLogics();
+export const TravelSpotIcons = ({ onPress }: TravelSpotIconsProps) => {
+  const { travelSpotsQuery } = useLogics();
 
   return (
     <View style={styles.container}>
@@ -19,7 +19,7 @@ export const BookmarkedTravelSpotIcons = ({ onPress }: BookmarkedTravelSpotIcons
         data={[1]}
         renderItem={() => (
           <Flex direction="row" flexWrap="wrap" justifyContent="center">
-            {bookmarkedTravelSpotsQuery.data?.pages
+            {travelSpotsQuery.data?.pages
               .flatMap((page) => page.travelSpots.content)
               .map((travelSpot) => (
                 <Box key={travelSpot.id} margin={1}>
@@ -39,7 +39,7 @@ export const BookmarkedTravelSpotIcons = ({ onPress }: BookmarkedTravelSpotIcons
           </Flex>
         )}
         keyExtractor={undefined}
-        onEndReached={() => bookmarkedTravelSpotsQuery.fetchNextPage()}
+        onEndReached={() => travelSpotsQuery.fetchNextPage()}
         onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD}
       />
     </View>

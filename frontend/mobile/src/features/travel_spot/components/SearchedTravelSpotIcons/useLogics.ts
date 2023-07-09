@@ -2,9 +2,9 @@
 
 import { useSearchTravelSpots } from '../../api/searchTravelSpots';
 
-import type { SearchedTravelSpotListProps } from './types';
+import type { SearchedTravelSpotIconsProps } from './types';
 
-export const useLogics = ({ searchParams }: Pick<SearchedTravelSpotListProps, 'searchParams'>) => {
+export const useLogics = ({ searchParams }: Pick<SearchedTravelSpotIconsProps, 'searchParams'>) => {
   const searchedTravelSpotsQuery = useSearchTravelSpots({
     params: searchParams,
   });

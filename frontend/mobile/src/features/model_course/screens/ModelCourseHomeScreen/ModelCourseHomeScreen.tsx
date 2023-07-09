@@ -26,6 +26,7 @@ export const ModelCourseHomeScreen = () => {
         variant={'outline'}
         _text={{ color: 'text.800', bold: true }}
         bg={'white'}
+        width={'100%'}
         onPress={handlePressNavigateToCreateModelCourse}
         marginX={Dimensions.get('window').width * 0.025}>
         {NAVIGATE_TO_CREATE_MODEL_COURSE_BUTTON_LABEL}
@@ -35,6 +36,7 @@ export const ModelCourseHomeScreen = () => {
         variant={'outline'}
         _text={{ color: 'text.800', bold: true }}
         bg={'white'}
+        width={'100%'}
         onPress={handlePressNavigateToSearchModelCourse}
         marginX={Dimensions.get('window').width * 0.025}>
         {NAVIGATE_TO_SEARCH_MODEL_COURSE_BUTTON_LABEL}

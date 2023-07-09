@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import type { CommonScreenParamList } from '@/navigation/CommonScreens';
 import { commonScreens } from '@/navigation/CommonScreens';
+import { commonHeaderStyle } from '@/styles/theme';
 import type { Screens } from '@/types';
 
 import { CreateModelCourseScreen } from '../../screens/CreateModelCourseScreen';
@@ -45,7 +46,7 @@ export const ModelCourseNavigator = () => {
   };
 
   return (
-    <ModelCourseStack.Navigator>
+    <ModelCourseStack.Navigator screenOptions={{ headerStyle: commonHeaderStyle }}>
       {Object.entries(modelCourseScreens).map(([name, component]) => (
         <ModelCourseStack.Screen
           key={name}

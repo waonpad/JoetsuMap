@@ -1,7 +1,10 @@
 // APIとの通信を行う、コアなロジック
 
+import { useState } from 'react';
+
 import { useForm } from 'react-hook-form';
 
+import type { TravelSpot } from '@/features/travel_spot';
 import { setValidationErrors } from '@/utils/compute';
 
 import { useCreateModelCourse } from '../../api/createModelCourse';
@@ -17,6 +20,8 @@ export const useLogics = ({
 }) => {
   const createModelCourseMutation = useCreateModelCourse();
 
+  const [travelSpots, setTravelSpots] = useState<TravelSpot[]>([]);
+
   const {
     control,
     handleSubmit,
@@ -31,6 +36,21 @@ export const useLogics = ({
   const onSubmit: SubmitHandler<CreateModelCourseFormInput> = (
     data: CreateModelCourseFormInput,
   ) => {
+    data.travelSpotIds = travelSpots.map((travelSpot) => travelSpot.id);
+
+    if (data.travelSpotIds.length < 2) {
+      setError('travelSpotIds', {
+        type: 'min',
+      });
+      return;
+    }
+    if (data.travelSpotIds.length > 10) {
+      setError('travelSpotIds', {
+        type: 'max',
+      });
+      return;
+    }
+
     createModelCourseMutation.mutate(
       { data },
       {
@@ -49,5 +69,7 @@ export const useLogics = ({
     control,
     handlePressSubmitButton,
     errors,
+    travelSpots,
+    setTravelSpots,
   };
 };

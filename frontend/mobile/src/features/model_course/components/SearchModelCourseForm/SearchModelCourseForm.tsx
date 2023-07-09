@@ -1,4 +1,4 @@
-import { Input, Text } from 'native-base';
+import { Box, Input, Text } from 'native-base';
 import { Controller } from 'react-hook-form';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -14,7 +14,7 @@ export const SearchModelCourseForm = ({
   defaultValues,
   onSubmitAction,
 }: SearchModelCourseFormProps) => {
-  const { control, handlePressKeyForHandleSubmit, errors } = useLogics({
+  const { control, handlePressSubmitKey, errors } = useLogics({
     defaultValues,
     onSubmitAction,
   });
@@ -31,9 +31,14 @@ export const SearchModelCourseForm = ({
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              InputLeftElement={<Icon name="search" size={5} />}
-              onKeyPress={handlePressKeyForHandleSubmit}
+              InputLeftElement={
+                <Box marginLeft={2}>
+                  <Icon name="search" size={16} color={'gray'} />
+                </Box>
+              }
               placeholder={SEARCH_MODEL_COURSE_INPUT_PLACEHOLDER}
+              returnKeyType="search"
+              onSubmitEditing={handlePressSubmitKey}
             />
             {errors.freeKeyword && <Text>{errors.freeKeyword.message}</Text>}
           </>

@@ -22,7 +22,7 @@ export const NotificationListItem = ({ notification }: NotificationListItemProps
               borderColor="muted.200"
               p="2"
               bg={isPressed ? 'bg.100' : 'bg.50'}>
-              <HStack space={[2, 3]}>
+              <HStack space={[2, 3]} justifyContent="space-between" width="100%">
                 <Pressable onPress={handleAvatarPress}>
                   <Avatar
                     source={{

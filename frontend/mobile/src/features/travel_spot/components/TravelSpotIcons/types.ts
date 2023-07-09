@@ -1,5 +1,5 @@
 import type { TravelSpot } from '@/features/travel_spot';
 
-export type BookmarkedTravelSpotIconsProps = {
+export type TravelSpotIconsProps = {
   onPress: (travelSpot: TravelSpot) => void;
 };
