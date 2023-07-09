@@ -23,7 +23,7 @@ type UseBookmarkModelCourseOptions = {
 export const useBookmarkModelCourse = ({ config }: UseBookmarkModelCourseOptions = {}) => {
   return useMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY_PLURAL]);
+      queryClient.invalidateQueries([QUERY_KEY_PLURAL, 'bookmarked', 'ids']);
     },
     ...config,
     mutationFn: bookmarkModelCourse,

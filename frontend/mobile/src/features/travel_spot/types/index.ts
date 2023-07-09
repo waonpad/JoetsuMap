@@ -11,7 +11,7 @@ export type TravelSpot = {
   icon: Photo;
   photo: Photo;
   coords: LatLng;
-  author?: User;
+  author: User;
   bookmarkedUsers?: User[];
 } & BaseEntity;
 

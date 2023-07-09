@@ -4,9 +4,9 @@ import { useSearchTravelSpots } from '../../api/searchTravelSpots';
 
 import type { SearchedTravelSpotListProps } from './types';
 
-export const useLogics = ({ params }: SearchedTravelSpotListProps) => {
+export const useLogics = ({ searchParams }: SearchedTravelSpotListProps) => {
   const searchedTravelSpotsQuery = useSearchTravelSpots({
-    params,
+    params: searchParams,
   });
 
   return {

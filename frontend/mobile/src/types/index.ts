@@ -72,3 +72,7 @@ export type ValidationError<T> = {
 export type MutationErrorResponse<T> = {
   error: ErrorResponse['error'] & ValidationError<T>;
 };
+
+export type IdListResponse = {
+  ids: number[];
+};

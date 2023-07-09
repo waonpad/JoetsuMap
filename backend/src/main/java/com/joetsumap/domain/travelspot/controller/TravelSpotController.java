@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joetsumap.common.payload.response.IdListResponse;
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotPageResponse;
 import com.joetsumap.domain.travelspot.payload.response.TravelSpotResponse;
@@ -30,7 +31,7 @@ public class TravelSpotController {
   TravelSpotService travelSpotService;
 
   @GetMapping("")
-  public TravelSpotPageResponse findAll8(@PageableDefault Pageable pageable) {
+  public TravelSpotPageResponse findAll(@PageableDefault Pageable pageable) {
 
     return travelSpotService.findAll(pageable);
   }
@@ -45,6 +46,12 @@ public class TravelSpotController {
   public TravelSpotPageResponse findAllBookmarks(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
 
     return travelSpotService.findAllBookmarks(userDetails, pageable);
+  }
+
+  @GetMapping("/bookmarks/ids")
+  public IdListResponse findAllBookmarkIds(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+    return travelSpotService.findAllBookmarkIds(userDetails);
   }
 
   @PostMapping("bookmarks/{id}")

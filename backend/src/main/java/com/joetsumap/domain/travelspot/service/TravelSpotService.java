@@ -1,10 +1,13 @@
 package com.joetsumap.domain.travelspot.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.joetsumap.common.payload.response.IdListResponse;
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.domain.travelspot.entity.TravelSpot;
 import com.joetsumap.domain.travelspot.entity.TravelSpotType;
@@ -78,6 +81,18 @@ public class TravelSpotService {
     });
 
     return new TravelSpotPageResponse(travelSpotDTOPage);
+  }
+
+  /**
+   * ブックマークしている観光地のIDをページング無しで全件取得する
+   */
+  public IdListResponse findAllBookmarkIds(UserDetailsImpl userDetails) {
+
+    List<TravelSpot> travelSpotPage = travelSpotRepository.findAllByBookmarkedUsers(userDetails.getUser());
+
+    return new IdListResponse(travelSpotPage.stream().map(travelSpot -> {
+      return travelSpot.getId();
+    }).toList());
   }
 
   /**

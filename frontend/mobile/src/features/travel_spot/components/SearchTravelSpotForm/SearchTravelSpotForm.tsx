@@ -1,6 +1,8 @@
+import { Input, Text } from 'native-base';
 import { Controller } from 'react-hook-form';
-import { Button, TextInput, View, Text } from 'react-native';
+import { View } from 'react-native';
 
+import { SEARCH_TRAVEL_SPOT_INPUT_PLACEHOLDER } from './constants';
 import { styles } from './styles';
 import { useLogics } from './useLogics';
 import { validationSchema } from './validationSchema';
@@ -11,7 +13,10 @@ export const SearchTravelSpotForm = ({
   defaultValues,
   onSubmitAction,
 }: SearchTravelSpotFormProps) => {
-  const { control, handlePressSubmitButton, errors } = useLogics({ defaultValues, onSubmitAction });
+  const { control, handlePressKeyForHandleSubmit, errors } = useLogics({
+    defaultValues,
+    onSubmitAction,
+  });
 
   return (
     <View style={styles.container}>
@@ -21,13 +26,17 @@ export const SearchTravelSpotForm = ({
         rules={validationSchema.freeKeyword}
         render={({ field: { onChange, onBlur, value } }) => (
           <>
-            <Text>キーワード</Text>
-            <TextInput onBlur={onBlur} onChangeText={onChange} value={value} />
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              onKeyPress={handlePressKeyForHandleSubmit}
+              placeholder={SEARCH_TRAVEL_SPOT_INPUT_PLACEHOLDER}
+            />
             {errors.freeKeyword && <Text>{errors.freeKeyword.message}</Text>}
           </>
         )}
       />
-      <Button title="検索" onPress={handlePressSubmitButton} />
     </View>
   );
 };

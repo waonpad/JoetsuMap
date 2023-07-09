@@ -1,5 +1,5 @@
-import { Button } from 'native-base';
-import { View } from 'react-native';
+import { Box, Button, Text } from 'native-base';
+import { Dimensions, View } from 'react-native';
 
 import { Suspense } from '@/components/Suspense';
 
@@ -21,12 +21,25 @@ export const ModelCourseHomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Button onPress={handlePressNavigateToCreateModelCourse}>
+      <View style={{ height: 10 }} />
+      <Button
+        variant={'outline'}
+        _text={{ color: 'text.800', bold: true }}
+        bg={'white'}
+        onPress={handlePressNavigateToCreateModelCourse}
+        marginX={Dimensions.get('window').width * 0.025}>
         {NAVIGATE_TO_CREATE_MODEL_COURSE_BUTTON_LABEL}
       </Button>
-      <Button onPress={handlePressNavigateToSearchModelCourse}>
+      <View style={{ height: 10 }} />
+      <Button
+        variant={'outline'}
+        _text={{ color: 'text.800', bold: true }}
+        bg={'white'}
+        onPress={handlePressNavigateToSearchModelCourse}
+        marginX={Dimensions.get('window').width * 0.025}>
         {NAVIGATE_TO_SEARCH_MODEL_COURSE_BUTTON_LABEL}
       </Button>
+      <View style={{ height: 10 }} />
       <Suspense>
         <ModelCourseList />
       </Suspense>

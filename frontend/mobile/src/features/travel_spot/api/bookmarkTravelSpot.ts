@@ -23,7 +23,7 @@ type UseBookmarkTravelSpotOptions = {
 export const useBookmarkTravelSpot = ({ config }: UseBookmarkTravelSpotOptions = {}) => {
   return useMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY_PLURAL]);
+      queryClient.invalidateQueries([QUERY_KEY_PLURAL, 'bookmarked', 'ids']);
     },
     ...config,
     mutationFn: bookmarkTravelSpot,

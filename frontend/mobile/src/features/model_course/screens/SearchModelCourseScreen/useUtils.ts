@@ -12,6 +12,7 @@ export const useUtils = () => {
   const handleSubmitSearch = (searchParams: SearchModelCourseFormInput) => {
     setSearchParams(searchParams);
   };
+
   return {
     searchParams,
     handleSubmitSearch,

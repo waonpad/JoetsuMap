@@ -35,5 +35,10 @@ export const theme: ITheme = extendTheme({
         width: '100%',
       },
     },
+    Button: {
+      defaultProps: {
+        bg: '#748FE8',
+      },
+    },
   },
 });

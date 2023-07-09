@@ -10,8 +10,8 @@ import { useLogics } from './useLogics';
 import type { SearchedTravelSpotListProps } from './types';
 
 // eslint-disable-next-line no-empty-pattern
-export const TypedTravelSpotList = ({ params }: SearchedTravelSpotListProps) => {
-  const { searchedTravelSpotsQuery } = useLogics({ params });
+export const SearchedTravelSpotList = ({ searchParams }: SearchedTravelSpotListProps) => {
+  const { searchedTravelSpotsQuery } = useLogics({ searchParams });
 
   return (
     <View style={styles.container}>

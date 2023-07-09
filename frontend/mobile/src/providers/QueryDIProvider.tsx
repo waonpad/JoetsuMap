@@ -1,19 +1,16 @@
 import type { ReactNode } from 'react';
 
-import { useBookmarkedModelCourses } from '@/features/model_course/api/getBookmarkedModelCourses';
-import { useBookmarkedTravelSpots } from '@/features/travel_spot/api/getBookmarkedTravelSpots';
+import { useBookmarkedModelCourseIds } from '@/features/model_course/api/getBookmarkedModelCourseIds';
+import { useBookmarkedTravelSpotIds } from '@/features/travel_spot/api/getBookmaerkedTravelSpotIds';
 
 // 最初から必要なデータを取得するためのコンポーネント
 export const QueryDIProvider = ({ children }: { children: ReactNode }): JSX.Element => {
-  // useBookmarkedTravelSpots({
-  //   config: { suspense: false, useErrorBoundary: false },
-  // });
-  // useBookmarkedModelCourses({
-  //   config: { suspense: false, useErrorBoundary: false },
-  // });
-
-  // これではページングされて取得できないものが出る
-  // 全て取得するAPIを作る
+  useBookmarkedTravelSpotIds({
+    config: { suspense: false, useErrorBoundary: false },
+  });
+  useBookmarkedModelCourseIds({
+    config: { suspense: false, useErrorBoundary: false },
+  });
 
   return <>{children}</>;
 };
