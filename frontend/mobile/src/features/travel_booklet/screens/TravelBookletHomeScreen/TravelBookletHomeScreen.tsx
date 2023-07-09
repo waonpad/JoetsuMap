@@ -1,5 +1,4 @@
-import { Fab } from 'native-base';
-import { AddIcon } from 'native-base';
+import { Fab, AddIcon } from 'native-base';
 import { View } from 'react-native';
 
 import { Suspense } from '@/components/Suspense';
@@ -28,7 +27,7 @@ export const TravelBookletHomeScreen = () => {
         renderInPortal={false}
         shadow={2}
         placement="bottom-right"
-        size="sm"
+        size="48px"
         icon={<AddIcon />}
         onPress={handlePressFab}
         // label="投稿する"

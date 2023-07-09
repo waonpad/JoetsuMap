@@ -1,37 +1,47 @@
-import React, { useState } from 'react';
-
-import { View } from 'react-native';
+import { Box, Button, Text } from 'native-base';
+import { Dimensions, View } from 'react-native';
 
 import { Suspense } from '@/components/Suspense';
 
-import { SearchModelCourseForm } from '../../components/SearchModelCourseForm';
-import { SearchedModelCourseList } from '../../components/SearchedModelCourseList';
+import { ModelCourseList } from '../../components/ModelCourseList';
 import { useModelCourseRoute } from '../../navigation/ModelCourseNavigator';
 
+import {
+  NAVIGATE_TO_CREATE_MODEL_COURSE_BUTTON_LABEL,
+  NAVIGATE_TO_SEARCH_MODEL_COURSE_BUTTON_LABEL,
+} from './constants';
 import { styles } from './styles';
-
-import type { SearchModelCourseFormInput } from '../../components/SearchModelCourseForm/types';
+import { useUtils } from './useUtils';
 
 export const ModelCourseHomeScreen = () => {
   const route = useModelCourseRoute<'ModelCourseHome'>();
 
-  const [searchParams, setSearchParams] = useState<SearchModelCourseFormInput>({
-    freeKeyword: '',
-  });
-
-  const handleSubmitSearch = (searchParams: SearchModelCourseFormInput) => {
-    setSearchParams(searchParams);
-  };
+  const { handlePressNavigateToCreateModelCourse, handlePressNavigateToSearchModelCourse } =
+    useUtils();
 
   return (
     <View style={styles.container}>
-      <SearchModelCourseForm
-        defaultValues={route.params?.searchModelCourseFormDefaultValues}
-        onSubmitAction={handleSubmitSearch}
-      />
-      {/* <ModelCourseList /> */}
+      <View style={{ height: 10 }} />
+      <Button
+        variant={'outline'}
+        _text={{ color: 'text.800', bold: true }}
+        bg={'white'}
+        onPress={handlePressNavigateToCreateModelCourse}
+        marginX={Dimensions.get('window').width * 0.025}>
+        {NAVIGATE_TO_CREATE_MODEL_COURSE_BUTTON_LABEL}
+      </Button>
+      <View style={{ height: 10 }} />
+      <Button
+        variant={'outline'}
+        _text={{ color: 'text.800', bold: true }}
+        bg={'white'}
+        onPress={handlePressNavigateToSearchModelCourse}
+        marginX={Dimensions.get('window').width * 0.025}>
+        {NAVIGATE_TO_SEARCH_MODEL_COURSE_BUTTON_LABEL}
+      </Button>
+      <View style={{ height: 10 }} />
       <Suspense>
-        <SearchedModelCourseList searchParams={searchParams} />
+        <ModelCourseList />
       </Suspense>
     </View>
   );

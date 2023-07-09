@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import type { SearchModelCourseFormInput, SearchModelCourseFormProps } from './types';
 import type { SubmitHandler } from 'react-hook-form';
-import type { GestureResponderEvent } from 'react-native';
+import type { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 
 export const useLogics = ({ defaultValues, onSubmitAction }: SearchModelCourseFormProps) => {
   const {
@@ -23,14 +23,16 @@ export const useLogics = ({ defaultValues, onSubmitAction }: SearchModelCourseFo
     onSubmitAction(data);
   };
 
-  const handlePressSubmitButton = (e: GestureResponderEvent) => {
-    clearErrors();
-    handleSubmit(onSubmit)(e);
+  const handlePressKeyForHandleSubmit = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+    if (e.nativeEvent.key === 'Enter') {
+      clearErrors();
+      handleSubmit(onSubmit)(e);
+    }
   };
 
   return {
     control,
-    handlePressSubmitButton,
+    handlePressKeyForHandleSubmit,
     errors,
   };
 };

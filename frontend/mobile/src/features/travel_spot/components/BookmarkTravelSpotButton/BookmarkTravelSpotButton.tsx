@@ -1,18 +1,25 @@
-import { View, Button } from 'react-native';
+import { IconButton } from 'native-base';
+import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { styles } from './styles';
 import { useLogics } from './useLogics';
 
 import type { BookmarkTravelSpotButtonProps } from './types';
 
-export const BookmarkTravelSpotButton = ({ travelSpotId }: BookmarkTravelSpotButtonProps) => {
-  const { bookmarkTravelSpotMutation, handlePressBookmark } = useLogics({ travelSpotId });
+export const BookmarkTravelSpotButton = ({ travelSpotId, size }: BookmarkTravelSpotButtonProps) => {
+  const { isBookmarked, handlePressBookmark } = useLogics({ travelSpotId });
 
   return (
     <View style={styles.container}>
-      <Button
-        // 最終的にアイコンに置き換える
-        title={bookmarkTravelSpotMutation.isLoading ? '処理中' : 'ブックマーク'}
+      <IconButton
+        icon={
+          <Icon
+            name={isBookmarked ? 'bookmark' : 'bookmark-o'}
+            color={'orange'}
+            size={size ?? 20}
+          />
+        }
         onPress={handlePressBookmark}
       />
     </View>

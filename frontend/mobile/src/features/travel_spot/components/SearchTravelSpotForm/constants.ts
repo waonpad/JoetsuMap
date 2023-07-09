@@ -1,1 +1,1 @@
-export const CONSTANT_EXAMPLE = '' as const;
+export const SEARCH_TRAVEL_SPOT_INPUT_PLACEHOLDER = 'スポット名で検索' as const;

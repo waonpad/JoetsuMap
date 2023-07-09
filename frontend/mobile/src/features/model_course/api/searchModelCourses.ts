@@ -37,7 +37,7 @@ export const useSearchModelCourses = (
 ) => {
   return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: [QUERY_KEY_PLURAL, params.freeKeyword],
+    queryKey: [QUERY_KEY_PLURAL, 'searched', params.freeKeyword],
     queryFn: ({ pageParam }) => searchModelCourses({ ...params, pageParam }),
     getNextPageParam: (page) => {
       return page.modelCourses.last ? undefined : page.modelCourses.number + 1;

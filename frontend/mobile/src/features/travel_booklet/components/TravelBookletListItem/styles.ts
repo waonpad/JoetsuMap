@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: Dimensions.get('window').width * 0.05,
+    marginHorizontal: Dimensions.get('window').width * 0.025,
     backgroundColor: '#fff',
   },
 });

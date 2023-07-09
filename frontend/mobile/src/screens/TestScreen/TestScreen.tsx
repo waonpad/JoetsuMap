@@ -18,6 +18,7 @@ import { useAppNavigation } from '@/navigation/AppNavigator';
 import { API_URL } from '@/utils/compute';
 
 import { styles } from './styles';
+import { BookmarkedTravelSpotList } from '@/features/travel_spot/components/BookmarkedTravelSpotList';
 
 /**
  * テスト用にいろいろ配置している。実際にはホーム画面
@@ -69,6 +70,7 @@ export const TestScreen = () => {
           // headers: { Authorization: `Bearer ${auth.token}` }, // 画像リソースへのアクセスは認可不要に
         }}
       />
+      {/* <BookmarkedTravelSpotList /> */}
       <Text>{APP_NAME}</Text>
       <Text>{JSON.stringify(location)}</Text>
       <NBButton

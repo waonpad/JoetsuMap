@@ -34,7 +34,7 @@ export type ReactHookFormValidationRules<T extends FieldValues> = Record<
 export type PickedImage = ImagePicker.ImagePickerSuccessResult['assets'][number];
 
 export type ToggleBookmarkResponse = {
-  isBookmarked: boolean;
+  bookmarked: boolean;
 };
 
 export type Screens<T extends Record<string, any>> = {
@@ -71,4 +71,8 @@ export type ValidationError<T> = {
 // param.subParamのように、ネストしている場合はピリオドでつなげて返ってくる
 export type MutationErrorResponse<T> = {
   error: ErrorResponse['error'] & ValidationError<T>;
+};
+
+export type IdListResponse = {
+  ids: number[];
 };

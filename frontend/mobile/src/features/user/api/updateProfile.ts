@@ -25,7 +25,7 @@ type UseUpdateUserOptions = {
 export const useUpdateProfile = ({ config }: UseUpdateUserOptions = {}) => {
   return useMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY]);
+      queryClient.invalidateQueries([QUERY_KEY, 'me']);
     },
     ...config,
     mutationFn: updateUser,

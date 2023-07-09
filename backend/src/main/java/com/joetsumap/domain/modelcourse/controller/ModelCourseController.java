@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joetsumap.common.payload.response.IdListResponse;
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.domain.modelcourse.payload.request.CreateModelCourseRequest;
 import com.joetsumap.domain.modelcourse.payload.request.UpdateModelCourseRequest;
@@ -73,6 +74,12 @@ public class ModelCourseController {
   public ModelCoursePageResponse findAllBookmarks(@AuthenticationPrincipal UserDetailsImpl userDetails, @PageableDefault Pageable pageable) {
 
     return modelCourseService.findAllBookmarks(userDetails, pageable);
+  }
+
+  @GetMapping("/bookmarks/ids")
+  public IdListResponse findAllBookmarkIds(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+    return modelCourseService.findAllBookmarkIds(userDetails);
   }
 
   @PostMapping("bookmarks/{id}")

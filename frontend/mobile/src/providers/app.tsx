@@ -14,6 +14,8 @@ import { queryClient } from '@/lib/react-query';
 import { ErrorFallbackScreen } from '@/screens/ErrorFallbackScreen';
 import { theme } from '@/styles/theme';
 
+import { QueryDIProvider } from './QueryDIProvider';
+
 type AppProviderProps = {
   children: React.ReactNode;
 };
@@ -29,7 +31,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
               <QueryClientProvider client={queryClient}>
                 <AuthProvider>
                   <NotificationProvider>
-                    <LocationTrackingProvider>{children}</LocationTrackingProvider>
+                    <LocationTrackingProvider>
+                      <QueryDIProvider>{children}</QueryDIProvider>
+                    </LocationTrackingProvider>
                   </NotificationProvider>
                 </AuthProvider>
               </QueryClientProvider>

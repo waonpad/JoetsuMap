@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.joetsumap.common.payload.response.IdListResponse;
 import com.joetsumap.common.payload.response.ToggleBookmarkResponse;
 import com.joetsumap.db.customizedjointable.ModelCourseTravelSpot.entity.ModelCourseTravelSpot;
 import com.joetsumap.db.customizedjointable.ModelCourseTravelSpot.repository.ModelCourseTravelSpotRepository;
@@ -225,6 +226,18 @@ public class ModelCourseService {
     });
 
     return new ModelCoursePageResponse(modelCourseDTOPage);
+  }
+
+  /**
+   *  ブックマークしているモデルコースのIDをページングなしで全件取得する
+   */
+  public IdListResponse findAllBookmarkIds(UserDetailsImpl userDetails) {
+
+    List<ModelCourse> modelCourses = modelCourseRepository.findByBookmarkedUsers(userDetails.getUser());
+
+    return new IdListResponse(modelCourses.stream().map(modelCourse -> {
+      return modelCourse.getId();
+    }).toList());
   }
 
   /**
