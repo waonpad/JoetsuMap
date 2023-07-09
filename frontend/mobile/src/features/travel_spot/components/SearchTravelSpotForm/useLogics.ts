@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import type { SearchTravelSpotFormInput, SearchTravelSpotFormProps } from './types';
 import type { SubmitHandler } from 'react-hook-form';
-import type { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import type { NativeSyntheticEvent, TextInputSubmitEditingEventData } from 'react-native';
 
 export const useLogics = ({ defaultValues, onSubmitAction }: SearchTravelSpotFormProps) => {
   const {
@@ -14,23 +14,21 @@ export const useLogics = ({ defaultValues, onSubmitAction }: SearchTravelSpotFor
     clearErrors,
   } = useForm<SearchTravelSpotFormInput>({
     mode: 'onBlur',
-    defaultValues: { ...defaultValues },
+    defaultValues: { freeKeyword: '', ...defaultValues },
   });
 
   const onSubmit: SubmitHandler<SearchTravelSpotFormInput> = (data: SearchTravelSpotFormInput) => {
     onSubmitAction(data);
   };
 
-  const handlePressKeyForHandleSubmit = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-    if (e.nativeEvent.key === 'Enter') {
-      clearErrors();
-      handleSubmit(onSubmit)(e);
-    }
+  const handlePressSubmitKey = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
+    clearErrors();
+    handleSubmit(onSubmit)(e);
   };
 
   return {
     control,
-    handlePressKeyForHandleSubmit,
+    handlePressSubmitKey,
     errors,
   };
 };

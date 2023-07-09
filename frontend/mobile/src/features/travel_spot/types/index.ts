@@ -26,3 +26,9 @@ export type TravelSpotListResponse = {
 export type TravelSpotPageResponse = {
   travelSpots: Page<TravelSpot>;
 };
+
+export const typeMap: Record<TravelSpot['types'][number], string> = {
+  FUN: '楽しむ',
+  FOOD: '食べる',
+  LEARN: '学ぶ',
+};

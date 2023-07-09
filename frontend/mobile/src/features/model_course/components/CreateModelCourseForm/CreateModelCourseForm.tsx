@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input, Text, Button, Avatar } from 'native-base';
+import { Input, Text, Button, Box, HStack, Divider } from 'native-base';
 import { Controller } from 'react-hook-form';
 import { View } from 'react-native';
 
@@ -8,7 +8,7 @@ import { Suspense } from '@/components/Suspense';
 import { BookmarkedTravelSpotIcons } from '@/features/travel_spot/components/BookmarkedTravelSpotIcons';
 import { SearchTravelSpotForm } from '@/features/travel_spot/components/SearchTravelSpotForm';
 import { SearchedTravelSpotIcons } from '@/features/travel_spot/components/SearchedTravelSpotIcons';
-import { imageSourceUri } from '@/utils/compute';
+import { TravelSpotIcons } from '@/features/travel_spot/components/TravelSpotIcons';
 
 import { HStackModelCourseTravelSpot } from '../HStackModelCourseTravelSpot';
 import { SelectedTravelSpotBottomSheet } from '../SelectedTravelSpotBottomSheet';
@@ -22,70 +22,114 @@ import { validationSchema } from './validationSchema';
 import type { CreateModelCourseFormProps } from './types';
 
 export const CreateModelCourseForm = ({ defaultValues }: CreateModelCourseFormProps) => {
-  const { control, handlePressSubmitButton, errors } = useLogics({ defaultValues });
-
-  // どうやってtravelSpotIdsをsubmitする？
+  const { control, handlePressSubmitButton, errors, travelSpots, setTravelSpots } = useLogics({
+    defaultValues,
+  });
 
   const {
     searchParams,
     handleSubmitSearch,
-    travelSpots,
     selectedTravelSpot,
     handlePressPushPopTravelSpotButton,
     handlePressTravelSpotIcon,
-  } = useUtils();
+    displayTravelSpotIcons,
+    handlePressChnageDisplayTravelSpotIcons,
+    handlePressCloseBottomSheetButton,
+  } = useUtils({ travelSpots, setTravelSpots });
 
   return (
-    <View style={styles.container}>
-      {/* 一番最初に訪れる観光地のアイコンを大きく表示する */}
-      <Avatar
-        source={{
-          uri: imageSourceUri(travelSpots[0].icon),
-        }}
-      />
+    <View style={{ ...styles.container, position: 'relative' }}>
+      <View style={{ height: 25 }} />
+      {/* 作成ボタンisどこに配置 */}
+      <Button
+        onPress={handlePressSubmitButton}
+        size={'sm'}
+        style={{ position: 'absolute', top: 10, right: 0, width: 100 }}
+        _text={{ bold: true }}>
+        {SUBMIT_LABEL}
+      </Button>
       {/* モデルコースのタイトル */}
       <Controller
         name={'title'}
         control={control}
         rules={validationSchema.title}
         render={({ field: { onChange, onBlur, value } }) => (
-          <>
+          <Box textAlign={'left'} width={'100%'}>
             <Text>{TITLE_LABRL}</Text>
             <Input onBlur={onBlur} onChangeText={onChange} value={value as string} />
             {errors.title && <Text>{errors.title.message}</Text>}
-          </>
+          </Box>
         )}
       />
       {/* 選択した観光地を横に並べていく */}
-      <HStackModelCourseTravelSpot
-        travelSpots={travelSpots}
-        onPressTravelSpot={handlePressTravelSpotIcon}
-      />
+      <View style={{ flex: 0.5 }}>
+        <HStackModelCourseTravelSpot
+          travelSpots={travelSpots}
+          onPressTravelSpot={handlePressTravelSpotIcon}
+        />
+      </View>
       {/* 観光地検索バー */}
-      <SearchTravelSpotForm onSubmitAction={handleSubmitSearch} />
+      <View style={{ flex: 0.5, width: '100%' }}>
+        <SearchTravelSpotForm onSubmitAction={handleSubmitSearch} />
+        <HStack>
+          <Button
+            onPress={() => handlePressChnageDisplayTravelSpotIcons('all')}
+            width={'50%'}
+            bg={displayTravelSpotIcons !== 'all' ? 'gray.200' : undefined}
+            _text={displayTravelSpotIcons !== 'all' ? { color: 'black' } : undefined}
+            borderRightRadius={0}>
+            全てのスポット
+          </Button>
+          <Divider orientation="vertical" />
+          <Button
+            onPress={() => handlePressChnageDisplayTravelSpotIcons('bookmarked')}
+            width={'50%'}
+            bg={displayTravelSpotIcons !== 'bookmarked' ? 'gray.200' : undefined}
+            _text={displayTravelSpotIcons !== 'bookmarked' ? { color: 'black' } : undefined}
+            borderLeftRadius={0}>
+            ブックマーク
+          </Button>
+        </HStack>
+      </View>
 
-      {/* どうやって表示を切り替える？ */}
+      <View style={{ height: 6 }} />
 
-      {/* ブックマークした観光地一覧 */}
-      <Suspense>
-        <BookmarkedTravelSpotIcons onPress={handlePressTravelSpotIcon} />
-      </Suspense>
-      {/* 検索した観光地一覧 */}
-      <Suspense>
-        <SearchedTravelSpotIcons searchParams={searchParams} onPress={handlePressTravelSpotIcon} />
-      </Suspense>
+      <View style={{ flex: 2, width: '100%' }}>
+        {/* ブックマークした観光地一覧 */}
+        {displayTravelSpotIcons === 'bookmarked' && (
+          <Suspense>
+            <BookmarkedTravelSpotIcons onPress={handlePressTravelSpotIcon} />
+          </Suspense>
+        )}
+        {/* 検索した観光地一覧 */}
+        {displayTravelSpotIcons === 'searched' && (
+          <Suspense>
+            <SearchedTravelSpotIcons
+              searchParams={searchParams}
+              onPress={handlePressTravelSpotIcon}
+            />
+          </Suspense>
+        )}
+        {/* 全ての観光地一覧 */}
+        {displayTravelSpotIcons === 'all' && (
+          <Suspense>
+            <TravelSpotIcons onPress={handlePressTravelSpotIcon} />
+          </Suspense>
+        )}
+      </View>
       {/* 選択している観光地を表示 */}
       {selectedTravelSpot && (
-        <SelectedTravelSpotBottomSheet
-          travelSpot={selectedTravelSpot}
-          isContainedForTravelSpots={travelSpots
-            .map((travelSpot) => travelSpot.id)
-            .includes(selectedTravelSpot.id)}
-          onPressPushPopTravelSpotButton={handlePressPushPopTravelSpotButton}
-        />
+        <Box style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: 'white' }}>
+          <SelectedTravelSpotBottomSheet
+            travelSpot={selectedTravelSpot}
+            isContainedForTravelSpots={travelSpots
+              .map((travelSpot) => travelSpot.id)
+              .includes(selectedTravelSpot.id)}
+            onPressPushPopTravelSpotButton={handlePressPushPopTravelSpotButton}
+            handleClose={handlePressCloseBottomSheetButton}
+          />
+        </Box>
       )}
-      {/* 作成ボタンisどこに配置 */}
-      <Button onPress={handlePressSubmitButton}>{SUBMIT_LABEL}</Button>
     </View>
   );
 };

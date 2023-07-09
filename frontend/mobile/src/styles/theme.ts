@@ -16,6 +16,7 @@
 import { extendTheme, theme as nativaBasedefaultTheme } from 'native-base';
 
 import type { ITheme } from 'native-base';
+import type { StyleProp } from 'react-native';
 
 export const theme: ITheme = extendTheme({
   colors: {
@@ -30,10 +31,7 @@ export const theme: ITheme = extendTheme({
       },
     },
     HStack: {
-      defaultProps: {
-        justifyContent: 'space-between',
-        width: '100%',
-      },
+      defaultProps: {},
     },
     Button: {
       defaultProps: {
@@ -42,3 +40,9 @@ export const theme: ITheme = extendTheme({
     },
   },
 });
+
+export const commonHeaderStyle: StyleProp<{
+  backgroundColor?: string;
+}> = {
+  backgroundColor: '#e0ffff',
+};
