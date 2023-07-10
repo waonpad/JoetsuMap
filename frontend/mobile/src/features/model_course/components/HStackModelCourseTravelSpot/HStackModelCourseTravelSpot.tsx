@@ -11,8 +11,9 @@ import type { HStackModelCourseTravelSpotProps } from './types';
 export const HStackModelCourseTravelSpot = ({
   travelSpots,
   onPressTravelSpot,
+  fill,
 }: HStackModelCourseTravelSpotProps) => {
-  const iconBaseArray = Array.from({ length: 10 });
+  const iconBaseArray = Array.from({ length: fill ? 10 : travelSpots.length });
 
   return (
     <View style={styles.container}>

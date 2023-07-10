@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Suspense } from '@/components/Suspense';
 
 import { TravelSpotList } from '../../components/TravelSpotList';
+import { TravelSpotTypeButtonGroup } from '../../components/TravelSpotTypeButtonGroup';
 import { useTravelSpotRoute } from '../../navigation/TravelSpotNavigator/useTravelSpotRoute';
 
 import { styles } from './styles';
@@ -12,6 +13,7 @@ export const TravelSpotHomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <TravelSpotTypeButtonGroup activeTravelSpotType={'ALL'} />
       <Suspense>
         <TravelSpotList />
       </Suspense>

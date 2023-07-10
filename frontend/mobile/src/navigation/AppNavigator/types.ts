@@ -5,7 +5,4 @@ export type AppNavigationParamList = {
   TravelBooklet: undefined;
   Passing: undefined;
   Notification: undefined;
-  // User: undefined;
-  // TravelSopt: undefined;
-  // Auth: undefined; // テスト用にアクセスしやすいよう配置
 };

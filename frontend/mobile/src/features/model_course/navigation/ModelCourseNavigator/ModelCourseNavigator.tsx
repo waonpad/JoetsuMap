@@ -2,8 +2,7 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type { CommonScreenParamList } from '@/navigation/CommonScreens';
-import { commonScreens } from '@/navigation/CommonScreens';
+import { commonScreenStackOptions, commonScreens } from '@/navigation/CommonScreens';
 import { commonHeaderStyle } from '@/styles/theme';
 import type { Screens } from '@/types';
 
@@ -15,12 +14,10 @@ import { UpdateModelCourseScreen } from '../../screens/UpdateModelCourseScreen';
 import type { ModelCourseNavigationParamList } from './types';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
-type ModelCourseStackNavigationParamList = ModelCourseNavigationParamList & CommonScreenParamList;
-
-const ModelCourseStack = createNativeStackNavigator<ModelCourseStackNavigationParamList>();
+const ModelCourseStack = createNativeStackNavigator<ModelCourseNavigationParamList>();
 
 export const ModelCourseNavigator = () => {
-  const modelCourseScreens: Screens<ModelCourseStackNavigationParamList> = {
+  const modelCourseScreens: Screens<ModelCourseNavigationParamList> = {
     ModelCourseHome: ModelCourseHomeScreen,
     CreateModelCourse: CreateModelCourseScreen,
     UpdateModelCourse: UpdateModelCourseScreen,
@@ -29,7 +26,7 @@ export const ModelCourseNavigator = () => {
   };
 
   const modelCourseScreenOptions: {
-    [key in keyof ModelCourseStackNavigationParamList]?: NativeStackNavigationOptions;
+    [key in keyof ModelCourseNavigationParamList]?: NativeStackNavigationOptions;
   } = {
     ModelCourseHome: {
       title: 'モデルコース',
@@ -43,6 +40,7 @@ export const ModelCourseNavigator = () => {
     SearchModelCourse: {
       title: 'モデルコース検索',
     },
+    ...commonScreenStackOptions,
   };
 
   return (
@@ -50,9 +48,9 @@ export const ModelCourseNavigator = () => {
       {Object.entries(modelCourseScreens).map(([name, component]) => (
         <ModelCourseStack.Screen
           key={name}
-          name={name as keyof ModelCourseStackNavigationParamList}
+          name={name as keyof ModelCourseNavigationParamList}
           component={component}
-          options={modelCourseScreenOptions[name as keyof ModelCourseStackNavigationParamList]}
+          options={modelCourseScreenOptions[name as keyof ModelCourseNavigationParamList]}
         />
       ))}
     </ModelCourseStack.Navigator>

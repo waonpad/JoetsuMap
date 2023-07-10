@@ -28,12 +28,16 @@ import { useUtils } from './useUtils';
 import type { ModelCourseListItemProps } from './types';
 
 export const ModelCourseListItem = ({ modelCourse }: ModelCourseListItemProps) => {
-  const { handlePressAuthorName, isTravelSpotsVisible, handlePressToggleTravelSpotsVisible } =
-    useUtils({ modelCourse });
+  const {
+    handlePressAuthorName,
+    isTravelSpotsVisible,
+    handlePressToggleTravelSpotsVisible,
+    handlePressNavigateToMapButton,
+  } = useUtils({ modelCourse });
 
   return (
     <View style={styles.container}>
-      <Box>
+      <Box width={'100%'}>
         <Pressable width={'100%'}>
           {({ isPressed }) => {
             return (
@@ -68,39 +72,54 @@ export const ModelCourseListItem = ({ modelCourse }: ModelCourseListItemProps) =
                       </Box>
                     </HStack>
                     <Collapsible collapsed={!isTravelSpotsVisible}>
-                      <FlatList
-                        style={{ width: '100%', position: 'relative', zIndex: 2 }}
-                        data={modelCourse.travelSpots}
-                        renderItem={({ item: travelSpot }) => (
-                          <Box>
-                            <HStack space={[2, 3]} alignItems={'center'}>
-                              <Avatar
-                                source={{
-                                  uri: imageSourceUri(travelSpot.icon),
-                                }}
-                              />
-                              <Text color="text.800" bold marginBottom={-1}>
-                                {travelSpot.name}
-                              </Text>
-                              <Box marginLeft={'auto'} marginRight={[-1.5, -2]}>
-                                <BookmarkTravelSpotButton travelSpotId={travelSpot.id} size={16} />
-                              </Box>
-                            </HStack>
-                          </Box>
-                        )}
-                        keyExtractor={(item) => item.id.toString()}
-                        ItemSeparatorComponent={() => <Box height={5} />}
-                      />
-                      <Box
-                        paddingLeft={[6, 8]}
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: -1,
-                          zIndex: 1,
-                          height: '100%',
-                        }}>
-                        <Divider orientation="vertical" bg={'coolGray.400'} width={0.5} />
+                      <Box>
+                        <FlatList
+                          style={{ width: '100%', position: 'relative', zIndex: 2 }}
+                          data={modelCourse.travelSpots}
+                          renderItem={({ item: travelSpot }) => (
+                            <Box>
+                              <HStack space={[2, 3]} alignItems={'center'}>
+                                <Avatar
+                                  source={{
+                                    uri: imageSourceUri(travelSpot.icon),
+                                  }}
+                                />
+                                <Text color="text.800" bold marginBottom={-1}>
+                                  {travelSpot.name}
+                                </Text>
+                                <Box marginLeft={'auto'} marginRight={[-1.5, -2]}>
+                                  <BookmarkTravelSpotButton
+                                    travelSpotId={travelSpot.id}
+                                    size={16}
+                                  />
+                                </Box>
+                              </HStack>
+                            </Box>
+                          )}
+                          keyExtractor={(item) => item.id.toString()}
+                          ItemSeparatorComponent={() => <Box height={5} />}
+                        />
+                        <Box
+                          paddingLeft={[6, 8]}
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: -1,
+                            zIndex: 1,
+                            height: '100%',
+                          }}>
+                          <Divider orientation="vertical" bg={'coolGray.400'} width={0.5} />
+                        </Box>
+                      </Box>
+                      {/* TODO: スタイリング */}
+                      <Box mt={[3, 4]}>
+                        <Button
+                          onPress={handlePressNavigateToMapButton}
+                          _text={{ bold: true, color: '#748FE8' }}
+                          variant={'outline'}
+                          bg={'white'}>
+                          マップで見る
+                        </Button>
                       </Box>
                     </Collapsible>
                   </VStack>

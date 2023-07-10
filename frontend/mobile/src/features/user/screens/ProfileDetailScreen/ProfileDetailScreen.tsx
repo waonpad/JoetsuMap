@@ -25,10 +25,7 @@ export const ProfileDetailScreen = () => {
       <Suspense>
         <ProfileDetail userId={userId} />
       </Suspense>
-      <DisplayContentChangeButtonGroup
-        handlePressChangeContentButton={changeDisplayContent}
-        userId={userId}
-      />
+      <DisplayContentChangeButtonGroup onPress={changeDisplayContent} userId={userId} />
       <Suspense>
         {displayContent === 'modelCourses' && <UserModelCourseList userId={userId} />}
         {displayContent === 'bookmarkedModelCourses' && <BookmarkedModelCourseList />}

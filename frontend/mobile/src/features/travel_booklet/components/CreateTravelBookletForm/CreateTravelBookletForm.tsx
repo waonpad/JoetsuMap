@@ -1,6 +1,7 @@
 import { Image } from 'expo-image';
+import { Text, Input, Button } from 'native-base';
 import { Controller } from 'react-hook-form';
-import { Button, TextInput, View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import { TITLE_LABRL, TEXT_LABEL, SUBMIT_LABEL } from './constants';
 import { styles } from './styles';
@@ -23,7 +24,7 @@ export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFo
         render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{TITLE_LABRL}</Text>
-            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            <Input onBlur={onBlur} onChangeText={onChange} value={value as string} />
             {errors.title && <Text>{errors.title.message}</Text>}
           </>
         )}
@@ -35,7 +36,7 @@ export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFo
         render={({ field: { onChange, onBlur, value } }) => (
           <>
             <Text>{TEXT_LABEL}</Text>
-            <TextInput onBlur={onBlur} onChangeText={onChange} value={value as string} />
+            <Input onBlur={onBlur} onChangeText={onChange} value={value as string} />
             {errors.text && <Text>{errors.text.message}</Text>}
           </>
         )}
@@ -43,8 +44,8 @@ export const CreateTravelBookletForm = ({ defaultValues }: CreateTravelBookletFo
       {photo && (
         <Image source={{ uri: photo?.uri }} style={{ width: photo.width, height: photo.height }} />
       )}
-      <Button title="写真を選択" onPress={handleChoosePhoto} />
-      <Button title={SUBMIT_LABEL} onPress={handlePressSubmitButton} />
+      <Button onPress={handleChoosePhoto}>写真を選択</Button>
+      <Button onPress={handlePressSubmitButton}>{SUBMIT_LABEL}</Button>
     </View>
   );
 };

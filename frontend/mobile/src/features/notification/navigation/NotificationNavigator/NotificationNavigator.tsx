@@ -3,7 +3,6 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { useAuth } from '@/lib/auth';
-import type { CommonScreenParamList } from '@/navigation/CommonScreens';
 import { commonScreenStackOptions, commonScreens } from '@/navigation/CommonScreens';
 import { UnAuthorizedScreen } from '@/screens/UnAuthorizedScreen';
 import type { Screens } from '@/types';
@@ -14,21 +13,19 @@ import { NotificationHomeScreen } from '../../screens/NotificationHomeScreen';
 import type { NotificationNavigationParamList } from './types';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
-type NotificationStackNavigationParamList = NotificationNavigationParamList & CommonScreenParamList;
-
-const NotificationStack = createNativeStackNavigator<NotificationStackNavigationParamList>();
+const NotificationStack = createNativeStackNavigator<NotificationNavigationParamList>();
 
 export const NotificationNavigator = () => {
   const { user } = useAuth();
 
-  const notificationScreens: Screens<NotificationStackNavigationParamList> = {
+  const notificationScreens: Screens<NotificationNavigationParamList> = {
     NotificationHome: user ? NotificationHomeScreen : UnAuthorizedScreen,
     NotificationDetail: user ? NotificationDetailScreen : UnAuthorizedScreen,
     ...commonScreens,
   };
 
   const notificationScreenOptions: {
-    [key in keyof NotificationStackNavigationParamList]?: NativeStackNavigationOptions;
+    [key in keyof NotificationNavigationParamList]?: NativeStackNavigationOptions;
   } = {
     NotificationHome: {
       title: '通知',
@@ -44,9 +41,9 @@ export const NotificationNavigator = () => {
       {Object.entries(notificationScreens).map(([name, component]) => (
         <NotificationStack.Screen
           key={name}
-          name={name as keyof NotificationStackNavigationParamList}
+          name={name as keyof NotificationNavigationParamList}
           component={component}
-          options={notificationScreenOptions[name as keyof NotificationStackNavigationParamList]}
+          options={notificationScreenOptions[name as keyof NotificationNavigationParamList]}
         />
       ))}
     </NotificationStack.Navigator>

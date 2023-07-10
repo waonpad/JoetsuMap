@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
-import { Button, Text, View } from 'react-native';
+import { Avatar, Box, Button, HStack, Pressable, Text, VStack } from 'native-base';
+import { View } from 'react-native';
 
 import { useAuth } from '@/lib/auth';
 import { Authorization, POLICIES } from '@/lib/authorization';
@@ -20,25 +21,64 @@ export const TravelBookletListItem = ({ travelBooklet }: TravelBookletListItemPr
 
   return (
     <View style={styles.container}>
-      <Text>{travelBooklet.title}</Text>
-      <Text>{travelBooklet.text}</Text>
-      <Image
-        source={{
-          uri: imageSourceUri(travelBooklet.photo),
-        }}
-        style={{
-          ...resizeByHeight(100, getSizeFromFileName(travelBooklet.photo)),
-        }}
-      />
-      <Authorization policyCheck={POLICIES['common:delete'](user, travelBooklet)}>
-        <DeleteTravelBookletButton travelBookletId={travelBooklet.id} />
-      </Authorization>
-      <Authorization policyCheck={POLICIES['common:update'](user, travelBooklet)}>
-        <Button title={'編集'} onPress={handleNavigateToUpdate} />
-      </Authorization>
-      <Text>{travelBooklet.author.username}</Text>
-      <Button title={'作成者のページに移動'} onPress={handleNavigateToAuthorProfile} />
-      <Button title={'詳細ページに移動'} onPress={handleNavigateToDetail} />
+      <Box width={'100%'}>
+        <Pressable width={'100%'}>
+          {({ isPressed }) => {
+            return (
+              <>
+                <Box
+                  borderWidth={1}
+                  borderColor="muted.300"
+                  p="2"
+                  borderRadius={5}
+                  bg={isPressed ? 'bg.100' : 'bg.50'}>
+                  {/* 表示される？ */}
+                  <VStack space={[3, 4]}>
+                    <Image
+                      source={{
+                        uri: imageSourceUri(travelBooklet.photo),
+                      }}
+                      style={{
+                        ...resizeByHeight(200, getSizeFromFileName(travelBooklet.photo)),
+                      }}
+                    />
+                    <HStack space={[2, 3]} justifyContent={'left'}>
+                      <Avatar
+                        source={{
+                          uri: imageSourceUri(travelBooklet.author.icon),
+                        }}
+                      />
+                      <VStack>
+                        <Text color="text.800" bold marginBottom={-1}>
+                          {travelBooklet.title}
+                        </Text>
+                        <Pressable onPress={handleNavigateToAuthorProfile}>
+                          <Text color="text.600" bold>
+                            {travelBooklet.author.username}
+                          </Text>
+                        </Pressable>
+                      </VStack>
+                    </HStack>
+                    <Text color="text.800" bold marginBottom={-1}>
+                      {travelBooklet.title}
+                    </Text>
+                    <Text color="text.600">{travelBooklet.text}</Text>
+                    <HStack space={[2, 3]} justifyContent={'space-around'}>
+                      <Authorization policyCheck={POLICIES['common:delete'](user, travelBooklet)}>
+                        <DeleteTravelBookletButton travelBookletId={travelBooklet.id} />
+                      </Authorization>
+                      <Authorization policyCheck={POLICIES['common:update'](user, travelBooklet)}>
+                        <Button onPress={handleNavigateToUpdate}>編集</Button>
+                      </Authorization>
+                      <Button onPress={handleNavigateToDetail}>詳細</Button>
+                    </HStack>
+                  </VStack>
+                </Box>
+              </>
+            );
+          }}
+        </Pressable>
+      </Box>
     </View>
   );
 };

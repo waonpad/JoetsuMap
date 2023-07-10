@@ -1,33 +1,36 @@
-import { View, Button } from 'react-native';
-
-import { useAuth } from '@/lib/auth';
+import { Button, Divider, HStack } from 'native-base';
+import { View } from 'react-native';
 
 import { styles } from './styles';
+import { useUtils } from './useUtils';
 
 import type { DisplayContentChangeButtonGroupProps } from './types';
 
 export const DisplayContentChangeButtonGroup = ({
   userId,
-  handlePressChangeContentButton,
+  onPress,
 }: DisplayContentChangeButtonGroupProps) => {
-  const { user } = useAuth();
+  const { activeButtonLabel, mergedButtonList, handlePressChangeContentButton } = useUtils({
+    userId,
+    onPress,
+  });
 
   return (
     <View style={styles.container}>
-      <Button title="モデルコース" onPress={() => handlePressChangeContentButton('modelCourses')} />
-      <Button title="旅のしおり" onPress={() => handlePressChangeContentButton('travelBooklets')} />
-      {user?.id === userId && (
-        <>
-          <Button
-            title="ブックマークしたコース"
-            onPress={() => handlePressChangeContentButton('bookmarkedModelCourses')}
-          />
-          <Button
-            title="ブックマークした観光地"
-            onPress={() => handlePressChangeContentButton('bookmarkedTravelSpots')}
-          />
-        </>
-      )}
+      <HStack justifyContent={'space-between'}>
+        {mergedButtonList.map(({ label, labelCode }, index) => (
+          <>
+            {index !== 0 && <Divider orientation="vertical" />}
+            <Button
+              key={label}
+              onPress={() => handlePressChangeContentButton(labelCode)}
+              bg={activeButtonLabel !== label ? 'gray.200' : undefined}
+              _text={activeButtonLabel !== label ? { color: 'black' } : undefined}>
+              {label}
+            </Button>
+          </>
+        ))}
+      </HStack>
     </View>
   );
 };
