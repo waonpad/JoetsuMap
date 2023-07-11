@@ -19,7 +19,6 @@ export const TravelSpotCard = ({ travelSpot, handleClose }: TravelSpotCardProps)
     <View style={styles.container}>
       <Box p={[2, 4]} bg="white" rounded={8} shadow={2}>
         <VStack space={2}>
-          {/* なぜか画像が表示されない */}
           <Image
             style={{
               ...resizeByHeight(200, getSizeFromFileName(travelSpot.photo)),
@@ -43,9 +42,10 @@ export const TravelSpotCard = ({ travelSpot, handleClose }: TravelSpotCardProps)
             ))}
           </HStack>
           {/* ブックマークボタンと閉じるボタン */}
-          <HStack space={1}>
-            <BookmarkTravelSpotButton travelSpotId={travelSpot.id} />
-            {/* 後で戻るアイコンを入れる */}
+          <HStack space={1} justifyContent={'flex-end'}>
+            <Box>
+              <BookmarkTravelSpotButton travelSpotId={travelSpot.id} />
+            </Box>
             <IconButton
               onPress={handleClose}
               icon={<AntDesign name="back" size={24} color="gray" />}

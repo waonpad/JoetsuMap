@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '@/lib/auth';
 import { commonScreenStackOptions, commonScreens } from '@/navigation/CommonScreens';
 import { UnAuthorizedScreen } from '@/screens/UnAuthorizedScreen';
+import { commonHeaderStyle } from '@/styles/theme';
 import type { Screens } from '@/types';
 
 import { NotificationDetailScreen } from '../../screens/NotificationDetail';
@@ -37,7 +38,7 @@ export const NotificationNavigator = () => {
   };
 
   return (
-    <NotificationStack.Navigator>
+    <NotificationStack.Navigator screenOptions={{ headerStyle: commonHeaderStyle }}>
       {Object.entries(notificationScreens).map(([name, component]) => (
         <NotificationStack.Screen
           key={name}

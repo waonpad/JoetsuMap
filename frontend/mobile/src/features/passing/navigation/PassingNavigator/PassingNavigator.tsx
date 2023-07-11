@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '@/lib/auth';
 import { commonScreenStackOptions } from '@/navigation/CommonScreens';
 import { UnAuthorizedScreen } from '@/screens/UnAuthorizedScreen';
+import { commonHeaderStyle } from '@/styles/theme';
 import type { Screens } from '@/types';
 
 import { PassingHistoryScreen } from '../../screens/PassingHistoryScreen';
@@ -36,7 +37,9 @@ export const PassingNavigator = () => {
   };
 
   return (
-    <PassingStack.Navigator>
+    <PassingStack.Navigator
+      screenOptions={{ headerStyle: commonHeaderStyle }}
+      initialRouteName="PassingHistory">
       {Object.entries(passingScreens).map(([name, component]) => (
         <PassingStack.Screen
           key={name}

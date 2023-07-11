@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { useHomeNavigation } from '@/features/home/navigation/HomeNavigator';
 import type { TravelSpot } from '@/features/travel_spot';
 
 import type { useModelCourse } from '../../api/getModelCourse';
@@ -13,6 +14,8 @@ export const useUtils = ({
   modelCourseQuery: ReturnType<typeof useModelCourse>;
 }) => {
   const travelSpots = modelCourseQuery.data?.modelCourse.travelSpots;
+
+  const homeNavigation = useHomeNavigation();
 
   const [displayTravelSpot, setDisplayTravelSpot] = useState<TravelSpot>();
 
@@ -33,11 +36,17 @@ export const useUtils = ({
   }) => {
     setDisplayTravelSpot(travelSpot);
   };
+
+  const handlePressResetSelectedModelCourseButton = () => {
+    homeNavigation.navigate('HomeHome', {});
+  };
+
   return {
     travelSpots,
     displayTravelSpot,
     handlePressCloseTravelSpotCardButton,
     handlePressHStackTravelSpotIcon,
     handlePressTravelSpotMapMarker,
+    handlePressResetSelectedModelCourseButton,
   };
 };

@@ -1,10 +1,9 @@
-import { Image } from 'expo-image';
 import { Avatar, Box, Button, HStack, Pressable, Text, VStack } from 'native-base';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 
 import { useAuth } from '@/lib/auth';
 import { Authorization, POLICIES } from '@/lib/authorization';
-import { getSizeFromFileName, imageSourceUri, resizeByHeight } from '@/utils/compute';
+import { imageSourceUri } from '@/utils/compute';
 
 import { DeleteTravelBookletButton } from '../DeleteTravelBookletButton';
 
@@ -34,20 +33,26 @@ export const TravelBookletListItem = ({ travelBooklet }: TravelBookletListItemPr
                   bg={isPressed ? 'bg.100' : 'bg.50'}>
                   {/* 表示される？ */}
                   <VStack space={[3, 4]}>
-                    <Image
-                      source={{
-                        uri: imageSourceUri(travelBooklet.photo),
-                      }}
-                      style={{
-                        ...resizeByHeight(200, getSizeFromFileName(travelBooklet.photo)),
-                      }}
-                    />
-                    <HStack space={[2, 3]} justifyContent={'left'}>
-                      <Avatar
+                    <Box justifyContent={'center'} alignItems={'center'} width={'100%'}>
+                      <Image
                         source={{
-                          uri: imageSourceUri(travelBooklet.author.icon),
+                          uri: imageSourceUri(travelBooklet.photo),
+                        }}
+                        style={{
+                          // ...resizeByHeight(200, getSizeFromFileName(travelBooklet.photo)),
+                          width: '100%',
+                          height: 200,
                         }}
                       />
+                    </Box>
+                    <HStack space={[2, 3]} justifyContent={'left'}>
+                      <Pressable onPress={handleNavigateToAuthorProfile}>
+                        <Avatar
+                          source={{
+                            uri: imageSourceUri(travelBooklet.author.icon),
+                          }}
+                        />
+                      </Pressable>
                       <VStack>
                         <Text color="text.800" bold marginBottom={-1}>
                           {travelBooklet.title}
@@ -59,18 +64,21 @@ export const TravelBookletListItem = ({ travelBooklet }: TravelBookletListItemPr
                         </Pressable>
                       </VStack>
                     </HStack>
-                    <Text color="text.800" bold marginBottom={-1}>
-                      {travelBooklet.title}
-                    </Text>
                     <Text color="text.600">{travelBooklet.text}</Text>
-                    <HStack space={[2, 3]} justifyContent={'space-around'}>
-                      <Authorization policyCheck={POLICIES['common:delete'](user, travelBooklet)}>
-                        <DeleteTravelBookletButton travelBookletId={travelBooklet.id} />
-                      </Authorization>
+                    <HStack space={[2, 3]} justifyContent={'flex-end'}>
+                      <Box>
+                        <Authorization policyCheck={POLICIES['common:delete'](user, travelBooklet)}>
+                          <DeleteTravelBookletButton travelBookletId={travelBooklet.id} />
+                        </Authorization>
+                      </Box>
                       <Authorization policyCheck={POLICIES['common:update'](user, travelBooklet)}>
-                        <Button onPress={handleNavigateToUpdate}>編集</Button>
+                        <Button size={'sm'} onPress={handleNavigateToUpdate}>
+                          編集
+                        </Button>
                       </Authorization>
-                      <Button onPress={handleNavigateToDetail}>詳細</Button>
+                      <Button size={'sm'} onPress={handleNavigateToDetail}>
+                        詳細
+                      </Button>
                     </HStack>
                   </VStack>
                 </Box>

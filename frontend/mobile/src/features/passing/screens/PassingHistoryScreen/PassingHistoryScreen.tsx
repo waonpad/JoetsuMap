@@ -8,6 +8,7 @@ import { usePassingRoute } from '../../navigation/PassingNavigator/usePassingRou
 import { styles } from './styles';
 
 export const PassingHistoryScreen = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const route = usePassingRoute<'PassingHistory'>();
 
   return (

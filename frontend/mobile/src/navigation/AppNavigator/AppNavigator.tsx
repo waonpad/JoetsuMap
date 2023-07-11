@@ -8,7 +8,7 @@ import { ModelCourseNavigator } from '@/features/model_course';
 import { NotificationNavigator } from '@/features/notification';
 import { PassingNavigator } from '@/features/passing';
 import { TravelBookletNavigator } from '@/features/travel_booklet';
-import { TestScreen } from '@/screens/TestScreen';
+// import { TestScreen } from '@/screens/TestScreen';
 import type { Screens } from '@/types';
 
 import { HomeNavigator } from '../../features/home/navigation/HomeNavigator';
@@ -20,7 +20,7 @@ const AppTab = createBottomTabNavigator<AppNavigationParamList>();
 
 export const AppNavigator = () => {
   const appScreens: Screens<AppNavigationParamList> = {
-    Test: TestScreen,
+    // Test: TestScreen,
     Home: HomeNavigator,
     ModelCourse: ModelCourseNavigator,
     Passing: PassingNavigator,

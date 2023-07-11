@@ -1,4 +1,4 @@
-import { Text, VStack } from 'native-base';
+import { Button, Text, VStack } from 'native-base';
 import { Dimensions, View } from 'react-native';
 
 import { Map } from '@/components/Map';
@@ -21,6 +21,7 @@ export const ModelCourseOnMap = ({ modelCourseId }: ModelCourseOnMapProps) => {
     handlePressCloseTravelSpotCardButton,
     handlePressHStackTravelSpotIcon,
     handlePressTravelSpotMapMarker,
+    handlePressResetSelectedModelCourseButton,
   } = useUtils({ modelCourseQuery });
 
   return (
@@ -43,13 +44,14 @@ export const ModelCourseOnMap = ({ modelCourseId }: ModelCourseOnMapProps) => {
           ))}
         </Map>
         {displayTravelSpot && (
-          // absoluteで中心に表示
+          // 中心に表示
           <View
             style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: [{ translateX: -50 }, { translateY: -50 }],
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              height: '100%',
             }}>
             <TravelSpotCard
               travelSpot={displayTravelSpot}
@@ -65,12 +67,23 @@ export const ModelCourseOnMap = ({ modelCourseId }: ModelCourseOnMapProps) => {
             backgroundColor: 'white',
             paddingVertical: Dimensions.get('window').height * 0.01,
             paddingHorizontal: Dimensions.get('window').width * 0.025,
+            position: 'relative',
           }}>
           <VStack space={2}>
             <Text color="text.800" bold marginBottom={-1}>
               モデルコース
             </Text>
             <Text color="text.600">選択中: {modelCourseQuery.data?.modelCourse.title}</Text>
+            <Button
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+              }}
+              size={'xs'}
+              onPress={handlePressResetSelectedModelCourseButton}>
+              選択解除
+            </Button>
             <HStackModelCourseTravelSpot
               travelSpots={travelSpots}
               onPressTravelSpot={handlePressHStackTravelSpotIcon}

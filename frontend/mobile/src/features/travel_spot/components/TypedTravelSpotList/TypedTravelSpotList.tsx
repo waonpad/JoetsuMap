@@ -19,6 +19,7 @@ export const TypedTravelSpotList = ({ travelSpotType }: TypedTravelSpotListProps
         style={{ width: '100%' }}
         data={typedTravelSpotsQuery.data?.pages.flatMap((page) => page.travelSpots.content)}
         renderItem={({ item }) => <TravelSpotListItem travelSpot={item} />}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // 余白
         keyExtractor={(item) => item.id.toString()}
         onEndReached={() => typedTravelSpotsQuery.fetchNextPage()}
         onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD}

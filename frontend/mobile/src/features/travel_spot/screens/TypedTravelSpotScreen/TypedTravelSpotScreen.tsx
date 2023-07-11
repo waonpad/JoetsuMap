@@ -14,6 +14,7 @@ export const TypedTravelSpotScreen = () => {
   return (
     <View style={styles.container}>
       <TravelSpotTypeButtonGroup activeTravelSpotType={route.params.travelSpotType} />
+      <View style={{ height: 10 }} />
       <Suspense>
         <TypedTravelSpotList travelSpotType={route.params.travelSpotType} />
       </Suspense>

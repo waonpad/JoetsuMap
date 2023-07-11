@@ -14,6 +14,7 @@ export const TravelSpotHomeScreen = () => {
   return (
     <View style={styles.container}>
       <TravelSpotTypeButtonGroup activeTravelSpotType={'ALL'} />
+      <View style={{ height: 10 }} />
       <Suspense>
         <TravelSpotList />
       </Suspense>

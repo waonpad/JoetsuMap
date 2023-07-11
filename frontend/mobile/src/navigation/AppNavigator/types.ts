@@ -1,5 +1,5 @@
 export type AppNavigationParamList = {
-  Test: undefined; // テスト用画面
+  // Test: undefined; // テスト用画面
   Home: undefined;
   ModelCourse: undefined;
   TravelBooklet: undefined;

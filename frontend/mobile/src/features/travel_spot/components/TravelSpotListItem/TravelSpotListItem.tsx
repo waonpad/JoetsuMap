@@ -1,7 +1,7 @@
 import { Pressable, Button, Box, HStack, Text, VStack, Avatar } from 'native-base';
 import { View, Image } from 'react-native';
 
-import { imageSourceUri, resizeByHeight, getSizeFromFileName } from '@/utils/compute';
+import { imageSourceUri } from '@/utils/compute';
 
 import { BookmarkTravelSpotButton } from '../BookmarkTravelSpotButton';
 
@@ -28,14 +28,18 @@ export const TravelSpotListItem = ({ travelSpot }: TravelSpotListItemProps) => {
                   bg={isPressed ? 'bg.100' : 'bg.50'}>
                   {/* 表示される？ */}
                   <VStack space={[3, 4]}>
-                    <Image
-                      source={{
-                        uri: imageSourceUri(travelSpot.photo),
-                      }}
-                      style={{
-                        ...resizeByHeight(200, getSizeFromFileName(travelSpot.photo)),
-                      }}
-                    />
+                    <Box justifyContent={'center'} alignItems={'center'} width={'100%'}>
+                      <Image
+                        source={{
+                          uri: imageSourceUri(travelSpot.photo),
+                        }}
+                        style={{
+                          // ...resizeByHeight(200, getSizeFromFileName(travelSpot.photo)),
+                          width: '100%',
+                          height: 200,
+                        }}
+                      />
+                    </Box>
                     <HStack space={[2, 3]} justifyContent={'left'}>
                       <Avatar
                         source={{

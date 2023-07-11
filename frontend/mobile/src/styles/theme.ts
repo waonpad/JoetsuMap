@@ -38,6 +38,16 @@ export const theme: ITheme = extendTheme({
         bg: '#748FE8',
       },
     },
+    Input: {
+      defaultProps: {
+        bg: '#fff',
+      },
+    },
+    TextArea: {
+      defaultProps: {
+        bg: '#fff',
+      },
+    },
   },
 });
 

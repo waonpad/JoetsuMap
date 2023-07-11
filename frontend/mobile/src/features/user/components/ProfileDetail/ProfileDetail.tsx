@@ -24,20 +24,19 @@ export const ProfileDetail = ({ userId }: ProfileDetailProps) => {
               <>
                 <Box
                   borderWidth={1}
-                  borderBottomWidth={0}
                   borderColor="muted.300"
                   p="2"
                   bg={isPressed ? 'bg.100' : 'bg.50'}
                   borderRadius={5}>
                   <VStack space={[3, 4]}>
-                    <HStack space={[2, 3]} justifyContent={'left'}>
+                    <HStack space={[2, 3]} justifyContent={'left'} alignItems={'center'}>
                       <Avatar
                         source={{
                           uri: imageSourceUri(user?.icon),
                         }}
                       />
                       <VStack>
-                        <Text color="text.800" bold marginBottom={-1}>
+                        <Text color="text.800" bold marginBottom={-1} fontSize={18}>
                           {user?.username}
                         </Text>
                       </VStack>

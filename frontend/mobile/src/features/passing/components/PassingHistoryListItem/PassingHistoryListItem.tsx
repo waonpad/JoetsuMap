@@ -1,4 +1,4 @@
-import { Text, Pressable, Box, HStack, Avatar, Spacer } from 'native-base';
+import { Text, Pressable, Box, HStack, Avatar, Spacer, VStack } from 'native-base';
 import { View } from 'react-native';
 
 import { imageSourceUri } from '@/utils/compute';
@@ -34,9 +34,11 @@ export const PassingHistoryListItem = ({ passing }: PassingHistoryListItemProps)
                     }}
                   />
                 </Pressable>
-                <Text color="text.800" bold marginBottom={-1}>
-                  {passing.passedUser?.username}
-                </Text>
+                <VStack>
+                  <Text color="text.800" bold marginBottom={-1}>
+                    {passing.passedUser?.username}
+                  </Text>
+                </VStack>
                 <Spacer />
                 <Text fontSize="xs" color="text.800" alignSelf="flex-start">
                   {formatDateToMonthDay(passing.createdAt)}

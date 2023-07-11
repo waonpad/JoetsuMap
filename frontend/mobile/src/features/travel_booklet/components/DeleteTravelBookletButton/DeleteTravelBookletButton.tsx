@@ -1,4 +1,5 @@
-import { Button, View } from 'react-native';
+import { Button } from 'native-base';
+import { View } from 'react-native';
 
 import { styles } from './styles';
 import { useLogics } from './useLogics';
@@ -10,10 +11,9 @@ export const DeleteTravelBookletButton = ({ travelBookletId }: DeleteTravelBookl
 
   return (
     <View style={styles.container}>
-      <Button
-        title={deleteTravelBookletMutation.isLoading ? '削除中' : '削除'}
-        onPress={handlePressDelete}
-      />
+      <Button size={'sm'} onPress={handlePressDelete}>
+        {deleteTravelBookletMutation.isLoading ? '削除中' : '削除'}
+      </Button>
     </View>
   );
 };

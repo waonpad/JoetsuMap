@@ -22,16 +22,23 @@ export const ProfileDetailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Suspense>
-        <ProfileDetail userId={userId} />
-      </Suspense>
-      <DisplayContentChangeButtonGroup onPress={changeDisplayContent} userId={userId} />
-      <Suspense>
-        {displayContent === 'modelCourses' && <UserModelCourseList userId={userId} />}
-        {displayContent === 'bookmarkedModelCourses' && <BookmarkedModelCourseList />}
-        {displayContent === 'travelBooklets' && <UserTravelBookletList userId={userId} />}
-        {displayContent === 'bookmarkedTravelSpots' && <BookmarkedTravelSpotList />}
-      </Suspense>
+      <View style={{ height: 10 }} />
+      <View style={{ flex: 1, width: '100%' }}>
+        <Suspense>
+          <ProfileDetail userId={userId} />
+        </Suspense>
+      </View>
+      <View style={{ flex: 1 }}>
+        <DisplayContentChangeButtonGroup onPress={changeDisplayContent} userId={userId} />
+      </View>
+      <View style={{ flex: 6, width: '100%' }}>
+        <Suspense>
+          {displayContent === 'modelCourses' && <UserModelCourseList userId={userId} />}
+          {displayContent === 'bookmarkedModelCourses' && <BookmarkedModelCourseList />}
+          {displayContent === 'travelBooklets' && <UserTravelBookletList userId={userId} />}
+          {displayContent === 'bookmarkedTravelSpots' && <BookmarkedTravelSpotList />}
+        </Suspense>
+      </View>
     </View>
   );
 };
