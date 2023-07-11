@@ -9,6 +9,7 @@ import type { PickedImage } from '@/types';
 import { setValidationErrors } from '@/utils/compute';
 
 import { useCreateTravelBooklet } from '../../api/createTravelBooklet';
+import { useTravelBookletNavigation } from '../../navigation/TravelBookletNavigator';
 
 import type { CreateTravelBookletFormInput } from '../CreateTravelBookletForm/types';
 import type { SubmitHandler } from 'react-hook-form';
@@ -21,13 +22,15 @@ export const useLogics = ({
 }) => {
   const createTravelBookletMutation = useCreateTravelBooklet();
 
+  const travelBookletNavigation = useTravelBookletNavigation();
+
   const [photo, setPhoto] = useState<PickedImage>();
 
   const handleChoosePhoto = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       selectionLimit: 1,
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      // allowsEditing: true,
       quality: 1,
       base64: true,
     });
@@ -45,7 +48,7 @@ export const useLogics = ({
     clearErrors,
   } = useForm<CreateTravelBookletFormInput>({
     mode: 'onBlur',
-    defaultValues: { ...defaultValues, title: 'a', text: 'b' },
+    defaultValues: { ...defaultValues },
   });
 
   const onSubmit: SubmitHandler<CreateTravelBookletFormInput> = (
@@ -63,6 +66,9 @@ export const useLogics = ({
       {
         onError: (error) =>
           setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
+        onSuccess: () => {
+          travelBookletNavigation.navigate('TravelBookletHome', {});
+        },
       },
     );
   };

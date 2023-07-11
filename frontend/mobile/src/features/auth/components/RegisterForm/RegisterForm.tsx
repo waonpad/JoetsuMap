@@ -1,5 +1,5 @@
-import { Image } from 'expo-image';
 import { Controller } from 'react-hook-form';
+import { Image } from 'react-native';
 import { Button, TextInput, View, Text } from 'react-native';
 
 import {

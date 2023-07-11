@@ -18,6 +18,7 @@ export const SearchedModelCourseList = ({ searchParams }: SearchedModelCourseLis
         style={{ width: '100%' }}
         data={searchModelCoursesQuery.data?.pages.flatMap((page) => page.modelCourses.content)}
         renderItem={({ item }) => <ModelCourseListItem modelCourse={item} />}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // 余白
         keyExtractor={(item) => item.id.toString()}
         onEndReached={() => searchModelCoursesQuery.fetchNextPage()}
         onEndReachedThreshold={DEFAULT_ON_END_REACHED_THRESHOLD}

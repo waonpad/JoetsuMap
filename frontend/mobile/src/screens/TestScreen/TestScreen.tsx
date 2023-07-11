@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 
-import { Image } from 'expo-image';
 import { View } from 'native-base';
 import { Button as NBButton } from 'native-base';
+import { Image } from 'react-native';
 import { ScrollView, Button, Text } from 'react-native';
 
 import { Map } from '@/components/Map';
-import { APP_NAME, IMAGE_SOURCE_BINARY } from '@/constants';
-// import { ModelCourseList } from '@/features/model_course/components/ModelCourseList';
+import { APP_NAME } from '@/constants';
 import type { TravelSpot } from '@/features/travel_spot';
 import { TravelSpotCard } from '@/features/travel_spot/components/TravelSpotCard';
 import { TravelSpotMapMarker } from '@/features/travel_spot/components/TravelSpotMapMarker';
@@ -15,10 +14,9 @@ import { useAuth } from '@/lib/auth';
 import { secureStore } from '@/lib/expo-secure-store';
 import { useNotification } from '@/lib/notification';
 import { useAppNavigation } from '@/navigation/AppNavigator';
-import { API_URL } from '@/utils/compute';
+import { imageSourceUri } from '@/utils/compute';
 
 import { styles } from './styles';
-import { BookmarkedTravelSpotList } from '@/features/travel_spot/components/BookmarkedTravelSpotList';
 
 /**
  * テスト用にいろいろ配置している。実際にはホーム画面
@@ -66,7 +64,7 @@ export const TestScreen = () => {
       <Image
         style={{ width: 100, height: 100 }}
         source={{
-          uri: `${API_URL}${IMAGE_SOURCE_BINARY}?image_path=${auth.user?.icon}`,
+          uri: auth.user?.icon ? imageSourceUri(auth.user?.icon) : '',
           // headers: { Authorization: `Bearer ${auth.token}` }, // 画像リソースへのアクセスは認可不要に
         }}
       />

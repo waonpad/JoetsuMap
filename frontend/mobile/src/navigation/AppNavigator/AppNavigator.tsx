@@ -2,19 +2,16 @@ import React from 'react';
 
 import { AntDesign, Foundation, FontAwesome, SimpleLineIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { CustomTabBarButton } from '@/components/Elements/CustomTabBarButton';
-// import { AuthNavigator } from '@/features/auth';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { ModelCourseNavigator } from '@/features/model_course';
 import { NotificationNavigator } from '@/features/notification';
 import { PassingNavigator } from '@/features/passing';
 import { TravelBookletNavigator } from '@/features/travel_booklet';
-// import { TravelSpotNavigator } from '@/features/travel_spot';
-// import { UserNavigator } from '@/features/user';
-import { HomeScreen } from '@/screens/HomeScreen';
-import { TestScreen } from '@/screens/TestScreen';
+// import { TestScreen } from '@/screens/TestScreen';
 import type { Screens } from '@/types';
+
+import { HomeNavigator } from '../../features/home/navigation/HomeNavigator';
 
 import type { AppNavigationParamList } from './types';
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
@@ -23,15 +20,12 @@ const AppTab = createBottomTabNavigator<AppNavigationParamList>();
 
 export const AppNavigator = () => {
   const appScreens: Screens<AppNavigationParamList> = {
-    // Auth: AuthNavigator,
-    Test: TestScreen,
-    Home: HomeScreen,
+    // Test: TestScreen,
+    Home: HomeNavigator,
     ModelCourse: ModelCourseNavigator,
     Passing: PassingNavigator,
     TravelBooklet: TravelBookletNavigator,
     Notification: NotificationNavigator,
-    // User: UserNavigator,
-    // TravelSopt: TravelSpotNavigator,
   };
 
   const tabBarIconColor = '#333333';

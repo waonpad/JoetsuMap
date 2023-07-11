@@ -8,5 +8,5 @@ export type ContentLabel =
 
 export type DisplayContentChangeButtonGroupProps = {
   userId: User['id'];
-  handlePressChangeContentButton: (contentLabel: ContentLabel) => void;
+  onPress: (contentLabel: ContentLabel) => void;
 };

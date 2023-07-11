@@ -1,4 +1,4 @@
-import { Box, Button, Text } from 'native-base';
+import { Button } from 'native-base';
 import { Dimensions, View } from 'react-native';
 
 import { Suspense } from '@/components/Suspense';
@@ -14,6 +14,7 @@ import { styles } from './styles';
 import { useUtils } from './useUtils';
 
 export const ModelCourseHomeScreen = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const route = useModelCourseRoute<'ModelCourseHome'>();
 
   const { handlePressNavigateToCreateModelCourse, handlePressNavigateToSearchModelCourse } =

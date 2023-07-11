@@ -66,6 +66,7 @@ export const CreateModelCourseForm = ({ defaultValues }: CreateModelCourseFormPr
         <HStackModelCourseTravelSpot
           travelSpots={travelSpots}
           onPressTravelSpot={handlePressTravelSpotIcon}
+          fill
         />
       </View>
       {/* 観光地検索バー */}
@@ -96,26 +97,23 @@ export const CreateModelCourseForm = ({ defaultValues }: CreateModelCourseFormPr
 
       <View style={{ flex: 2, width: '100%' }}>
         {/* ブックマークした観光地一覧 */}
-        {displayTravelSpotIcons === 'bookmarked' && (
-          <Suspense>
+
+        <Suspense>
+          {displayTravelSpotIcons === 'bookmarked' && (
             <BookmarkedTravelSpotIcons onPress={handlePressTravelSpotIcon} />
-          </Suspense>
-        )}
-        {/* 検索した観光地一覧 */}
-        {displayTravelSpotIcons === 'searched' && (
-          <Suspense>
+          )}
+          {/* 検索した観光地一覧 */}
+          {displayTravelSpotIcons === 'searched' && (
             <SearchedTravelSpotIcons
               searchParams={searchParams}
               onPress={handlePressTravelSpotIcon}
             />
-          </Suspense>
-        )}
-        {/* 全ての観光地一覧 */}
-        {displayTravelSpotIcons === 'all' && (
-          <Suspense>
+          )}
+          {/* 全ての観光地一覧 */}
+          {displayTravelSpotIcons === 'all' && (
             <TravelSpotIcons onPress={handlePressTravelSpotIcon} />
-          </Suspense>
-        )}
+          )}
+        </Suspense>
       </View>
       {/* 選択している観光地を表示 */}
       {selectedTravelSpot && (

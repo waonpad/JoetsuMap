@@ -16,13 +16,18 @@ export const SearchModelCourseScreen = () => {
 
   return (
     <View style={styles.container}>
-      <SearchModelCourseForm
-        defaultValues={route.params?.searchModelCourseFormDefaultValues}
-        onSubmitAction={handleSubmitSearch}
-      />
-      <Suspense>
-        <SearchedModelCourseList searchParams={searchParams} />
-      </Suspense>
+      {/* <View style={{ height: 10 }} /> */}
+      <View style={{ flex: 1, width: '100%' }}>
+        <SearchModelCourseForm
+          defaultValues={route.params?.searchModelCourseFormDefaultValues}
+          onSubmitAction={handleSubmitSearch}
+        />
+      </View>
+      <View style={{ flex: 8 }}>
+        <Suspense>
+          <SearchedModelCourseList searchParams={searchParams} />
+        </Suspense>
+      </View>
     </View>
   );
 };

@@ -12,6 +12,7 @@ import { useCreateModelCourse } from '../../api/createModelCourse';
 import type { CreateModelCourseFormInput } from '../CreateModelCourseForm/types';
 import type { SubmitHandler } from 'react-hook-form';
 import type { GestureResponderEvent } from 'react-native';
+import { useModelCourseNavigation } from '../../navigation/ModelCourseNavigator';
 
 export const useLogics = ({
   defaultValues,
@@ -19,6 +20,8 @@ export const useLogics = ({
   defaultValues?: Partial<CreateModelCourseFormInput>;
 }) => {
   const createModelCourseMutation = useCreateModelCourse();
+
+  const modelCOurseNavigation = useModelCourseNavigation();
 
   const [travelSpots, setTravelSpots] = useState<TravelSpot[]>([]);
 
@@ -56,6 +59,9 @@ export const useLogics = ({
       {
         onError: (error) =>
           setValidationErrors({ errors: error?.response?.data.error.validation, setError }),
+        onSuccess: () => {
+          modelCOurseNavigation.navigate('ModelCourseHome', {});
+        },
       },
     );
   };
